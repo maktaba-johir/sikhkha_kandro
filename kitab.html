@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কিতাব বিভাগ - জামাতসমূহ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.48);
+            z-index: 1;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            color: #e8f5e9;
+            font-size: 1.35rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            z-index: 20;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(27, 94, 32, 0.7);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(27, 94, 32, 0.9);
+            transform: translateX(-4px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            max-width: 1100px;
+            width: 94%;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #1B5E20;
+            margin-bottom: 14px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        p {
+            font-size: 1.3rem;
+            color: #004d40;
+            margin-bottom: 50px;
+            opacity: 0.92;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+            justify-items: center;
+        }
+
+        .btn {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 24px 20px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 320px;
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: 0.7s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn i {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+        }
+
+        .btn span {
+            font-size: 1.15rem;
+            opacity: 0.96;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #EC407A;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* জামাতের রং */
+        .jamat-1 { background: linear-gradient(135deg, #FF6D00, #FF9800); }
+        .jamat-2 { background: linear-gradient(135deg, #1976D2, #42A5F5); }
+        .jamat-3 { background: linear-gradient(135deg, #388E3C, #66BB6A); }
+        .jamat-4 { background: linear-gradient(135deg, #7B1FA2, #BA68C8); }
+        .jamat-5 { background: linear-gradient(135deg, #D32F2F, #F44336); }
+        .jamat-6 { background: linear-gradient(135deg, #F57C00, #FFB300); }
+        .jamat-7 { background: linear-gradient(135deg, #512DA8, #7E57C2); }
+        .jamat-8 { background: linear-gradient(135deg, #00796B, #26A69A); }
+        .jamat-9 { background: linear-gradient(135deg, #6A1B9A, #AB47BC); }
+        .jamat-10 { background: linear-gradient(135deg, #C2185B, #EC407A); }
+        .jamat-11 { background: linear-gradient(135deg, #33691E, #689F38); }
+        .jamat-12 { background: linear-gradient(135deg, #880E4F, #EC407A); }
+        .jamat-13 { background: linear-gradient(135deg, #AD1457, #F06292); }
+
+        .btn:hover {
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .footer {
+            margin-top: 55px;
+            font-size: 0.95rem;
+            color: #004d40;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.4rem; }
+            p { font-size: 1.15rem; margin-bottom: 40px; }
+            .btn { padding: 20px 16px; font-size: 1.2rem; }
+            .btn i { font-size: 2rem; }
+            .container { padding: 40px 25px; }
+            .back-btn { font-size: 1.2rem; top: 12px; left: 12px; }
+            .grid { gap: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <!-- ব্যাক বাটন -->
+    <a href="madrasha.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> মাদরাসায় ফিরুন
+    </a>
+
+    <div class="container">
+        <h1>কিতাব বিভাগ</h1>
+        <p>জামাত নির্বাচন করুন</p>
+
+        <div class="grid">
+
+            <!-- ১. খুসূসী জামাত -->
+            <a href="১। খুসূসী জামাত/khususi.html" class="btn jamat-1">
+                <i class="fas fa-star"></i>
+                <span>খুসূসী জামাত</span>
+            </a>
+
+            <!-- ২. তাইসীর জামাত -->
+            <a href="২। তাইসীর জামাত/tisir.html" class="btn jamat-2">
+                <i class="fas fa-book"></i>
+                <span>তাইসীর জামাত</span>
+            </a>
+
+            <!-- ৩. মিযান জামাত -->
+            <a href="3_mijan/mijan.html" class="btn jamat-3">
+                <i class="fas fa-balance-scale"></i>
+                <span>মিযান জামাত</span>
+            </a>
+
+            <!-- ৪. নাহবেমীর জামাত -->
+            <a href="4_nahbemir/nahbemir.html" class="btn jamat-4">
+                <i class="fas fa-scroll"></i>
+                <span>নাহবেমীর জামাত</span>
+            </a>
+
+            <!-- ৫. হেদায়াতুন্নাহু জামাত -->
+            <a href="৫। হেদায়াতুন্নাহু জামাত/hedaettunna.html" class="btn jamat-5">
+                <i class="fas fa-compass"></i>
+                <span>হেদায়াতুন্নাহু জামাত</span>
+            </a>
+
+            <!-- ৬. কাফিয়া জামাত -->
+            <a href="৬। কাফিয়া জামাত/kafiea.html" class="btn jamat-6">
+                <i class="fas fa-gem"></i>
+                <span>কাফিয়া জামাত</span>
+            </a>
+
+            <!-- ৭. শরহে জামি জামাত -->
+            <a href="৭। শরহে জামি জামাত/sorhe_zami.html" class="btn jamat-7">
+                <i class="fas fa-feather-alt"></i>
+                <span>শরহে জামি জামাত</span>
+            </a>
+
+            <!-- ৮. শরহে বেকায়া জামাত -->
+            <a href="৮। শরহে বেকায়া জামাত/sorhe_bekaea.html" class="btn jamat-8">
+                <i class="fas fa-pen-fancy"></i>
+                <span>শরহে বেকায়া জামাত</span>
+            </a>
+
+            <!-- ৯. জালালাইন জামাত -->
+            <a href="৯। জালালাইন জামাত/jalalin.html" class="btn jamat-9">
+                <i class="fas fa-mosque"></i>
+                <span>জালালাইন জামাত</span>
+            </a>
+
+            <!-- ১০. মিশকাত জামাত -->
+            <a href="১০। মিশকাত জামাত/meskat.html" class="btn jamat-10">
+                <i class="fas fa-lightbulb"></i>
+                <span>মিশকাত জামাত</span>
+            </a>
+
+            <!-- ১১. দাওরা জামাত -->
+            <a href="১১। দাওরা জামাত/daura.html" class="btn jamat-11">
+                <i class="fas fa-certificate"></i>
+                <span>দাওরা জামাত</span>
+            </a>
+
+            <!-- ১২. কুদুরী জামাত (বালিকা) -->
+            <a href="১২। কুদুরী জামাত/kuduri.html" class="btn jamat-12">
+                <i class="fas fa-female"></i>
+                <span>কুদুরী জামাত</span>
+                <div class="badge">বালিকা</div>
+            </a>
+
+            <!-- ১৩. হেদায়া জামাত (বালিকা) -->
+            <a href="১৩। হেদায়া জামাত/hedaea.html" class="btn jamat-13">
+                <i class="fas fa-heart"></i>
+                <span>হেদায়া জামাত</span>
+                <div class="badge">বালিকা</div>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>

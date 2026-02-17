@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <!-- এই লাইনটি HTML5 বলে দেয়, যাতে ব্রাউজার সঠিকভাবে কোড পড়তে পারে -->
+    <meta charset="UTF-8"> <!-- বাংলা টেক্সট সঠিকভাবে দেখাবে -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- মোবাইলে সুন্দর দেখাবে -->
+    <title>হিফজ বিভাগ - কিতাবসমূহ</title> <!-- ব্রাউজার ট্যাবে নাম দেখাবে -->
+
+    <!-- গুগল ফন্ট থেকে বাংলা ফন্ট লোড করা হচ্ছে — সুন্দর লেখা দেখাবে -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ফন্ট অসাম আইকন লোড করা হচ্ছে (যেমন: ডাউনলোড আইকন, ব্যাক বাটন) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        /* সব এলিমেন্টের ডিফল্ট মার্জিন/প্যাডিং মুছে ফেলা — লেআউট কন্ট্রোল করার জন্য */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* পুরো পেজের ফন্ট, ব্যাকগ্রাউন্ড, স্ক্রল ইত্যাদি সেট করা */
+        body {
+            font-family: 'Hind Siliguri', sans-serif; /* বাংলা ফন্ট */
+            min-height: 100vh; /* পুরো স্ক্রিন জুড়ে থাকবে */
+            background: url('../b.jpg') no-repeat center center fixed; /* ব্যাকগ্রাউন্ড ছবি */
+            background-size: cover; /* ছবি পুরো পেজ জুড়ে */
+            position: relative;
+            padding: 20px 0;
+            overflow-x: hidden; /* পাশে স্ক্রল হবে না */
+        }
+
+        /* পেজের উপরে কালো আধা-স্বচ্ছ ওভারলে — ব্যাকগ্রাউন্ড ছবি কম উজ্জ্বল দেখাবে */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1; /* অন্যান্য কন্টেন্টের নিচে থাকবে */
+        }
+
+        /* ব্যাক বাটন — পেজের উপরে বামে, সবসময় দৃশ্যমান */
+        .back-btn {
+            position: fixed; /* স্ক্রল করলেও জায়গায় থাকবে */
+            top: 20px; left: 20px;
+            color: #e8f5e9;
+            font-size: 1.3rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            z-index: 100; /* সবার উপরে থাকবে */
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(27, 94, 32, 0.8); /* সবুজ ব্যাকগ্রাউন্ড */
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .back-btn:hover {
+            background: rgba(27, 94, 32, 1); /* হোভারে গাঢ় হবে */
+            transform: translateX(-5px); /* একটু বামে সরবে */
+        }
+
+        /* কন্টেন্ট রাখার জন্য কন্টেইনার */
+        .container {
+            position: relative;
+            z-index: 10; /* ওভারলের উপরে */
+            max-width: 1000px;
+            margin: 0 auto; /* মাঝে রাখা */
+            padding: 30px 20px;
+        }
+
+        /* পেজের শিরোনাম */
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #0edb52; /* গাঢ় সবুজ */
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.2); /* ছায়া */
+        }
+
+        /* সাবটাইটেল */
+        p.subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #9fbdb8;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        /* বইয়ের কার্ডগুলো গ্রিডে সাজানো */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* স্বয়ংক্রিয় গ্রিড */
+            gap: 30px;
+            justify-items: center;
+        }
+
+        /* প্রতিটি বইয়ের কার্ড */
+        .book-card {
+            position: relative;
+            width: 100%;
+            max-width: 250px;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .book-card:hover {
+            transform: translateY(-12px) scale(1.05); /* হোভারে বড় ও উঁচু হবে */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        /* বইয়ের কভার ছবি */
+        .book-cover {
+            width: 100%;
+            height: 320px;
+            object-fit: contain;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-bottom: 4px solid #1B5E20; /* নিচে সবুজ লাইন */
+        }
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        /* বইয়ের নাম */
+        .book-title {
+            padding: 16px 12px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: #004d40;
+            line-height: 1.4;
+        }
+
+        /* ডাউনলোড বাটন — এটাই আপনার মূল চাওয়া */
+        .download-btn {
+            display: block;
+            width: 85%; /* কার্ডের ৮৫% প্রস্থ */
+            margin: 10px auto 18px; /* উপরে ১০px, নিচে ১৮px */
+            padding: 10px;
+            background: #1B5E20; /* সবুজ রঙ */
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            background: #2E7D32; /* হোভারে গাঢ় সবুজ */
+            transform: translateY(-2px); /* একটু উঁচু হবে */
+        }
+        .download-btn i {
+            margin-right: 6px; /* আইকন ও টেক্সটের মাঝে গ্যাপ */
+        }
+
+        /* ফুটার */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.95rem;
+            color: #004d40;
+            opacity: 0.8;
+        }
+
+        /* মোবাইল/ট্যাবলেটের জন্য রেসপনসিভ ডিজাইন */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3rem; }
+            p.subtitle { font-size: 1.15rem; margin-bottom: 40px; }
+            .books-grid { gap: 22px; }
+            .book-card { max-width: 200px; }
+            .book-cover { height: 280px; }
+            .book-title { font-size: 1.05rem; padding: 12px 10px; }
+            .download-btn { font-size: 0.9rem; padding: 8px; }
+            .back-btn { font-size: 1.15rem; top: 15px; left: 15px; }
+        }
+        @media (max-width: 480px) {
+            .books-grid { grid-template-columns: 1fr; } /* এক কলাম */
+            .book-card { max-width: 240px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- কালো ওভারলে -->
+    <div class="overlay"></div>
+
+    <!-- ব্যাক বাটন — ক্লিক করলে মাদরাসা পেজে যাবে -->
+    <a href="../madrasha.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> মাদরাসা বিভাগে যান
+    </a>
+
+    <!-- মূল কন্টেন্ট -->
+    <div class="container">
+        <h1>হিফজ বিভাগ</h1>
+        <p class="subtitle">কিতাব নির্বাচন করুন</p>
+
+        <!-- বইয়ের গ্রিড -->
+        <div class="books-grid">
+
+            <!-- ১. কুরআনুল কারীম — ডাউনলোড আছে -->
+            <div class="book-card"> <!-- নোট: এখানে <a> নেই, কারণ শুধু ডাউনলোড -->
+                <div class="book-cover">
+                    <img src="qran.jpg" alt="কুরআনুল কারীম">
+                </div>
+                <div class="book-title">কুরআনুল কারীম</div>
+                <!-- ডাউনলোড বাটন — ক্লিক করলে qran.pdf ডাউনলোড হবে -->
+                <a href="qran.pdf" class="download-btn" download>
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ২. নূরানী পদ্ধতিতে কুরআন শিক্ষা — ডাউনলোড আছে -->
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="nurani_poddoti.jpg" alt="নূরানী পদ্ধতিতে কুরআন শিক্ষা">
+                </div>
+                <div class="book-title">নূরানী পদ্ধতিতে কুরআন শিক্ষা</div>
+                <a href="nurani_poddoti.pdf" class="download-btn" download>
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৩. সাহায্যকারী অন্যান্য বই — ডাউনলোড নেই, শুধু লিঙ্ক -->
+            <a href="tajbit.html" class="book-card"> <!-- কার্ডে ক্লিক → tajbit.html -->
+                <div class="book-cover">
+                    <img src="tajbit_cover.jpg" alt="সাহায্যকারী অন্যান্য বই">
+                </div>
+                <div class="book-title">সাহায্যকারী অন্যান্য বই</div>
+                <!-- এখানে কোনো ডাউনলোড বাটন নেই — কারণ এটি একটি সাব-পেজ -->
+            </a>
+
+        </div>
+
+        <!-- ফুটার -->
+        <div class="footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+</body>
+</html>

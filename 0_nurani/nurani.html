@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নূরানী বিভাগ - শ্রেণী নির্বাচন</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('../b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.48);
+            z-index: 1;
+        }
+        .back-btn {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            color: #e8f5e9;
+            font-size: 1.35rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            z-index: 20;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(27, 94, 32, 0.7);
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: rgba(27, 94, 32, 0.9);
+            transform: translateX(-4px);
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            max-width: 1100px;
+            width: 94%;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-size: 3rem;
+            color: #1B5E20;
+            margin-bottom: 14px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        p {
+            font-size: 1.3rem;
+            color: #004d40;
+            margin-bottom: 50px;
+            opacity: 0.92;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+            justify-items: center;
+        }
+        .btn {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 24px 20px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 320px;
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: 0.7s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn i {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+        }
+        .btn span {
+            font-size: 1.15rem;
+            opacity: 0.96;
+        }
+        /* শ্রেণীর রং */
+        .class-0 { background: linear-gradient(135deg, #FBC02D, #FFF176); } /* হলুদ - শিশু */
+        .class-1 { background: linear-gradient(135deg, #FF6D00, #FF9800); } /* কমলা */
+        .class-2 { background: linear-gradient(135deg, #1976D2, #42A5F5); } /* নীল */
+        .class-3 { background: linear-gradient(135deg, #388E3C, #66BB6A); } /* সবুজ */
+
+        .btn:hover {
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+        }
+        .footer {
+            margin-top: 55px;
+            font-size: 0.95rem;
+            color: #004d40;
+            opacity: 0.85;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.4rem; }
+            p { font-size: 1.15rem; margin-bottom: 40px; }
+            .btn { padding: 20px 16px; font-size: 1.2rem; }
+            .btn i { font-size: 2rem; }
+            .container { padding: 40px 25px; }
+            .back-btn { font-size: 1.2rem; top: 12px; left: 12px; }
+            .grid { gap: 18px; }
+        }
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <!-- ব্যাক বাটন -->
+    <a href="../madrasha.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> মাদরাসা বিভাগে ফিরুন
+    </a>
+
+    <div class="container">
+        <h1>নূরানী বিভাগ</h1>
+        <p>শ্রেণী নির্বাচন করুন</p>
+
+        <div class="grid">
+
+            <!-- ০. শিশু শ্রেণী -->
+            <a href="0c.html" class="btn class-0">
+                <i class="fas fa-child"></i>
+                <span>শিশু শ্রেণী</span>
+            </a>
+
+            <!-- ১. ১ম শ্রেণী -->
+            <a href="1c.html" class="btn class-1">
+                <i class="fas fa-star"></i>
+                <span>১ম শ্রেণী</span>
+            </a>
+
+            <!-- ২. ২য় শ্রেণী -->
+            <a href="2c.html" class="btn class-2">
+                <i class="fas fa-book"></i>
+                <span>২য় শ্রেণী</span>
+            </a>
+
+            <!-- ৩. ৩য় শ্রেণী -->
+            <a href="3c.html" class="btn class-3">
+                <i class="fas fa-graduation-cap"></i>
+                <span>৩য় শ্রেণী</span>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+</body>
+</html>

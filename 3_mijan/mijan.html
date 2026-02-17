@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মিযান জামাত - কিতাব লাইব্রেরি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-dark: #1e40af;
+            --accent-color: #f59e0b;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border-light: #e2e8f0;
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 48px; margin-bottom: 10px; }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .book-card {
+            position: relative;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: 0.4s ease;
+            height: 280px;
+            background: white;
+        }
+
+        .book-image { width: 100%; height: 100%; object-fit: cover; }
+
+        .book-actions {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(30, 58, 138, 0.95) 0%, rgba(30, 58, 138, 1) 100%);
+            padding: 16px;
+            transform: translateY(100%);
+            transition: 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .btn {
+            border: none; padding: 8px 12px; border-radius: 8px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            width: 100%; display: flex; align-items: center;
+            justify-content: center; gap: 5px; text-decoration: none;
+            color: white; font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .read-btn { background: var(--accent-color); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .download-links { display: flex; justify-content: space-around; padding-top: 5px; }
+        .download-links a {
+            color: white; font-size: 16px; background: rgba(255, 255, 255, 0.1);
+            width: 32px; height: 32px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; cursor: pointer;
+        }
+
+        #reader-container {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98); z-index: 9999;
+        }
+
+        .close-header {
+            background: #1e293b; color: white; padding: 15px 25px;
+            display: flex; justify-content: space-between; align-items: center; height: 8%;
+        }
+
+        .close-btn { background: #ef4444; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; }
+        #book-iframe { width: 100%; height: 92%; border: none; }
+        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; color: var(--text-light); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📚 মিযান জামাত - কিতাব লাইব্রেরি</h1>
+    <p>ইসলামিক শিক্ষার সম্পূর্ণ সংগ্রহ</p>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
+
+<div id="reader-container">
+    <div class="close-header">
+        <span>কিতাব রিডার - <b>রাহবার টিম-২০২৬</b></span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
+    </div>
+    <iframe id="book-iframe" src="" allowfullscreen></iframe>
+</div>
+
+<div class="footer">
+    <p>প্রজেক্ট: <strong>রাহবার টিম</strong> | ২০২৬</p>
+</div>
+
+<script>
+    const library = [
+        { id: "3-mijan-maktaba-busra", title: "০১। মিযান মুনশাইব (মতন)" },
+        { id: "20240927_20240927_0604", title: "০২। সফওয়াতুল মাসাদির (মতন)" },
+        { id: "3-easo-arbi-shikhi", title: "০৩। এসো আরবি শিখি (মতন)" },
+        { id: "imgtopdf-0907231449026-1", title: "০৪। বাকুরাতুল আদব (মতন)" },
+        { id: "3-at-tamrinul-kitabi", title: "০৫। আত তামরিনুল কিতাবী (মতন)" },
+        { id: "3-tarikhul-islam-maktaba-busra", title: "০৬। তারীখুল ইসলাম (মতন)" },
+        { id: "3-behesti-gauher", title: "০৭। বেহেশতী গাওহার (মতন)" },
+        { id: "3-behesti-jeur-mukammal", title: "০৮। বেহেশতী জেওর-সকল খণ্ড" },
+        { id: "20190922_20190922_1139", title: "০৯। কারিমা (মতন)" },
+        { id: "20230904_20230904_2010", title: "১০। পান্দেনামা (মতন)" },
+        { id: "3-nujhatul-kari-asrafiea", title: "১১। নুজহাতুল ক্বারী" },
+        { id: "ilm-us-sarf_202307", title: "১২। ইলমুস সরফ আওয়ালাইন" }
+    ];
+
+    const pending = [
+        { title: "১৩। বাংলা (৬ষ্ঠ)" },
+        { title: "১৪। মাই ইংলিশ বুক (৬ষ্ঠ)" },
+        { title: "১৫। গণিত (৬ষ্ঠ)" }
+    ];
+
+    const grid = document.getElementById('grid');
+
+    function renderBook(book, isPending = false) {
+        const imgSrc = isPending ? "https://via.placeholder.com/160x280?text=আসার+পথে" : `https://archive.org/services/img/${book.id}`;
+        return `
+            <div class="book-card" onclick="toggleActions(this)">
+                <img class="book-image" src="${imgSrc}" alt="${book.title}">
+                <div class="book-actions">
+                    <button class="btn read-btn" onclick="${isPending ? 'noLink()' : `openReader('${book.id}')`}; event.stopPropagation();">
+                        <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                    </button>
+                    <button class="btn secondary-btn" onclick="noLink(); event.stopPropagation();"><i class="fas fa-list"></i> এ বিষয়ের আরো কিতাব</button>
+                    <button class="btn secondary-btn" onclick="noLink(); event.stopPropagation();"><i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব</button>
+                    <button class="btn secondary-btn" onclick="noLink(); event.stopPropagation();"><i class="fas fa-book"></i> ব্যাখ্যাগ্রন্থ ও নুসখা</button>
+                    <div class="download-links">
+                        <a onclick="${isPending ? 'noLink()' : 'event.stopPropagation()'}" href="${isPending ? '#' : 'https://archive.org/download/'+book.id}" target="_blank"><i class="fas fa-archive"></i></a>
+                        <a onclick="noLink(); event.stopPropagation();"><i class="fab fa-google-drive"></i></a>
+                        <a onclick="noLink(); event.stopPropagation();"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    library.forEach(book => grid.innerHTML += renderBook(book));
+    pending.forEach(book => grid.innerHTML += renderBook(book, true));
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    document.addEventListener('click', (e) => { if (!e.target.closest('.book-card')) document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active')); });
+
+    function openReader(id) {
+        document.getElementById('book-iframe').src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        document.getElementById('book-iframe').src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function noLink() { alert("দুঃখিত! এই কিতাব বা সেকশনটি এখনো যুক্ত করা হয় নি।"); }
+</script>
+</body>
+</html>

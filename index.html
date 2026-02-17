@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শিক্ষা কেন্দ্র - হোম</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* গাঢ় ওভারলে — যাতে টেক্সট পড়া যায় */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45); /* গাঢ়ত্ব কমাতে/বাড়াতে 0.3 - 0.6 */
+            z-index: 1;
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.93);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 90%;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #006064;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #006064;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 30px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            width: 260px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn i {
+            font-size: 1.6rem;
+        }
+
+        .btn-madrasha {
+            background: linear-gradient(45deg, #1B5E20, #4CAF50);
+        }
+
+        .btn-school {
+            background: linear-gradient(45deg, #1565C0, #42A5F5);
+        }
+
+        .btn-categories {
+            background: linear-gradient(45deg, #6A1B9A, #AB47BC);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #006064;
+            opacity: 0.8;
+        }
+
+        /* মোবাইল রেসপন্সিভ */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+        }
+		
+	  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    </style>
+</head>
+<body>
+
+    <!-- গাঢ় ওভারলে -->
+    <div class="overlay"></div>
+
+    <!-- মূল কন্টেন্ট -->
+    <div class="container">
+        <h1 class="animate__flip">শিক্ষা কেন্দ্র</h1>
+        <p>আপনার পছন্দের শিক্ষা বিভাগ নির্বাচন করুন</p>
+
+        <div class="button-container">
+            <a href="madrasha.html" class="btn btn-madrasha">
+                <i class="fas fa-mosque"></i> মাদরাসা
+            </a>
+            <a href="school.html" class="btn btn-school">
+                <i class="fas fa-school"></i> স্কুল
+            </a>
+            <a href="categories.html" class="btn btn-categories">
+                <i class="fas fa-book-open"></i> বিষয়ভিত্তিক কিতাব
+            </a>
+        </div>
+
+        <div class="animate__flip footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>

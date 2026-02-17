@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শরহে বেকায়া জামাত - কিতাবসমূহ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('../b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            padding: 20px 0;
+            overflow-x: hidden;
+        }
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #e8f5e9;
+            font-size: 1.3rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            z-index: 100;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(27, 94, 32, 0.8);
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .back-btn:hover {
+            background: rgba(27, 94, 32, 1);
+            transform: translateX(-5px);
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #00796B;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        p.subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #004d40;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 28px;
+            justify-items: center;
+        }
+        .book-card {
+            position: relative;
+            width: 100%;
+            max-width: 220px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .book-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+        }
+        .female-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #EC407A;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .book-cover {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-bottom: 4px solid #00796B;
+        }
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .book-title {
+            padding: 16px 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: #004d40;
+            line-height: 1.4;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.95rem;
+            color: #004d40;
+            opacity: 0.8;
+        }
+
+        /* ডাউনলোড বাটন — নাহবেমীরের মতো */
+        .download-btn {
+            display: block;
+            width: 85%;
+            margin: 4px auto 18px;
+            padding: 10px;
+            background: #1B5E20;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            background: #2E7D32;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        .download-btn i {
+            margin-right: 6px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3rem; }
+            p.subtitle { font-size: 1.15rem; margin-bottom: 40px; }
+            .books-grid { gap: 20px; }
+            .book-card { max-width: 180px; }
+            .book-cover { height: 260px; }
+            .book-title { font-size: 1.05rem; padding: 14px 10px 8px; }
+            .download-btn { font-size: 0.9rem; padding: 8px; width: 90%; }
+            .back-btn { font-size: 1.15rem; top: 15px; left: 15px; padding: 8px 12px; }
+        }
+        @media (max-width: 480px) {
+            .books-grid { grid-template-columns: repeat(2, 1fr); }
+            .book-card { max-width: 160px; }
+            .book-cover { height: 220px; }
+            .download-btn { font-size: 0.85rem; padding: 7px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <!-- ব্যাক বাটন -->
+    <a href="../kitab.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> কিতাব বিভাগে
+    </a>
+    <div class="container">
+        <h1>শরহে বেকায়া জামাত</h1>
+        <p class="subtitle">কিতাব নির্বাচন করুন</p>
+        <div class="books-grid">
+
+            <!-- ১. শরহে বেকায়া-১ম খণ্ড -->
+            <div class="book-card" onclick="window.location='8.sorhe_bekaeah-1.html'">
+                <div class="book-cover">
+                    <img src="8.sorhe_bekaeah-1.jpg" alt="শরহে বেকায়া-১ম খণ্ড">
+                </div>
+                <div class="book-title">শরহে বেকায়া-১ম খণ্ড</div>
+                <a href="8.sorhe_bekaeah-1.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ২. শরহে বেকায়া-২য় খন্ড -->
+            <div class="book-card" onclick="window.location='8.sorhe_bekaeah-2.html'">
+                <div class="book-cover">
+                    <img src="8.sorhe_bekaeah-2.jpg" alt="শরহে বেকায়া-২য় খন্ড">
+                </div>
+                <div class="book-title">শরহে বেকায়া-২য় খন্ড</div>
+                <a href="8.sorhe_bekaeah-2.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৩. নূরুল আনওয়ার -->
+            <div class="book-card" onclick="window.location='8.nurul_anoer-1.html'">
+                <div class="book-cover">
+                    <img src="8.nurul_anoer-1.jpg" alt="নূরুল আনওয়ার">
+                </div>
+                <div class="book-title">নূরুল আনওয়ার (কিতাবুল্লাহ)</div>
+                <a href="8.nurul_anoer-1.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৪. মুখতাসারুল মা’য়ানী -->
+            <div class="book-card" onclick="window.location='8.mukhtasarul_maeani.html'">
+                <div class="book-cover">
+                    <img src="8.mukhtasarul_maeani.jpg" alt="মুখতাসারুল মা’য়ানী">
+                </div>
+                <div class="book-title">মুখতাসারুল মা’য়ানী</div>
+                <a href="8.mukhtasarul_maeani.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৫. ইনশা-৩য় খণ্ড -->
+            <div class="book-card" onclick="window.location='8.insa-3.html'">
+                <div class="book-cover">
+                    <img src="8.insa-3.jpg" alt="ইনশা-৩য় খণ্ড">
+                </div>
+                <div class="book-title">ইনশা-৩য় খণ্ড</div>
+                <a href="8.insa-3.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৬. সিরাজী -->
+            <div class="book-card" onclick="window.location='8.siraji.html'">
+                <div class="book-cover">
+                    <img src="8.siraji.jpg" alt="সিরাজী">
+                </div>
+                <div class="book-title">সিরাজী</div>
+                <a href="8.siraji.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৭. মাকামাতুল হারিরী -->
+            <div class="book-card" onclick="window.location='8.maqamat.html'">
+                <div class="book-cover">
+                    <img src="8.maqamat.jpg" alt="মাকামাতুল হারিরী">
+                </div>
+                <div class="book-title">মাকামাতুল হারিরী</div>
+                <a href="8.maqamat.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৮. কুরআনুল কারীম -->
+            <div class="book-card" onclick="window.location='8.qran.html'">
+                <div class="book-cover">
+                    <img src="8.qran.jpg" alt="কুরআনুল কারীম">
+                </div>
+                <div class="book-title">কুরআনুল কারীম</div>
+                <a href="8.qran.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ৯. মুখতারাত (শুধু মহিলাদের জন্য) -->
+            <div class="book-card" onclick="window.location='8.mukhtarat.html'">
+                <div class="female-badge">মহিলা</div>
+                <div class="book-cover">
+                    <img src="8.mukhtarat.jpg" alt="মুখতারাত">
+                </div>
+                <div class="book-title">মুখতারাত (মহিলা)</div>
+                <a href="8.mukhtarat.pdf" class="download-btn" download onclick="event.stopPropagation();">
+                    <i class="fas fa-download"></i> ডাউনলোড করুন
+                </a>
+            </div>
+
+            <!-- ১০. ব্যাখ্যাগ্রন্থসমূহ -->
+            <div class="book-card" onclick="window.location='8.sorhe_bekaea_jamat.html'">
+                <div class="book-cover">
+                    <img src="8.sorhe_bekaea_jamat.jpg" alt="ব্যাখ্যাগ্রন্থসমূহ">
+                </div>
+                <div class="book-title">ব্যাখ্যাগ্রন্থসমূহ</div>
+                
+                <!-- "দেখুন" বাটন — লিঙ্ক: 8.sorhe_bekaea_jamater_sorah.html -->
+                <a href="8.sorhe_bekaea_jamater_sorah.html" class="download-btn" onclick="event.stopPropagation();">
+                    <i class="fas fa-eye"></i> দেখুন
+                </a>
+            </div>
+
+        </div>
+        <div class="footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+</body>
+</html>

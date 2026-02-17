@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাদরাসা বিভাগ - শিক্ষা কেন্দ্র</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* গাঢ় ওভারলে */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 45px 35px;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+            max-width: 950px;
+            width: 92%;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #006064;
+            font-size: 1.4rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            transition: 0.3s;
+            z-index: 20;
+        }
+
+        .back-btn:hover {
+            color: #004d40;
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            font-size: 2.9rem;
+            color: #1B5E20;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #004d40;
+            margin-bottom: 45px;
+            opacity: 0.92;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            justify-items: center;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 22px 20px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn i {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .btn span {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* প্রতিটি বিভাগের রং */
+        .btn-nurani { background: linear-gradient(135deg, #FF6D00, #FF9800); }
+        .btn-najera { background: linear-gradient(135deg, #1976D2, #42A5F5); }
+        .btn-hifz { background: linear-gradient(135deg, #388E3C, #66BB6A); }
+        .btn-kitab { background: linear-gradient(135deg, #7B1FA2, #BA68C8); }
+        .btn-takhassus { background: linear-gradient(135deg, #D32F2F, #F44336); }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.95rem;
+            color: #004d40;
+            opacity: 0.8;
+        }
+
+        /* মোবাইল */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3rem; }
+            p { font-size: 1.1rem; }
+            .btn { padding: 18px 16px; font-size: 1.2rem; }
+            .btn i { font-size: 1.9rem; }
+            .container { padding: 35px 20px; }
+            .back-btn { font-size: 1.2rem; top: 10px; left: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ওভারলে -->
+    <div class="overlay"></div>
+
+    <!-- ব্যাক বাটন -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> হোমে ফিরুন
+    </a>
+
+    <!-- মূল কন্টেন্ট -->
+    <div class="container">
+        <h1>মাদরাসা বিভাগ</h1>
+        <p>আপনার পছন্দের বিভাগ নির্বাচন করুন</p>
+
+        <div class="button-container">
+            <a href="0। নূরানী বিভাগ/nurani.html" class="btn btn-nurani">
+                <i class="fas fa-sun"></i>
+                <span>নূরানী বিভাগ</span>
+            </a>
+
+            <a href="00। নাজেরা বিভাগ/najera.html" class="btn btn-najera">
+                <i class="fas fa-book-reader"></i>
+                <span>নাজেরা বিভাগ</span>
+            </a>
+
+            <a href="000। হিফজ বিভাগ/hifz.html" class="btn btn-hifz">
+                <i class="fas fa-brain"></i>
+                <span>হিফজ বিভাগ</span>
+            </a>
+
+            <a href="kitab.html" class="btn btn-kitab">
+                <i class="fas fa-book-open"></i>
+                <span>কিতাব বিভাগ</span>
+            </a>
+
+            <a href="takhassus.html" class="btn btn-takhassus">
+                <i class="fas fa-graduation-cap"></i>
+                <span>তাখাসসুসাত বিভাগ</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>
