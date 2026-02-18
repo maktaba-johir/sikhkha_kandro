@@ -22,7 +22,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            /* overflow: hidden;  <-- এটি স্ক্রল আটকে দিচ্ছিল, তাই ডিলিট করা হয়েছে */
+            padding: 20px 0; /* মোবাইলে উপর-নিচে কিছুটা জায়গা রাখার জন্য */
         }
 
         /* গাঢ় ওভারলে */
@@ -49,6 +50,7 @@
             width: 92%;
             backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: auto; /* কন্টেন্ট বড় হলে মাঝখানে রাখার জন্য */
         }
 
         /* ব্যাক বাটন */
@@ -158,28 +160,32 @@
             opacity: 0.8;
         }
 
-        /* মোবাইল */
+        /* মোবাইল স্ক্রিন অপ্টিমাইজেশন */
         @media (max-width: 768px) {
-            h1 { font-size: 2.3rem; }
-            p { font-size: 1.1rem; }
+            body {
+                align-items: flex-start; /* মোবাইলে কন্টেন্ট একদম উপরে আটকে না থেকে স্বাভাবিকভাবে শুরু হবে */
+                padding: 40px 0;
+            }
+            h1 { font-size: 2.1rem; }
+            p { font-size: 1rem; margin-bottom: 30px; }
             .btn { padding: 18px 16px; font-size: 1.2rem; }
-            .btn i { font-size: 1.9rem; }
-            .container { padding: 35px 20px; }
-            .back-btn { font-size: 1.2rem; top: 10px; left: 10px; }
+            .btn i { font-size: 1.8rem; }
+            .container { 
+                padding: 40px 15px; 
+                margin-top: 20px;
+            }
+            .back-btn { font-size: 1.1rem; top: 10px; left: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ওভারলে -->
     <div class="overlay"></div>
 
-    <!-- ব্যাক বাটন -->
     <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> হোমে ফিরুন
     </a>
 
-    <!-- মূল কন্টেন্ট -->
     <div class="container">
         <h1>মাদরাসা বিভাগ</h1>
         <p>আপনার পছন্দের বিভাগ নির্বাচন করুন</p>
@@ -212,7 +218,7 @@
         </div>
 
         <div class="footer">
-            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+            &copy; ২০২৬ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
         </div>
     </div>
 
