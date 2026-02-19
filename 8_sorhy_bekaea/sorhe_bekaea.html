@@ -3,313 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শরহে বেকায়া জামাত - কিতাবসমূহ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>শরহে বেকায়াহ জামাত - কিতাব লাইব্রেরি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #7f1d1d; /* শরহে বেকায়াহ জামাতের জন্য মেরুন থিম */
+            --primary-dark: #450a0a;
+            --accent-color: #f59e0b;
+            --bg-color: #fef2f2;
+            --text-dark: #1e293b;
+        }
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            min-height: 100vh;
-            background: url('../b.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            padding: 20px 0;
+            background: var(--bg-color);
+            color: var(--text-dark);
             overflow-x: hidden;
         }
-        .overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            color: #e8f5e9;
-            font-size: 1.3rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            z-index: 100;
-            padding: 10px 14px;
-            border-radius: 12px;
-            background: rgba(27, 94, 32, 0.8);
-            transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .back-btn:hover {
-            background: rgba(27, 94, 32, 1);
-            transform: translateX(-5px);
-        }
-        .container {
+
+        /* ============ হেডার ও মেনু বাটন ============ */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
             position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 20px;
         }
-        h1 {
-            text-align: center;
-            font-size: 2.8rem;
-            color: #00796B;
-            margin-bottom: 15px;
-            font-weight: 700;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        .menu-btn {
+            position: absolute; left: 20px; top: 25px;
+            font-size: 24px; cursor: pointer; color: white; z-index: 100;
         }
-        p.subtitle {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #004d40;
-            margin-bottom: 50px;
-            opacity: 0.9;
+
+        /* ============ সাইডবার ============ */
+        .sidebar {
+            position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
+            background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease; z-index: 1000; overflow-y: auto; padding: 20px;
         }
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 28px;
-            justify-items: center;
+        .sidebar.active { left: 0; }
+        .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; }
+        .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .sidebar-item:hover { background: #fef2f2; color: var(--primary-color); }
+
+        /* ============ গ্রিড ও কিতাব কার্ড ============ */
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px;
         }
+
         .book-card {
-            position: relative;
-            width: 100%;
-            max-width: 220px;
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-            transition: all 0.4s ease;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative; cursor: pointer; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.4s; height: 350px; background: white;
         }
-        .book-card:hover {
-            transform: translateY(-12px) scale(1.05);
-            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+        .book-image { width: 100%; height: 100%; object-fit: cover; }
+        
+        .book-actions {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(127, 29, 29, 0.98) 0%, rgba(69, 10, 10, 1) 100%);
+            padding: 12px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
+            max-height: 100%; overflow-y: auto;
         }
-        .female-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #EC407A;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            z-index: 10;
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .btn {
+            border: none; padding: 7px; border-radius: 6px;
+            cursor: pointer; font-size: 10px; font-weight: 700;
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 5px; text-decoration: none; color: white;
         }
-        .book-cover {
-            width: 100%;
-            height: 300px;
-            object-fit: contain;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            border-bottom: 4px solid #00796B;
-        }
-        .book-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .book-title {
-            padding: 16px 12px 8px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.15rem;
-            color: #004d40;
-            line-height: 1.4;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            font-size: 0.95rem;
-            color: #004d40;
-            opacity: 0.8;
+        /* পরিচিতি বাটন স্টাইল */
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
+        .read-btn { background: var(--accent-color); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
+        .dl-icon {
+            color: white; font-size: 14px; background: rgba(255, 255, 255, 0.1);
+            flex: 1; height: 30px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; text-decoration: none;
         }
 
-        /* ডাউনলোড বাটন — নাহবেমীরের মতো */
-        .download-btn {
-            display: block;
-            width: 85%;
-            margin: 4px auto 18px;
-            padding: 10px;
-            background: #1B5E20;
-            color: white;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        /* ============ রিডার পপআপ ============ */
+        #reader-container {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
         }
-        .download-btn:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        .close-header {
+            background: #1e293b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 60px;
         }
-        .download-btn i {
-            margin-right: 6px;
-        }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .iframe-wrapper { width: 100%; height: calc(100% - 60px); -webkit-overflow-scrolling: touch; }
+        #book-iframe { width: 100%; height: 100%; border: none; }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.3rem; }
-            p.subtitle { font-size: 1.15rem; margin-bottom: 40px; }
-            .books-grid { gap: 20px; }
-            .book-card { max-width: 180px; }
-            .book-cover { height: 260px; }
-            .book-title { font-size: 1.05rem; padding: 14px 10px 8px; }
-            .download-btn { font-size: 0.9rem; padding: 8px; width: 90%; }
-            .back-btn { font-size: 1.15rem; top: 15px; left: 15px; padding: 8px 12px; }
-        }
-        @media (max-width: 480px) {
-            .books-grid { grid-template-columns: repeat(2, 1fr); }
-            .book-card { max-width: 160px; }
-            .book-cover { height: 220px; }
-            .download-btn { font-size: 0.85rem; padding: 7px; }
-        }
+        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 900; }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <!-- ব্যাক বাটন -->
-    <a href="../kitab.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> কিতাব বিভাগে
-    </a>
-    <div class="container">
-        <h1>শরহে বেকায়া জামাত</h1>
-        <p class="subtitle">কিতাব নির্বাচন করুন</p>
-        <div class="books-grid">
 
-            <!-- ১. শরহে বেকায়া-১ম খণ্ড -->
-            <div class="book-card" onclick="window.location='8.sorhe_bekaeah-1.html'">
-                <div class="book-cover">
-                    <img src="8.sorhe_bekaeah-1.jpg" alt="শরহে বেকায়া-১ম খণ্ড">
-                </div>
-                <div class="book-title">শরহে বেকায়া-১ম খণ্ড</div>
-                <a href="8.sorhe_bekaeah-1.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
+<div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-            <!-- ২. শরহে বেকায়া-২য় খন্ড -->
-            <div class="book-card" onclick="window.location='8.sorhe_bekaeah-2.html'">
-                <div class="book-cover">
-                    <img src="8.sorhe_bekaeah-2.jpg" alt="শরহে বেকায়া-২য় খন্ড">
-                </div>
-                <div class="book-title">শরহে বেকায়া-২য় খন্ড</div>
-                <a href="8.sorhe_bekaeah-2.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
+<div class="sidebar" id="sidebar">
+    <h2>📚 কিতাব তালিকা</h2>
+    <div id="sidebar-list"></div>
+</div>
 
-            <!-- ৩. নূরুল আনওয়ার -->
-            <div class="book-card" onclick="window.location='8.nurul_anoer-1.html'">
-                <div class="book-cover">
-                    <img src="8.nurul_anoer-1.jpg" alt="নূরুল আনওয়ার">
-                </div>
-                <div class="book-title">নূরুল আনওয়ার (কিতাবুল্লাহ)</div>
-                <a href="8.nurul_anoer-1.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
+<div class="header">
+    <h1>📚 শরহে বেকায়াহ জামাত - লাইব্রেরি</h1>
+    <p>রাহবার টিম-২০২৬ ডিজিটাল প্ল্যাটফর্ম</p>
+</div>
 
-            <!-- ৪. মুখতাসারুল মা’য়ানী -->
-            <div class="book-card" onclick="window.location='8.mukhtasarul_maeani.html'">
-                <div class="book-cover">
-                    <img src="8.mukhtasarul_maeani.jpg" alt="মুখতাসারুল মা’য়ানী">
-                </div>
-                <div class="book-title">মুখতাসারুল মা’য়ানী</div>
-                <a href="8.mukhtasarul_maeani.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
 
-            <!-- ৫. ইনশা-৩য় খণ্ড -->
-            <div class="book-card" onclick="window.location='8.insa-3.html'">
-                <div class="book-cover">
-                    <img src="8.insa-3.jpg" alt="ইনশা-৩য় খণ্ড">
-                </div>
-                <div class="book-title">ইনশা-৩য় খণ্ড</div>
-                <a href="8.insa-3.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
-
-            <!-- ৬. সিরাজী -->
-            <div class="book-card" onclick="window.location='8.siraji.html'">
-                <div class="book-cover">
-                    <img src="8.siraji.jpg" alt="সিরাজী">
-                </div>
-                <div class="book-title">সিরাজী</div>
-                <a href="8.siraji.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
-
-            <!-- ৭. মাকামাতুল হারিরী -->
-            <div class="book-card" onclick="window.location='8.maqamat.html'">
-                <div class="book-cover">
-                    <img src="8.maqamat.jpg" alt="মাকামাতুল হারিরী">
-                </div>
-                <div class="book-title">মাকামাতুল হারিরী</div>
-                <a href="8.maqamat.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
-
-            <!-- ৮. কুরআনুল কারীম -->
-            <div class="book-card" onclick="window.location='8.qran.html'">
-                <div class="book-cover">
-                    <img src="8.qran.jpg" alt="কুরআনুল কারীম">
-                </div>
-                <div class="book-title">কুরআনুল কারীম</div>
-                <a href="8.qran.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
-
-            <!-- ৯. মুখতারাত (শুধু মহিলাদের জন্য) -->
-            <div class="book-card" onclick="window.location='8.mukhtarat.html'">
-                <div class="female-badge">মহিলা</div>
-                <div class="book-cover">
-                    <img src="8.mukhtarat.jpg" alt="মুখতারাত">
-                </div>
-                <div class="book-title">মুখতারাত (মহিলা)</div>
-                <a href="8.mukhtarat.pdf" class="download-btn" download onclick="event.stopPropagation();">
-                    <i class="fas fa-download"></i> ডাউনলোড করুন
-                </a>
-            </div>
-
-            <!-- ১০. ব্যাখ্যাগ্রন্থসমূহ -->
-            <div class="book-card" onclick="window.location='8.sorhe_bekaea_jamat.html'">
-                <div class="book-cover">
-                    <img src="8.sorhe_bekaea_jamat.jpg" alt="ব্যাখ্যাগ্রন্থসমূহ">
-                </div>
-                <div class="book-title">ব্যাখ্যাগ্রন্থসমূহ</div>
-                
-                <!-- "দেখুন" বাটন — লিঙ্ক: 8.sorhe_bekaea_jamater_sorah.html -->
-                <a href="8.sorhe_bekaea_jamater_sorah.html" class="download-btn" onclick="event.stopPropagation();">
-                    <i class="fas fa-eye"></i> দেখুন
-                </a>
-            </div>
-
-        </div>
-        <div class="footer">
-            &copy; ২০২৫ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
-        </div>
+<div id="reader-container">
+    <div class="close-header">
+        <span id="reader-title">রাহবার টিম-২০২৬</span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
     </div>
+    <div class="iframe-wrapper">
+        <iframe id="book-iframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<div class="footer">
+    <p>ডেভলপার: <strong>রাহবার টিম</strong> | ২০২৬</p>
+</div>
+
+<script>
+    const library = [
+        { id: "sorhe_bekadeah_moton", title: "০১। শরহে বেকায়া-১ম খণ্ড" },
+        { id: "SharhWiqayah/SharhWiqayah2", title: "০২। শরহে বেকায়া ২য় খণ্ড" },
+        { id: "mukhtasarul_maeani", title: "০৩। মুখতাসারুল মায়ানী" },
+        { id: "20200605_20200605_0129", title: "০৪। দুরুসুল বালাগাত" },
+        { id: "TafsireTawzihulQuran", title: "০৫। তাওযীহুল কুরআন" },
+        { id: "maqamatul_hariri", title: "০৬। মাকামাতুল হারীরী" },
+        { id: "MukhtaratMinAdabilArabAbulHasanAliNadwi", title: "০৭। মুখতারাত" },
+        { id: "20211215_20211215_1857", title: "০৮। সিরাজী" },
+        { id: "at_tariqu_ilal_insha-3", title: "০৯। আত তরিকু ইলাল ইনশা-৩" },
+        { id: "kafiea_makta_busra", title: "১০। কাফিয়া" }
+    ];
+
+    const grid = document.getElementById('grid');
+    const sidebarList = document.getElementById('sidebar-list');
+
+    function renderItem(book) {
+        const imgSrc = `https://archive.org/services/img/${book.id}`;
+        const readFunc = `openReader('${book.id}', '${book.title}')`;
+        
+        const html = `
+            <div class="book-card" onclick="toggleActions(this)">
+                <img class="book-image" src="${imgSrc}">
+                <div class="book-actions">
+                    <a href="porisiti.html" class="btn info-btn" onclick="event.stopPropagation();">
+                        <i class="fas fa-info-circle"></i> ${book.title} (পরিচিতি)
+                    </a>
+                    
+                    <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
+                        <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                    </button>
+                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                        <i class="fas fa-list"></i> এ বিষয়ে আরো কিতাব
+                    </button>
+                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                        <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
+                    </button>
+                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                        <i class="fas fa-book"></i> ব্যাখ্যাগ্রন্থসমূহ
+                    </button>
+                    
+                    <div class="download-links">
+                        <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
+                            <i class="fas fa-archive"></i>
+                        </a>
+                        <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('ড্রাইভ লিঙ্ক নেই'); event.stopPropagation();">
+                            <i class="fab fa-google-drive"></i>
+                        </a>
+                        <a class="dl-icon" title="টেলিগ্রাম" onclick="alert('টেলিগ্রামে খুঁজুন'); event.stopPropagation();">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        grid.innerHTML += html;
+        sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
+    }
+
+    library.forEach(book => renderItem(book));
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    }
+
+    function openReader(id, title) {
+        document.getElementById('book-iframe').src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-title').innerText = title;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        document.getElementById('book-iframe').src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('.book-card')) {
+            document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
+        }
+    });
+</script>
 </body>
 </html>
