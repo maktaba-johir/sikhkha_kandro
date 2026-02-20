@@ -56,7 +56,7 @@
         .book-card {
             position: relative; cursor: pointer; border-radius: 12px;
             overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.4s; height: 320px; background: white;
+            transition: 0.4s; height: 350px; background: white;
         }
         .book-image { width: 100%; height: 100%; object-fit: cover; }
         
@@ -75,6 +75,10 @@
             width: 100%; display: flex; align-items: center; justify-content: center;
             gap: 5px; text-decoration: none; color: white;
         }
+
+        /* কিতাবের পরিচিতি বাটন স্টাইল */
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
+
         .read-btn { background: var(--accent-color); }
         .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
 
@@ -113,7 +117,7 @@
 </div>
 
 <div class="header">
-    <h1>📚 হেদায়াতুন্নাহু জামাত</h1>
+    <h1>📚 হেদায়াতuন্নাহু জামাত</h1>
     <p>রাহবার টিম-২০২৬ ডিজিটাল লাইব্রেরি</p>
 </div>
 
@@ -142,14 +146,14 @@
         { id: "ilmus_siga_farsi_moton", title: "০৩। ইলমুস সীগাহ" },
         { id: "20230721_20230721_0442", title: "০৪। ফুসুলে আকবরী" },
         { id: "1_20230131_20230131_0633", title: "০৫। খেলাফতে রাশেদাহ" },
-        { id: "jadut_talebin_20260218_1246", title: "০৬। যাদুত্ব ত্বালেবীন" }, // Updated Link
+        { id: "jadut_talebin_20260218_1246", title: "০৬। যাদুত্ব ত্বালেবীন" },
         { id: "taiseer-ul-mantiq_202009", title: "০৭। তাইসীরুল মানতেক" },
         { id: "AsanMantiq-Palanpuri", title: "০৮। আসান মানতিক" },
         { id: "qayyumzamman_gmail_20170119_1209", title: "০৯। বুস্তাঁ" },
         { id: "hmmt00172", title: "১০। কালয়ূবী" },
         { id: "mufeed_at-talibeen", title: "১১। মুফিদুত্ব তালেবীন" },
-        { id: "1-a_20260218", title: "১২। আ'রাবিয়্যাহ ১ম খণ্ড" }, // Updated Link
-        { id: "1-b_20260218", title: "১৩। আ'রাবিয়্যাহ ২য় খণ্ড" }, // Updated Link
+        { id: "1-a_20260218", title: "১২। আ'রাবিয়্যাহ ১ম খণ্ড" },
+        { id: "1-b_20260218", title: "১৩। আ'রাবিয়্যাহ ২য় খণ্ড" },
         { id: "mueallimul_insa-3", title: "১৪। মুয়াল্লিমুল ইনশা-৩" },
         { id: "al_kiraatur_rasedah_kamel", title: "১৫। আল ক্বিরাতুর রাশেদা" },
         { id: "kasasun_nabieein-1", title: "১৬। কাসাসুন নাবিয়্যীন-১" },
@@ -170,6 +174,10 @@
                 <div class="book-card" onclick="toggleActions(this)">
                     <img class="book-image" src="${imgSrc}">
                     <div class="book-actions">
+                        <a href="porisiti.html" class="btn info-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-info-circle"></i> ${book.title} (পরিচিতি)
+                        </a>
+
                         <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
                             <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
                         </button>
@@ -187,7 +195,7 @@
                             <a class="dl-icon" title="আর্কাইভ ডাউনলোড" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
                                 <i class="fas fa-archive"></i>
                             </a>
-                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('লিঙ্ক এখনো যুক্ত করা হয়নি'); event.stopPropagation();">
+                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('লিঙ্ক এখনো যুক্ত করা হয়নি'); event.stopPropagation();">
                                 <i class="fab fa-google-drive"></i>
                             </a>
                             <a class="dl-icon" title="টেলিগ্রাম" onclick="alert('আমাদের টেলিগ্রাম চ্যানেলে পাবেন'); event.stopPropagation();">
