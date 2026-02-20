@@ -56,7 +56,7 @@
         .book-card {
             position: relative; cursor: pointer; border-radius: 12px;
             overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.4s; height: 320px; background: white;
+            transition: 0.4s; height: 350px; background: white;
         }
         .book-image { width: 100%; height: 100%; object-fit: cover; }
         
@@ -75,6 +75,10 @@
             width: 100%; display: flex; align-items: center; justify-content: center;
             gap: 5px; text-decoration: none; color: white;
         }
+
+        /* কিতাবের নাম ও পরিচিতি বাটন স্টাইল */
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
+
         .read-btn { background: var(--accent-color); }
         .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
 
@@ -161,6 +165,10 @@
             <div class="book-card" onclick="toggleActions(this)">
                 <img class="book-image" src="${imgSrc}">
                 <div class="book-actions">
+                    <a href="porisiti.html" class="btn info-btn" onclick="event.stopPropagation();">
+                        <i class="fas fa-info-circle"></i> ${book.title} (পরিচিতি)
+                    </a>
+
                     <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
                         <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
                     </button>
