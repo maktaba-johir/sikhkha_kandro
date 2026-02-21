@@ -3,175 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>হিফজ বিভাগ - কিতাবসমূহ</title>
+    <title>হিফজ বিভাগ - ডিজিটাল লাইব্রেরি</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        :root {
+            --primary: #1b5e20;
+            --accent: #f59e0b;
+            --bg: #f0fdf4;
+        }
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            min-height: 100vh;
-            background: #f0fdf4; 
-            position: relative;
+            background: var(--bg);
             padding: 20px 0;
+            color: #333;
         }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
         .back-btn {
-            position: fixed;
-            top: 20px; left: 20px;
-            color: #e8f5e9;
-            font-size: 1rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            z-index: 100;
-            padding: 10px 14px;
-            border-radius: 12px;
-            background: #1b5e20;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            position: fixed; top: 20px; left: 20px;
+            color: white; text-decoration: none;
+            padding: 10px 15px; border-radius: 10px;
+            background: var(--primary); z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #1b5e20;
-            margin-bottom: 5px;
+        h1 { text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 5px; }
+        .subtitle { text-align: center; margin-bottom: 40px; color: #555; font-size: 1.1rem; }
+
+        /* প্রধান ক্যাটাগরি ডিজাইন */
+        .category-box {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            color: white; padding: 30px; border-radius: 20px;
+            text-align: center; margin-bottom: 30px; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(27,94,32,0.2);
+        }
+        .category-box:hover { transform: scale(1.02); }
+        .category-box i { font-size: 3rem; margin-bottom: 10px; }
+        .category-box h2 { font-size: 2rem; }
+
+        /* কুরআন লিস্ট (প্রথম দিকে লুকানো থাকবে) */
+        #quran-list {
+            display: none; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px; margin-bottom: 40px; background: #e8f5e9;
+            padding: 20px; border-radius: 15px; border: 2px dashed var(--primary);
         }
 
-        /* আপনার পছন্দমতো পরিবর্তন করা হলো */
-        p.subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #444;
-            margin-bottom: 40px;
-            font-weight: 500;
-        }
-
+        /* সাধারণ কিতাব গ্রিড */
         .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px;
         }
 
         .book-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+            background: white; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s;
+            display: flex; flex-direction: column; text-align: center;
         }
-
         .book-card:hover { transform: translateY(-5px); }
+        .book-cover { width: 100%; height: 230px; background: #f9f9f9; padding: 15px; }
+        .book-cover img { width: 100%; height: 100%; object-fit: contain; }
+        .book-title { padding: 15px 10px; font-weight: 600; color: var(--primary); min-height: 60px; }
 
-        .book-cover {
-            width: 100%;
-            height: 250px;
-            background: #f9f9f9;
-            padding: 10px;
-        }
-
-        .book-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .book-title {
-            padding: 10px;
-            font-weight: 600;
-            color: #1b5e20;
-            font-size: 1rem;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-group {
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
+        .btn-group { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
         .btn {
-            padding: 8px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            padding: 10px; border-radius: 8px; text-decoration: none;
+            font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
+        .read-btn { background: var(--accent); color: white; }
+        .dl-btn { background: var(--primary); color: white; }
 
-        .read-btn { background: #f59e0b; color: white; }
-        .dl-btn { background: #1b5e20; color: white; }
-
-        /* ফুটার স্টাইল - টেক্সট মাঝে আনার জন্য */
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            font-size: 1rem;
-            color: #1b5e20;
-            border-top: 1px solid #dcfce7;
-        }
-
-        /* পপআপ রিডার */
+        /* রিডার পপআপ */
         #reader-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000;
         }
-        .modal-content { width: 100%; height: 100%; position: relative; }
         .close-btn {
-            position: absolute; top: 10px; right: 20px;
-            color: white; font-size: 35px; cursor: pointer; z-index: 1100;
+            position: absolute; top: 15px; right: 25px;
+            color: white; font-size: 40px; cursor: pointer; z-index: 1100;
         }
         iframe { width: 100%; height: 100%; border: none; }
 
-        @media (max-width: 480px) {
-            .books-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .book-cover { height: 180px; }
-            h1 { font-size: 1.8rem; }
-            p.subtitle { font-size: 1rem; }
+        .footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--primary); }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .books-grid, #quran-list { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .category-box h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <a href="../madrasha.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> ফিরে যান
-    </a>
+    <a href="../madrasha.html" class="back-btn"><i class="fas fa-arrow-left"></i> ফিরে যান</a>
 
     <div class="container">
         <h1>হিফজ বিভাগ</h1>
         <p class="subtitle">আপনার পছন্দনীয় কুরআন ও কিতাব বাছাই করুন</p>
 
-        <div class="books-grid" id="book-list">
+        <div class="category-box" onclick="toggleQuran()">
+            <i class="fas fa-quran"></i>
+            <h2>কুরআন মাজীদ</h2>
+            <p>বিভিন্ন প্রিন্টের কুরআন দেখতে এখানে ক্লিক করুন</p>
+        </div>
+
+        <div id="quran-list">
+            </div>
+
+        <h3 style="margin-bottom: 20px; color: var(--primary); border-left: 5px solid var(--accent); padding-left: 10px;">অন্যান্য প্রয়োজনীয় কিতাব</h3>
+        
+        <div class="books-grid" id="other-books">
             </div>
 
         <div class="footer">
@@ -181,16 +126,13 @@
 
     <div id="reader-modal">
         <span class="close-btn" onclick="closeReader()">&times;</span>
-        <div class="modal-content">
-            <iframe id="book-frame" src=""></iframe>
-        </div>
+        <iframe id="book-frame" src=""></iframe>
     </div>
 
     <script>
-        const books = [
-            { id: "nurani_poddoti", title: "নূরানী পদ্ধতিতে কুরআন শিক্ষা" },
+        const quranData = [
             { id: "15-line-standard-quran-pdf", title: "১৫ লাইন স্ট্যান্ডার্ড কুরআন" },
-            { id: "holy-quran-beautiful-arabic-text", title: "কুরআন (সুন্দর আরবি টেক্সট)" },
+            { id: "holy-quran-beautiful-arabic-text", title: "কুরআন (সুন্দর টেক্সট)" },
             { id: "QuranMajeed-15Lines-SaudiPrint", title: "কুরআন (সৌদি প্রিন্ট)" },
             { id: "QuranEMajeed15Lines", title: "কুরআনুল কারীম (১৫ লাইন)" },
             { id: "quranekareem15line_202003", title: "কুরআন কারীম (১৫ লাইন)" },
@@ -198,10 +140,15 @@
             { id: "QuranMajeed-15Lines-PakistaniPrint", title: "কুরআন (পাকিস্তানি প্রিন্ট)" }
         ];
 
-        const grid = document.getElementById('book-list');
+        const otherData = [
+            { id: "nurani_poddoti", title: "নূরানী পদ্ধতি" },
+            { id: "nujhatul_qari", title: "নুযহাতুল ক্বারী" },
+            { id: "adeai_masnunah", title: "আদইয়ায়ে মাছনূনাহ" },
+            { id: "nurani_poddotite_olpo_somoye_quran_sikkhah", title: "অল্প সময়ে কুরআন শিক্ষা" }
+        ];
 
-        books.forEach(book => {
-            grid.innerHTML += `
+        function createCard(book) {
+            return `
                 <div class="book-card">
                     <div class="book-cover">
                         <img src="https://archive.org/services/img/${book.id}" alt="${book.title}">
@@ -209,7 +156,7 @@
                     <div class="book-title">${book.title}</div>
                     <div class="btn-group">
                         <button class="btn read-btn" onclick="openReader('${book.id}')">
-                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                            <i class="fas fa-book-open"></i> পড়ুন
                         </button>
                         <a href="https://archive.org/download/${book.id}" class="btn dl-btn" target="_blank">
                             <i class="fas fa-download"></i> ডাউনলোড
@@ -217,7 +164,20 @@
                     </div>
                 </div>
             `;
-        });
+        }
+
+        // কিতাবগুলো লোড করা
+        const quranList = document.getElementById('quran-list');
+        const otherList = document.getElementById('other-books');
+
+        quranData.forEach(book => quranList.innerHTML += createCard(book));
+        otherData.forEach(book => otherList.innerHTML += createCard(book));
+
+        function toggleQuran() {
+            const list = document.getElementById('quran-list');
+            list.style.display = (list.style.display === 'grid') ? 'none' : 'grid';
+            if(list.style.display === 'grid') list.scrollIntoView({ behavior: 'smooth' });
+        }
 
         function openReader(id) {
             document.getElementById('book-frame').src = `https://archive.org/embed/${id}`;
