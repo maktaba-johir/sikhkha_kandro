@@ -22,8 +22,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* overflow: hidden;  <-- এটি স্ক্রল আটকে দিচ্ছিল, তাই ডিলিট করা হয়েছে */
-            padding: 20px 0; /* মোবাইলে উপর-নিচে কিছুটা জায়গা রাখার জন্য */
+            padding: 20px 0;
         }
 
         /* গাঢ় ওভারলে */
@@ -50,7 +49,7 @@
             width: 92%;
             backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            margin: auto; /* কন্টেন্ট বড় হলে মাঝখানে রাখার জন্য */
+            margin: auto;
         }
 
         /* ব্যাক বাটন */
@@ -85,8 +84,27 @@
         p {
             font-size: 1.25rem;
             color: #004d40;
-            margin-bottom: 45px;
+            margin-bottom: 20px; /* মার্জিন কিছুটা কমানো হয়েছে লিঙ্কের জন্য */
             opacity: 0.92;
+        }
+
+        /* জেনারেল সিস্টেম লিঙ্ক স্টাইল */
+        .general-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(13, 71, 161, 0.1);
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .general-link:hover {
+            background: rgba(13, 71, 161, 0.2);
+            color: #1565c0;
         }
 
         .button-container {
@@ -141,7 +159,8 @@
             opacity: 0.95;
         }
 
-        /* প্রতিটি বিভাগের রং */
+        /* কালার স্কিম */
+        .btn-shishu { background: linear-gradient(135deg, #FF4081, #F50057); } /* শিশু শ্রেণী */
         .btn-nurani { background: linear-gradient(135deg, #FF6D00, #FF9800); }
         .btn-najera { background: linear-gradient(135deg, #1976D2, #42A5F5); }
         .btn-hifz { background: linear-gradient(135deg, #388E3C, #66BB6A); }
@@ -160,21 +179,13 @@
             opacity: 0.8;
         }
 
-        /* মোবাইল স্ক্রিন অপ্টিমাইজেশন */
         @media (max-width: 768px) {
-            body {
-                align-items: flex-start; /* মোবাইলে কন্টেন্ট একদম উপরে আটকে না থেকে স্বাভাবিকভাবে শুরু হবে */
-                padding: 40px 0;
-            }
+            body { align-items: flex-start; padding: 40px 0; }
             h1 { font-size: 2.1rem; }
-            p { font-size: 1rem; margin-bottom: 30px; }
+            p { font-size: 1rem; margin-bottom: 15px; }
             .btn { padding: 18px 16px; font-size: 1.2rem; }
             .btn i { font-size: 1.8rem; }
-            .container { 
-                padding: 40px 15px; 
-                margin-top: 20px;
-            }
-            .back-btn { font-size: 1.1rem; top: 10px; left: 10px; }
+            .container { padding: 40px 15px; margin-top: 20px; }
         }
     </style>
 </head>
@@ -188,9 +199,18 @@
 
     <div class="container">
         <h1>মাদরাসা বিভাগ</h1>
-        <p>আপনার পছন্দের বিভাগ নির্বাচন করুন</p>
+        <p>আপনার পছন্দের বিভাগ নির্বাচন করুন।</p>
+        
+        <a href="janarel_arabik.html" class="general-link">
+            <i class="fas fa-external-link-alt"></i> জেনারেল সিস্টেমে দেখতে চাইলে এখানে ক্লিক করুন
+        </a>
 
         <div class="button-container">
+            <a href="0_shishu/shishu.html" class="btn btn-shishu">
+                <i class="fas fa-child"></i>
+                <span>শিশু শ্রেণী</span>
+            </a>
+
             <a href="0_nurani/nurani.html" class="btn btn-nurani">
                 <i class="fas fa-sun"></i>
                 <span>নূরানী বিভাগ</span>
