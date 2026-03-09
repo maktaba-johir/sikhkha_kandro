@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জেনারেল ও উচ্চ শিক্ষা - ডিজিটাল লাইব্রেরি</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* স্ক্রিনের ওপরের কালো আবছা পর্দা */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        /* মূল সাদা বক্স */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 { color: #0d47a1; font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { color: #444; font-size: 1.1rem; margin-bottom: 35px; }
+
+        /* বাটন সাজানোর গ্রিড */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* সুন্দর বড় বাটন ডিজাইন */
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 25px 15px;
+            border-radius: 18px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+            transition: 0.3s;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn i { font-size: 2.2rem; }
+        .btn span { font-size: 0.95rem; font-weight: 400; opacity: 0.9; }
+
+        /* আলাদা আলাদা কালার */
+        .primary { background: linear-gradient(135deg, #1e88e5, #1565c0); } /* স্কুল */
+        .inter { background: linear-gradient(135deg, #fb8c00, #ef6c00); }   /* ইন্টার */
+        .university { background: linear-gradient(135deg, #8e24aa, #6a1b9a); } /* মাস্টার্স */
+        .bcs { background: linear-gradient(135deg, #d81b60, #ad1457); }      /* বিসিএস */
+        .skills { background: linear-gradient(135deg, #00acc1, #00838f); }   /* স্কিলস */
+
+        /* ফিরে যাওয়ার বাটন */
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            background: #0d47a1;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            z-index: 100;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .footer { margin-top: 40px; font-size: 0.9rem; color: #666; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> ফিরে যান
+    </a>
+
+    <div class="container">
+        <h1>জেনারেল শিক্ষা ও ক্যারিয়ার</h1>
+        <p class="subtitle">আপনার প্রয়োজনীয় বিভাগটি নির্বাচন করুন</p>
+
+        <div class="grid">
+            <a href="school_levels.html" class="btn primary">
+                <i class="fas fa-school"></i>
+                স্কুল শাখা
+                <span>১ম শ্রেণী থেকে ১০ম শ্রেণী</span>
+            </a>
+
+            <a href="hsc.html" class="btn inter">
+                <i class="fas fa-graduation-cap"></i>
+                ইন্টারমিডিয়েট
+                <span>একাদশ ও দ্বাদশ (HSC)</span>
+            </a>
+
+            <a href="university.html" class="btn university">
+                <i class="fas fa-university"></i>
+                উচ্চ শিক্ষা
+                <span>অনার্স ও মাস্টার্স (Degree)</span>
+            </a>
+
+            <a href="jobs.html" class="btn bcs">
+                <i class="fas fa-briefcase"></i>
+                চাকরি প্রস্তুতি
+                <span>BCS ও সরকারি চাকরি গাইড</span>
+            </a>
+
+            <a href="skills.html" class="btn skills">
+                <i class="fas fa-laptop-code"></i>
+                দক্ষতা উন্নয়ন
+                <span>কম্পিউটার, ভাষা ও ফ্রিল্যান্সিং</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৬ শিক্ষা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>
