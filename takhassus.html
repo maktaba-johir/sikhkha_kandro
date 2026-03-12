@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>তাখাসসুসাত বিভাগ - গবেষণা কেন্দ্র</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            /* আপনার ব্যাকগ্রাউন্ড ইমেজের নাম অনুযায়ী 'b.jpg' রাখা হয়েছে */
+            background: url('b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* গাঢ় ওভারলে */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 45px 35px;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+            max-width: 950px;
+            width: 92%;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: auto;
+        }
+
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #1a237e;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            transition: 0.3s;
+            z-index: 20;
+        }
+
+        .back-btn:hover {
+            color: #0d47a1;
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #0d47a1;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #37474f;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            justify-items: center;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 25px 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* গ্লস ইফেক্ট */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn i {
+            font-size: 2.5rem;
+            /* আইকন শ্যাডো */
+            filter: drop-shadow(3px 5px 4px rgba(0,0,0,0.3));
+        }
+
+        .btn span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        /* বিশেষ কালার স্কিম */
+        .btn-ifta { background: linear-gradient(135deg, #1B5E20, #43A047); } /* ইফতা - সবুজ */
+        .btn-hadith { background: linear-gradient(135deg, #4527A0, #7E57C2); } /* হাদীস - বেগুনি */
+        .btn-adab { background: linear-gradient(135deg, #E65100, #FB8C00); } /* আদব - কমলা */
+
+        .btn:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.95rem;
+            color: #37474f;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.1rem; }
+            .btn { padding: 20px 15px; }
+            .container { padding: 40px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> ফিরে যান
+    </a>
+
+    <div class="container">
+        <h1>তাখাসসুসাত বিভাগ</h1>
+        <p>উচ্চতর গবেষণার জন্য আপনার পছন্দসই বিভাগ নির্বাচন করুন।</p>
+
+        <div class="button-container">
+            <a href="t_ifta/ifta.html" class="btn btn-ifta">
+                <i class="fas fa-gavel"></i>
+                <span>তাখাসসুস ফিল ইফতা</span>
+            </a>
+
+            <a href="t_hadith/hadith.html" class="btn btn-hadith">
+                <i class="fas fa-scroll"></i>
+                <span>তাখাসসুস ফিল হাদীস</span>
+            </a>
+
+            <a href="t_adab/adab.html" class="btn btn-adab">
+                <i class="fas fa-feather-alt"></i>
+                <span>তাখাসসুস ফিল আদব</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৬ রাহবার গবেষণা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>
