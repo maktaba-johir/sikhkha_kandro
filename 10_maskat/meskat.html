@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেশকাত জামাত - কিতাব লাইব্রেরি</title>
+    <title>মিযান জামাত - কিতাব লাইব্রেরি</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary-color: #064e3b; /* মেশকাত জামাতের জন্য পান্না সবুজ থিম */
-            --primary-dark: #022c22;
+            --primary-color: #1e3a8a; /* মিযান জামাতের জন্য নীল থিম */
+            --primary-dark: #1e40af;
             --accent-color: #f59e0b;
-            --bg-color: #f0fdf4;
+            --bg-color: #f8fafc;
             --text-dark: #1e293b;
         }
         body {
@@ -45,7 +45,7 @@
         .sidebar.active { left: 0; }
         .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; }
         .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
-        .sidebar-item:hover { background: #dcfce7; color: var(--primary-color); }
+        .sidebar-item:hover { background: #f3f4f6; color: var(--primary-color); }
 
         /* ============ গ্রিড ও কিতাব কার্ড ============ */
         .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
@@ -62,7 +62,7 @@
         
         .book-actions {
             position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(180deg, rgba(6, 78, 59, 0.98) 0%, rgba(2, 44, 34, 1) 100%);
+            background: linear-gradient(180deg, rgba(30, 58, 138, 0.98) 0%, rgba(30, 64, 175, 1) 100%);
             padding: 12px; transform: translateY(100%);
             transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
             max-height: 100%; overflow-y: auto;
@@ -76,10 +76,12 @@
             gap: 5px; text-decoration: none; color: white;
         }
 
+        /* পরিচিতি বাটন স্টাইল */
         .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
-
+        
         .read-btn { background: var(--accent-color); }
-        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); transition: 0.3s; }
+        .secondary-btn:hover { background: rgba(255, 255, 255, 0.3); }
 
         .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
         .dl-icon {
@@ -116,8 +118,8 @@
 </div>
 
 <div class="header">
-    <h1>📚 মেশকাত জামাত</h1>
-    <p>রাহবার টিম-২০২৬ ডিজিটাল লাইব্রেরি</p>
+    <h1>📚 মিযান জামাত - লাইব্রেরি</h1>
+    <p>রাহবার টিম-২০২৬ ডিজিটাল প্ল্যাটফর্ম</p>
 </div>
 
 <div class="container">
@@ -139,62 +141,82 @@
 </div>
 
 <script>
+    // subjectId গুলো আগের 'subjects.html' এর আইডি অনুযায়ী দেওয়া হয়েছে
     const library = [
-        { id: "meskatul_masabih_moton", title: "০১। মেশকাতুল মাসাবীহ" },
-        { id: "ALHIDAYAH0/AL-HIDAYAH-VOL-3-RAHMANIA", title: "০২। হেদায়া (৩য় খণ্ড)" },
-        { id: "ALHIDAYAH0/AL-HIDAYAH-VOL-4-RAHMANIA", title: "০৩। হেদায়া (৪র্থ খণ্ড)" },
-        { id: "nujhatun_najor", title: "০৪। শরহু নুখবাতুল ফিকার" },
-        { id: "sorhul_aqheidun_nasafiyeah", title: "০৫। শারহুল আকাইদ" },
-        { id: "20200115_20200115_1446", title: "০৬। তাফসীরে বায়যাবী" },
-        { id: "dewbon_andolon", title: "০৭। তাহরীকে দেওবন্দ" },
-        { id: "AlAdabAlMufrad", title: "০৮। আল-আদাবুল মুফরাদ" },
-        { id: "tafsiru_jalalyn_motn", title: "০৯। তাফসীরে জালালাইন" },
-        { id: "Matn_Tahawiya", title: "১০। আক্বিদাতুত্ব ত্বহাভী" }
+        { id: "3-mijan-maktaba-busra", title: "০১। মিযান মুনশাইব", subjectId: 14 }, // ইলমুস সরফ
+        { id: "20240927_20240927_0604", title: "০২। সফওয়াতুল মাসাদির", subjectId: 23 }, // ইলমুল লুগাত
+        { id: "3-easo-arbi-shikhi", title: "০৩। এসো আরবি শিখি", subjectId: 30 }, // ইলমুল ইনশা/আদব
+        { id: "imgtopdf-0907231449026-1", title: "০৪। বাকুরাতুল আদব", subjectId: 18 }, // ইলমুল আদব
+        { id: "3-at-tamrinul-kitabi", title: "০৫। আত তামরিনুল কিতাবী", subjectId: 30 }, // ইলমুল ইনশা
+        { id: "3-tarikhul-islam-maktaba-busra", title: "০৬। তারীখুল ইসলাম", subjectId: 25 }, // ইতিহাস
+        { id: "3-behesti-gauher", title: "০৭। বেহেশতী গাওহার", subjectId: 8 }, // ইলমুল ফিকহ
+        { id: "3-behesti-jeur-mukammal", title: "০৮। বেহেশতী জেওর", subjectId: 8 }, // ইলমুল ফিকহ
+        { id: "20190922_20190922_1139", title: "০৯। কারিমা", subjectId: 18 }, // আদব/পদ্য
+        { id: "20230904_20230904_2010", title: "১০। পান্দেনামা", subjectId: 18 }, // আদব
+        { id: "3-nujhatul-kari-asrafiea", title: "১১। নুজহাতুল ক্বারী", subjectId: 18 }, // আদব
+        { id: "ilm-us-sarf_202307", title: "১২। ইলমুস সরফ আওয়ালাইন", subjectId: 14 } // ইলমুস সরফ
+    ];
+
+    const pending = [
+        { title: "১৩। বাংলা (৬ষ্ঠ)", subjectId: 0 },
+        { title: "১৪। মাই ইংলিশ বুক (৬ষ্ঠ)", subjectId: 0 },
+        { title: "১৫। গণিত (৬ষ্ঠ)", subjectId: 28 } // ইলমুল হিসাব
     ];
 
     const grid = document.getElementById('grid');
     const sidebarList = document.getElementById('sidebar-list');
 
-    function renderLibrary() {
-        library.forEach((book) => {
-            const imgSrc = `https://archive.org/services/img/${book.id}`;
-            const readFunc = `openReader('${book.id}', '${book.title}')`;
-            
-            grid.innerHTML += `
-                <div class="book-card" onclick="toggleActions(this)">
-                    <img class="book-image" src="${imgSrc}">
-                    <div class="book-actions">
-                        <a href="porisiti.html" class="btn info-btn" onclick="event.stopPropagation();">
-                            <i class="fas fa-info-circle"></i> ${book.title} (পরিচিতি)
+    function renderItem(book, isPending = false) {
+        const imgSrc = isPending ? "https://via.placeholder.com/160x320?text=আসছে..." : `https://archive.org/services/img/${book.id}`;
+        const readFunc = isPending ? `alert('শীঘ্রই যুক্ত হবে')` : `openReader('${book.id}', '${book.title}')`;
+        
+        // বিষয় পরিচিতি লিংকের জন্য লজিক
+        const infoLink = book.subjectId > 0 ? `subjects.html#sub-${book.subjectId}` : `alert('এই বিষয়ের তথ্য এখনো যুক্ত হয়নি')`;
+        const infoOnClick = book.subjectId > 0 ? "" : "onclick=\"event.stopPropagation(); alert('এই বিষয়ের তথ্য এখনো যুক্ত হয়নি'); return false;\"";
+
+        const html = `
+            <div class="book-card" onclick="toggleActions(this)">
+                <img class="book-image" src="${imgSrc}">
+                <div class="book-actions">
+                    <div class="btn info-btn" onclick="event.stopPropagation();">
+                        <i class="fas fa-bookmark"></i> ${book.title}
+                    </div>
+
+                    <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
+                        <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                    </button>
+                    
+                    <a href="${book.subjectId > 0 ? 'subjects.html' : '#'}" class="btn secondary-btn" ${infoOnClick} onclick="event.stopPropagation();">
+                        <i class="fas fa-info-circle"></i> বিষয় পরিচিতি
+                    </a>
+
+                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                        <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
+                    </button>
+                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                        <i class="fas fa-layer-group"></i> ব্যাখ্যাগ্রন্থসমূহ
+                    </button>
+                    
+                    <div class="download-links">
+                        <a class="dl-icon" title="আর্কাইভ" href="${isPending ? '#' : 'https://archive.org/download/'+book.id}" target="_blank" onclick="event.stopPropagation();">
+                            <i class="fas fa-archive"></i>
                         </a>
-                        <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
-                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
-                        </button>
-                        <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
-                            <i class="fas fa-list"></i> এ বিষয়ে আরো কিতাব
-                        </button>
-                        <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
-                            <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
-                        </button>
-                        <div class="download-links">
-                            <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
-                                <i class="fas fa-archive"></i>
-                            </a>
-                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('লিঙ্ক নেই'); event.stopPropagation();">
-                                <i class="fab fa-google-drive"></i>
-                            </a>
-                            <a class="dl-icon" title="টেলিগ্রাম" onclick="alert('টেলিগ্রামে পাবেন'); event.stopPropagation();">
-                                <i class="fab fa-telegram"></i>
-                            </a>
-                        </div>
+                        <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('ড্রাইভ লিঙ্ক নেই'); event.stopPropagation();">
+                            <i class="fab fa-google-drive"></i>
+                        </a>
+                        <a class="dl-icon" title="টেলিগ্রাম" onclick="alert('টেলিগ্রামে খুঁজুন'); event.stopPropagation();">
+                            <i class="fab fa-telegram"></i>
+                        </a>
                     </div>
                 </div>
-            `;
-            sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
-        });
+            </div>
+        `;
+        grid.innerHTML += html;
+        sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
     }
 
-    renderLibrary();
+    library.forEach(book => renderItem(book));
+    pending.forEach(book => renderItem(book, true));
 
     function toggleActions(card) {
         document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
