@@ -10,7 +10,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary-color: #1e3a8a; /* মিযান জামাতের জন্য নীল থিম */
+            --primary-color: #1e3a8a;
             --primary-dark: #1e40af;
             --accent-color: #f59e0b;
             --bg-color: #f8fafc;
@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
 
-        /* ============ হেডার ও মেনু বাটন ============ */
+        /* ============ হেডার ও মেনু ============ */
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
@@ -76,9 +76,7 @@
             gap: 5px; text-decoration: none; color: white;
         }
 
-        /* পরিচিতি বাটন স্টাইল */
-        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
-        
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; pointer-events: none; }
         .read-btn { background: var(--accent-color); }
         .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); transition: 0.3s; }
         .secondary-btn:hover { background: rgba(255, 255, 255, 0.3); }
@@ -141,26 +139,25 @@
 </div>
 
 <script>
-    // subjectId গুলো আগের 'subjects.html' এর আইডি অনুযায়ী দেওয়া হয়েছে
     const library = [
-        { id: "3-mijan-maktaba-busra", title: "০১। মিযান মুনশাইব", subjectId: 14 }, // ইলমুস সরফ
-        { id: "20240927_20240927_0604", title: "০২। সফওয়াতুল মাসাদির", subjectId: 23 }, // ইলমুল লুগাত
-        { id: "3-easo-arbi-shikhi", title: "০৩। এসো আরবি শিখি", subjectId: 30 }, // ইলমুল ইনশা/আদব
-        { id: "imgtopdf-0907231449026-1", title: "০৪। বাকুরাতুল আদব", subjectId: 18 }, // ইলমুল আদব
-        { id: "3-at-tamrinul-kitabi", title: "০৫। আত তামরিনুল কিতাবী", subjectId: 30 }, // ইলমুল ইনশা
-        { id: "3-tarikhul-islam-maktaba-busra", title: "০৬। তারীখুল ইসলাম", subjectId: 25 }, // ইতিহাস
-        { id: "3-behesti-gauher", title: "০৭। বেহেশতী গাওহার", subjectId: 8 }, // ইলমুল ফিকহ
-        { id: "3-behesti-jeur-mukammal", title: "০৮। বেহেশতী জেওর", subjectId: 8 }, // ইলমুল ফিকহ
-        { id: "20190922_20190922_1139", title: "০৯। কারিমা", subjectId: 18 }, // আদব/পদ্য
-        { id: "20230904_20230904_2010", title: "১০। পান্দেনামা", subjectId: 18 }, // আদব
-        { id: "3-nujhatul-kari-asrafiea", title: "১১। নুজহাতুল ক্বারী", subjectId: 18 }, // আদব
-        { id: "ilm-us-sarf_202307", title: "১২। ইলমুস সরফ আওয়ালাইন", subjectId: 14 } // ইলমুস সরফ
+        { id: "3-mijan-maktaba-busra", title: "০১। মিযান মুনশাইব", subjectId: 14 },
+        { id: "20240927_20240927_0604", title: "০২। সফওয়াতুল মাসাদির", subjectId: 23 },
+        { id: "3-easo-arbi-shikhi", title: "০৩। এসো আরবি শিখি", subjectId: 30 },
+        { id: "imgtopdf-0907231449026-1", title: "০৪। বাকুরাতুল আদব", subjectId: 18 },
+        { id: "3-at-tamrinul-kitabi", title: "০৫। আত তামরিনুল কিতাবী", subjectId: 30 },
+        { id: "3-tarikhul-islam-maktaba-busra", title: "০৬। তারীখুল ইসলাম", subjectId: 25 },
+        { id: "3-behesti-gauher", title: "০৭। বেহেশতী গাওহার", subjectId: 8 },
+        { id: "3-behesti-jeur-mukammal", title: "০৮। বেহেশতী জেওর", subjectId: 8 },
+        { id: "20190922_20190922_1139", title: "০৯। কারিমা", subjectId: 18 },
+        { id: "20230904_20230904_2010", title: "১০। পান্দেনামা", subjectId: 18 },
+        { id: "3-nujhatul-kari-asrafiea", title: "১১। নুজহাতুল ক্বারী", subjectId: 18 },
+        { id: "ilm-us-sarf_202307", title: "১২। ইলমুস সরফ আওয়ালাইন", subjectId: 14 }
     ];
 
     const pending = [
         { title: "১৩। বাংলা (৬ষ্ঠ)", subjectId: 0 },
         { title: "১৪। মাই ইংলিশ বুক (৬ষ্ঠ)", subjectId: 0 },
-        { title: "১৫। গণিত (৬ষ্ঠ)", subjectId: 28 } // ইলমুল হিসাব
+        { title: "১৫। গণিত (৬ষ্ঠ)", subjectId: 28 }
     ];
 
     const grid = document.getElementById('grid');
@@ -170,9 +167,9 @@
         const imgSrc = isPending ? "https://via.placeholder.com/160x320?text=আসছে..." : `https://archive.org/services/img/${book.id}`;
         const readFunc = isPending ? `alert('শীঘ্রই যুক্ত হবে')` : `openReader('${book.id}', '${book.title}')`;
         
-        // বিষয় পরিচিতি লিংকের জন্য লজিক
-        const infoLink = book.subjectId > 0 ? `subjects.html#sub-${book.subjectId}` : `alert('এই বিষয়ের তথ্য এখনো যুক্ত হয়নি')`;
-        const infoOnClick = book.subjectId > 0 ? "" : "onclick=\"event.stopPropagation(); alert('এই বিষয়ের তথ্য এখনো যুক্ত হয়নি'); return false;\"";
+        // ছবি অনুযায়ী পাথ: ../../porichiti/subjects.html
+        const infoLink = book.subjectId > 0 ? `../../porichiti/subjects.html#sub-${book.subjectId}` : "#";
+        const infoOnClick = book.subjectId > 0 ? "" : "onclick=\"event.stopPropagation(); alert('এই বিষয়ের তথ্য এখনো যুক্ত হয়নি'); return false;\"";
 
         const html = `
             <div class="book-card" onclick="toggleActions(this)">
@@ -186,13 +183,14 @@
                         <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
                     </button>
                     
-                    <a href="${book.subjectId > 0 ? 'subjects.html' : '#'}" class="btn secondary-btn" ${infoOnClick} onclick="event.stopPropagation();">
+                    <a href="${infoLink}" class="btn secondary-btn" ${infoOnClick} onclick="event.stopPropagation();">
                         <i class="fas fa-info-circle"></i> বিষয় পরিচিতি
                     </a>
 
                     <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
                         <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
                     </button>
+
                     <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
                         <i class="fas fa-layer-group"></i> ব্যাখ্যাগ্রন্থসমূহ
                     </button>
