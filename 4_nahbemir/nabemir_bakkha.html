@@ -21,7 +21,6 @@
             overflow-x: hidden;
         }
 
-        /* হেডার */
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
@@ -39,7 +38,6 @@
             display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;
         }
 
-        /* কিতাব কার্ড এনিমেশন */
         .book-card {
             position: relative; cursor: pointer; border-radius: 12px;
             overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -73,9 +71,10 @@
             color: white; font-size: 16px; background: rgba(255, 255, 255, 0.15);
             flex: 1; height: 35px; display: flex; align-items: center;
             justify-content: center; border-radius: 5px; text-decoration: none;
+            transition: 0.3s;
         }
+        .dl-icon:hover { background: rgba(255, 255, 255, 0.3); }
 
-        /* রিডার পপআপ */
         #reader-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
@@ -115,10 +114,12 @@
 </div>
 
 <script>
-    const telegramLink = "https://t.me/rahbar_to_truth";
+    // টেলিগ্রাম লিঙ্ক
+    const telegramGroup = "https://t.me/rahbar_to_truth";
     
+    // ৪০টি কিতাবের বিস্তারিত তালিকা ও সংশোধিত লিঙ্ক
     const books = [
-        { id: "iknauj_jomir_arabic", title: "إقناع الضمير تعريب نحو مير", author: "আরবী শরাহ", feature: "নাহবেমীর কিতাবের আধুনিক আরবী সংস্করণ।" },
+        { id: "iknauj_jomir_arabic", title: "إقناع الضير تعريب نحو مير", author: "আরবী শরাহ", feature: "নাহবেমীর কিতাবের আধুনিক আরবী সংস্করণ।" },
         { id: "By_Md_Saif_Khan_Misbahi_20181007_1754", title: "التنوير شرح نحو مير", author: "মাওলানা সাইফ খান মিসবাহী", feature: "সহজ ও প্রাঞ্জল আরবী ব্যাখ্যা।" },
         { id: "AlBasheerSharahNahavMeer", title: "البشير شرح نحو مير", author: "উর্দু শরাহ", feature: "দরসের উপযোগী গুরুত্বপূর্ণ আলোচনা।" },
         { id: "1_20210824", title: "بدر منیر شرح نحو میر", author: "উর্দু শরাহ", feature: "নাহবেমীর কিতাবের বিস্তারিত উর্দু ব্যাখ্যা।" },
@@ -135,26 +136,26 @@
         { id: "durre_be_nojir", title: "در بے نظیر شرح نحو میر", author: "উর্দু শরাহ", feature: "পরীক্ষার্থীদের জন্য বিশেষ সহায়ক।" },
         { id: "tashilun_nahu_abdullah_gongohi", title: "تسهيل النحو عبد اللہ گنگوہی", author: "মাওলানা আব্দুল্লাহ গাঙ্গুহী", feature: "নাহু শাস্ত্রের অতি জনপ্রিয় কিতাব।" },
         { id: "20230815_20230815_0844", title: "فیض النحو", author: "উর্দু শরাহ", feature: "নাহবেমীরের সহজবোধ্য উর্দু ব্যাখ্যা।" },
-        { id: "TasheelUlNahav", title: "تسهيل النحو خان صاحب", author: "خان صاحب", feature: "নাহু শিক্ষার অনন্য মাধ্যম।" },
+        { id: "TasheelUlNahav", title: "تسهيل النحو خان صاحب", author: "خان সাহেব", feature: "নাহু শিক্ষার অনন্য মাধ্যম।" },
         { id: "tarkeeb-tasheel-ul-nahav", title: "تركيب تسهيل النحو", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের তারকিব শিক্ষার বই।" },
         { id: "faijin_nahu_sibbir", title: "فيض النحو ندوي صاحب", author: "শাব্বির আহমদ নদভী", feature: "নদভী সাহেবের বিশেষ তাহকিক।" },
         { id: "talimun_nahu_ustaja", title: "تعلیم النحو أستاذة", author: "উস্তাযা সাহেব", feature: "মহিলা মাদরাসার জন্য বিশেষ উপযোগী।" },
         { id: "dorse_nahbemir_ahmad_mummtaj", title: "درس نحومير-ممتاز", author: "আহমদ মুমতাজ", feature: "তাদরিসি আলোচনার চমৎকার সংকলন।" },
         { id: "KHULASAUNN_NAHU-1", title: "خلاصة النحو جـ1", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের মৌলিক কায়দা কানুন।" },
         { id: "KHULASATUN_NAHU-2", title: "خلاصة النحو جـ2", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের বিস্তারিত আলোচনা।" },
-        { id: "nahbemir_daeate_islami", title: "نحو میر دعوت اسلامی", author: "মাকতাবাতুল মদিনা", feature: "রঙিন ও পরিমার্জিত সংস্করণ।" },
-        { id: "nahbemir_kadriea", title: "نحو مير قادرية", author: "মাকতাবাতুল কাদরিয়া", feature: "সহজ পাঠ্য সংস্করণ।" },
+        { id: "nahbemir_daeate_islami", title: "نحو مير دعوت اسلامي", author: "মাকতাবাতুল মদিনা", feature: "রঙিন ও পরিমার্জিত সংস্করণ।" },
+        { id: "nahbemir_kadriea", title: "নحو مير قادرية", author: "মাকতাবাতুল কাদরিয়া", feature: "সহজ পাঠ্য সংস্করণ।" },
         { id: "nisabunnahu", title: "نصاب النحو دينية", author: "দ্বীনিয়া দাওয়াত", feature: "কোর্সের জন্য নির্ধারিত পাঠ্যবই।" },
-        { id: "naeimut_tahrir_sohe_nahbemir", title: "نعيم التحرير عبد الحكيم صاحب", author: "আব্দুল হাকিম সাহেব", feature: "তাহকিকি ও তশরিহি আলোচনা।" },
-        { id: "ilmunnahu_mustak_ahmad", title: "علم نحو مشتاق احمد", author: "মাওলানা মুশতাক আহমদ", feature: "কওমি মাদরাসার জনপ্রিয় নাহু বই।" },
-        { id: "20190922_20190922_0725", title: "نحو মير مترجم عطر التحرير", author: "উর্দু অনুবাদ", feature: "অনুবাদ ও ব্যাখ্যার সমন্বয়।" },
+        { id: "naeimut_tahrir_sohe_nahbemir", title: "نعيم التحرير عبد الحكيم সাহেব", author: "আব্দুল হাকিম সাহেব", feature: "তাহকিকি ও তশরিহি আলোচনা।" },
+        { id: "ilmunnahu_mustak_ahmad", title: "علم نحو مشতাক আহমদ", author: "মাওলানা মুশতাক আহমদ", feature: "কওমি মাদরাসার জনপ্রিয় নাহু বই।" },
+        { id: "20190922_20190922_0725", title: "নাহবেমীর مترجم عطر التحرير", author: "উর্দু অনুবাদ", feature: "অনুবাদ ও ব্যাখ্যার সমন্বয়।" },
         { id: "urdu_nabemir", title: "اردো نحو میر ولی الرحمن", author: "মাওলানা ওয়ালিউর রহমান", feature: "সহজবোধ্য উর্দু অনুবাদ।" },
-        { id: "abu-abdurahman-kurdi-f_barid_20180209_1916", title: "نحو مير أبو الحسين", author: "আবু হুসাইন", feature: "সহজ ও সংক্ষিপ্ত নাহু আলোচনা।" },
+        { id: "abu-abdurahman-kurdi-f_barid_20180209_1916", title: "নحو মীর أبو الحسين", author: "আবু হুসাইন", feature: "সহজ ও সংক্ষিপ্ত নাহু আলোচনা।" },
         { id: "sohoj_farsi_bangla_nahnemir", title: "সহজ ফার্সি বাংলা নাহবেমীর", author: "বাংলা অনুবাদ", feature: "বাংলা ভাষাভাষীদের জন্য শ্রেষ্ঠ সংকলন।" },
         { id: "prosno_uttore_nahbemir", title: "প্রশ্নোত্তরে নাহবেমীর", author: "বাংলা সংকলন", feature: "পরীক্ষার প্রস্তুতির জন্য অনন্য বই।" },
-        { id: "sohoje_nahob_sikhbo", title: "সহজে নাহব শিখব", author: "নাসিম আরাফাত", feature: "আধুনিক পদ্ধতিতে নাহব শিক্ষা।" },
+        { id: "sohoje_nahob_sikhbo", title: "সহজে নাহব শিখব", author: "নাসিম আরাফাত সাহেব", feature: "আধুনিক পদ্ধতিতে নাহব শিক্ষা।" },
         { id: "asan_nahu_palonpuru-shaheb", title: "আসান নাহু", author: "মাওলানা পালনপুরী রহ.", feature: "অত্যন্ত সহজ ভাষায় নাহু তত্ত্ব।" },
-        { id: "sondo_akare_nahu", title: "দরসে নাহবে মীর", author: "ইব্রাহীম হেলাল", feature: "ছন্দাকারে ও চার্টের মাধ্যমে আলোচনা।" },
+        { id: "sondo_akare_nahu", title: "দরসে নাহবে মীর", author: "ইব্রাহীম হেলাল সাহেব", feature: "ছন্দাকারে ও চার্টের মাধ্যমে আলোচনা।" },
         { id: "mukaddamae_nahbemir", title: "মুকাদ্দামায়ে নাহবেমীর", author: "আরবী-বাংলা", feature: "নাহবেমীর শুরু করার প্রস্তুতি।" }
     ];
 
@@ -178,10 +179,10 @@
                             <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
                                 <i class="fas fa-archive"></i>
                             </a>
-                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('ড্রাইভ লিঙ্ক নেই'); event.stopPropagation();">
+                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('গুগল ড্রাইভ লিঙ্ক বর্তমানে যুক্ত নেই। অনুগ্রহ করে আর্কাইভ ব্যবহার করুন।'); event.stopPropagation();">
                                 <i class="fab fa-google-drive"></i>
                             </a>
-                            <a class="dl-icon" title="টেলিগ্রাম" href="${telegramLink}" target="_blank" onclick="event.stopPropagation();">
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${telegramGroup}" target="_blank" onclick="event.stopPropagation();">
                                 <i class="fab fa-telegram"></i>
                             </a>
                         </div>
@@ -193,6 +194,7 @@
     }
 
     function toggleActions(card) {
+        // অন্য খোলা কার্ড থাকলে বন্ধ করে দেবে
         document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
         card.classList.toggle('active');
     }
@@ -210,6 +212,7 @@
         document.body.style.overflow = 'auto';
     }
 
+    // কার্ডের বাইরে ক্লিক করলে এনিমেশন বন্ধ হবে
     document.addEventListener('click', (e) => { 
         if (!e.target.closest('.book-card')) {
             document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
