@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নাহবেমীর ব্যাখ্যাগ্রন্থসমূহ - রাহবার টিম</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #065f46; 
+            --primary-dark: #064e3b;
+            --accent-color: #f59e0b;
+            --bg-color: #f0fdf4;
+        }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* হেডার */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute; left: 20px; top: 20px;
+            color: white; text-decoration: none; font-size: 18px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;
+        }
+
+        /* কিতাব কার্ড এনিমেশন */
+        .book-card {
+            position: relative; cursor: pointer; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.4s; height: 380px; background: white;
+        }
+        .book-image { width: 100%; height: 100%; object-fit: cover; }
+        
+        .book-actions {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(6, 95, 70, 0.98) 0%, rgba(6, 78, 59, 1) 100%);
+            padding: 15px 10px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 8px;
+            max-height: 100%; overflow-y: auto; color: white;
+        }
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .book-title { font-size: 14px; font-weight: 700; color: #fcc201; margin-bottom: 2px; text-align: center;}
+        .book-author { font-size: 11px; opacity: 0.9; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px; }
+        .book-feature { font-size: 10px; margin: 5px 0; line-height: 1.3; }
+
+        .btn {
+            border: none; padding: 8px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 5px; text-decoration: none; color: white;
+        }
+        .read-btn { background: var(--accent-color); color: #000; }
+
+        .download-links { display: flex; justify-content: space-around; gap: 5px; margin-top: 5px; }
+        .dl-icon {
+            color: white; font-size: 16px; background: rgba(255, 255, 255, 0.15);
+            flex: 1; height: 35px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; text-decoration: none;
+        }
+
+        /* রিডার পপআপ */
+        #reader-container {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+        }
+        .close-header {
+            background: #1e293b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 60px;
+        }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+        @media (max-width: 480px) {
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .book-card { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+    <h1>নাহবেমীর ব্যাখ্যাগ্রন্থসমূহ</h1>
+    <p>রাহবার টিম-২০২৬ ডিজিটাল প্ল্যাটফর্ম</p>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
+
+<div id="reader-container">
+    <div class="close-header">
+        <span id="reader-title">পড়ছেন...</span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
+    </div>
+    <div style="width: 100%; height: calc(100% - 60px);">
+        <iframe id="book-iframe" src="" style="width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    const telegramLink = "https://t.me/rahbar_to_truth";
+    
+    const books = [
+        { id: "iknauj_jomir_arabic", title: "إقناع الضمير تعريب نحو مير", author: "আরবী শরাহ", feature: "নাহবেমীর কিতাবের আধুনিক আরবী সংস্করণ।" },
+        { id: "By_Md_Saif_Khan_Misbahi_20181007_1754", title: "التنوير شرح نحو مير", author: "মাওলানা সাইফ খান মিসবাহী", feature: "সহজ ও প্রাঞ্জল আরবী ব্যাখ্যা।" },
+        { id: "AlBasheerSharahNahavMeer", title: "البشير شرح نحو مير", author: "উর্দু শরাহ", feature: "দরসের উপযোগী গুরুত্বপূর্ণ আলোচনা।" },
+        { id: "1_20210824", title: "بدر منیر شرح نحو میر", author: "উর্দু শরাহ", feature: "নাহবেমীর কিতাবের বিস্তারিত উর্দু ব্যাখ্যা।" },
+        { id: "hadieatus_sogir", title: "ھدیہ صغیر شرح نحو میر", author: "উর্দু শরাহ", feature: "শিক্ষার্থীদের জন্য সংক্ষিপ্ত ও উপকারী নোট।" },
+        { id: "tanbir_sohe_urdu", title: "التنوير شرح اردو نحو مير", author: "উর্দু শরাহ", feature: "উর্দু ভাষার চমৎকার একটি ব্যাখ্যাগ্রন্থ।" },
+        { id: "TabseerUrduSharahNahavMeer_SardarAhmadHassanSaeedi", title: "تبصير اردو شرح نحو میر", author: "সর্দার আহমদ হাসান সাঈদী", feature: "জটিল বিষয়গুলোর সহজ সমাধান।" },
+        { id: "saul_fokir", title: "سعی الفقیر شرح نحو میر", author: "উর্দু শরাহ", feature: "তাকরির ও তাহকিকের সমন্বয়ে রচিত।" },
+        { id: "tasbir_nahbemir", title: "تثویر اردو شرح نحو میر", author: "উর্দু শরাহ", feature: "নতুন আঙ্গিকে নাহবেমীর এর ব্যাখ্যা।" },
+        { id: "tajkir_sorhe_nahbemir", title: "تذکیر شرح نحو میر", author: "উর্দু শরাহ", feature: "নাহবেমীর শিক্ষার্থীদের জন্য সহায়ক গ্রন্থ।" },
+        { id: "TabeerSharhNahuMeer", title: "تعبیر شرح نحو میر", author: "উর্দু শরাহ", feature: "ভাষা ও ব্যাকরণগত চমৎকার আলোচনা।" },
+        { id: "tuhfatun_nirir", title: "تحفۃ النحریر شرح نحو میر", author: "উর্দু শরাহ", feature: "বিরল ও সূক্ষ্ম মাসআলার সমাধান।" },
+        { id: "tuhfae_nasir_sorhe_nahbemir", title: "تحفۂ نصیر شرح نحو میر", author: "উর্দু শরাহ", feature: "নাহবেমীরের জটিল জায়গার ব্যাখ্যা।" },
+        { id: "rihul_abir", title: "ریح العبیر شرح نحو میر", author: "উর্দু শরাহ", feature: "প্রাঞ্জল ভাষায় নাহু শাস্ত্রের আলোচনা।" },
+        { id: "durre_be_nojir", title: "در بے نظیر شرح نحو میر", author: "উর্দু শরাহ", feature: "পরীক্ষার্থীদের জন্য বিশেষ সহায়ক।" },
+        { id: "tashilun_nahu_abdullah_gongohi", title: "تسهيل النحو عبد اللہ گنگوہی", author: "মাওলানা আব্দুল্লাহ গাঙ্গুহী", feature: "নাহু শাস্ত্রের অতি জনপ্রিয় কিতাব।" },
+        { id: "20230815_20230815_0844", title: "فیض النحو", author: "উর্দু শরাহ", feature: "নাহবেমীরের সহজবোধ্য উর্দু ব্যাখ্যা।" },
+        { id: "TasheelUlNahav", title: "تسهيل النحو خان صاحب", author: "خان صاحب", feature: "নাহু শিক্ষার অনন্য মাধ্যম।" },
+        { id: "tarkeeb-tasheel-ul-nahav", title: "تركيب تسهيل النحو", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের তারকিব শিক্ষার বই।" },
+        { id: "faijin_nahu_sibbir", title: "فيض النحو ندوي صاحب", author: "শাব্বির আহমদ নদভী", feature: "নদভী সাহেবের বিশেষ তাহকিক।" },
+        { id: "talimun_nahu_ustaja", title: "تعلیم النحو أستاذة", author: "উস্তাযা সাহেব", feature: "মহিলা মাদরাসার জন্য বিশেষ উপযোগী।" },
+        { id: "dorse_nahbemir_ahmad_mummtaj", title: "درس نحومير-ممتاز", author: "আহমদ মুমতাজ", feature: "তাদরিসি আলোচনার চমৎকার সংকলন।" },
+        { id: "KHULASAUNN_NAHU-1", title: "خلاصة النحو جـ1", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের মৌলিক কায়দা কানুন।" },
+        { id: "KHULASATUN_NAHU-2", title: "خلاصة النحو جـ2", author: "উর্দু শরাহ", feature: "নাহু শাস্ত্রের বিস্তারিত আলোচনা।" },
+        { id: "nahbemir_daeate_islami", title: "نحو میر دعوت اسلامی", author: "মাকতাবাতুল মদিনা", feature: "রঙিন ও পরিমার্জিত সংস্করণ।" },
+        { id: "nahbemir_kadriea", title: "نحو مير قادرية", author: "মাকতাবাতুল কাদরিয়া", feature: "সহজ পাঠ্য সংস্করণ।" },
+        { id: "nisabunnahu", title: "نصاب النحو دينية", author: "দ্বীনিয়া দাওয়াত", feature: "কোর্সের জন্য নির্ধারিত পাঠ্যবই।" },
+        { id: "naeimut_tahrir_sohe_nahbemir", title: "نعيم التحرير عبد الحكيم صاحب", author: "আব্দুল হাকিম সাহেব", feature: "তাহকিকি ও তশরিহি আলোচনা।" },
+        { id: "ilmunnahu_mustak_ahmad", title: "علم نحو مشتاق احمد", author: "মাওলানা মুশতাক আহমদ", feature: "কওমি মাদরাসার জনপ্রিয় নাহু বই।" },
+        { id: "20190922_20190922_0725", title: "نحو মير مترجم عطر التحرير", author: "উর্দু অনুবাদ", feature: "অনুবাদ ও ব্যাখ্যার সমন্বয়।" },
+        { id: "urdu_nabemir", title: "اردো نحو میر ولی الرحمن", author: "মাওলানা ওয়ালিউর রহমান", feature: "সহজবোধ্য উর্দু অনুবাদ।" },
+        { id: "abu-abdurahman-kurdi-f_barid_20180209_1916", title: "نحو مير أبو الحسين", author: "আবু হুসাইন", feature: "সহজ ও সংক্ষিপ্ত নাহু আলোচনা।" },
+        { id: "sohoj_farsi_bangla_nahnemir", title: "সহজ ফার্সি বাংলা নাহবেমীর", author: "বাংলা অনুবাদ", feature: "বাংলা ভাষাভাষীদের জন্য শ্রেষ্ঠ সংকলন।" },
+        { id: "prosno_uttore_nahbemir", title: "প্রশ্নোত্তরে নাহবেমীর", author: "বাংলা সংকলন", feature: "পরীক্ষার প্রস্তুতির জন্য অনন্য বই।" },
+        { id: "sohoje_nahob_sikhbo", title: "সহজে নাহব শিখব", author: "নাসিম আরাফাত", feature: "আধুনিক পদ্ধতিতে নাহব শিক্ষা।" },
+        { id: "asan_nahu_palonpuru-shaheb", title: "আসান নাহু", author: "মাওলানা পালনপুরী রহ.", feature: "অত্যন্ত সহজ ভাষায় নাহু তত্ত্ব।" },
+        { id: "sondo_akare_nahu", title: "দরসে নাহবে মীর", author: "ইব্রাহীম হেলাল", feature: "ছন্দাকারে ও চার্টের মাধ্যমে আলোচনা।" },
+        { id: "mukaddamae_nahbemir", title: "মুকাদ্দামায়ে নাহবেমীর", author: "আরবী-বাংলা", feature: "নাহবেমীর শুরু করার প্রস্তুতি।" }
+    ];
+
+    const grid = document.getElementById('grid');
+
+    function renderBooks() {
+        books.forEach(book => {
+            const html = `
+                <div class="book-card" onclick="toggleActions(this)">
+                    <img class="book-image" src="https://archive.org/services/img/${book.id}">
+                    <div class="book-actions">
+                        <div class="book-title">${book.title}</div>
+                        <div class="book-author">লেখক: ${book.author}</div>
+                        <div class="book-feature"><b>বৈশিষ্ট্য:</b> ${book.feature}</div>
+
+                        <button class="btn read-btn" onclick="openReader('${book.id}', '${book.title}'); event.stopPropagation();">
+                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                        </button>
+                        
+                        <div class="download-links">
+                            <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fas fa-archive"></i>
+                            </a>
+                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('ড্রাইভ লিঙ্ক নেই'); event.stopPropagation();">
+                                <i class="fab fa-google-drive"></i>
+                            </a>
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${telegramLink}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += html;
+        });
+    }
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    function openReader(id, title) {
+        document.getElementById('book-iframe').src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-title').innerText = title;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        document.getElementById('book-iframe').src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('.book-card')) {
+            document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
+        }
+    });
+
+    renderBooks();
+</script>
+</body>
+</html>
