@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* [আগের সব CSS স্টাইল অপরিবর্তিত রাখা হয়েছে] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-color: #065f46; 
@@ -23,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* ============ হেডার ও মেনু বাটন ============ */
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
@@ -36,7 +36,6 @@
             font-size: 24px; cursor: pointer; color: white; z-index: 100;
         }
 
-        /* ============ সাইডবার ============ */
         .sidebar {
             position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
             background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
@@ -47,7 +46,6 @@
         .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
         .sidebar-item:hover { background: #f0fdf4; color: var(--primary-color); }
 
-        /* ============ গ্রিড ও কিতাব কার্ড ============ */
         .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
         .grid-container {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px;
@@ -76,9 +74,7 @@
             gap: 5px; text-decoration: none; color: white;
         }
 
-        /* কিতাবের নাম ও পরিচিতি বাটন স্টাইল */
         .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
-
         .read-btn { background: var(--accent-color); }
         .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
 
@@ -89,7 +85,6 @@
             justify-content: center; border-radius: 5px; text-decoration: none;
         }
 
-        /* ============ রিডার পপআপ ============ */
         #reader-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
@@ -161,6 +156,11 @@
         const imgSrc = isPending ? "https://via.placeholder.com/160x320?text=আসছে..." : `https://archive.org/services/img/${book.id}`;
         const readFunc = isPending ? `alert('শীঘ্রই যুক্ত হবে')` : `openReader('${book.id}', '${book.title}')`;
         
+        // নাহবেমীর কিতাবের জন্য আলাদা লিঙ্ক সেট করা
+        const bakkhaAction = (book.id === "nahw_meer") 
+            ? `window.location.href='nabemir_bakkha.html'` 
+            : `alert('শীঘ্রই আসছে')`;
+
         const html = `
             <div class="book-card" onclick="toggleActions(this)">
                 <img class="book-image" src="${imgSrc}">
@@ -178,7 +178,7 @@
                     <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
                         <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
                     </button>
-                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                    <button class="btn secondary-btn" onclick="${bakkhaAction}; event.stopPropagation();">
                         <i class="fas fa-book"></i> ব্যাখ্যাগ্রন্থসমূহ
                     </button>
                     
