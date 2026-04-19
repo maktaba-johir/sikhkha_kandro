@@ -3,87 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নাহবেমীর জামাত - কিতাব লাইব্রেরি</title>
+    <title>নাহবেমীর ব্যাখ্যাগ্রন্থসমূহ - রাহবার টিম</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* [আগের সব CSS স্টাইল অপরিবর্তিত রাখা হয়েছে] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-color: #065f46; 
             --primary-dark: #064e3b;
             --accent-color: #f59e0b;
             --bg-color: #f0fdf4;
-            --text-dark: #1e293b;
         }
         body {
             font-family: 'Hind Siliguri', sans-serif;
             background: var(--bg-color);
-            color: var(--text-dark);
             overflow-x: hidden;
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 50px 20px;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
         }
-        .menu-btn {
-            position: absolute; left: 20px; top: 25px;
-            font-size: 24px; cursor: pointer; color: white; z-index: 100;
+        .back-btn {
+            position: absolute; left: 20px; top: 20px;
+            color: white; text-decoration: none; font-size: 18px;
         }
-
-        .sidebar {
-            position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
-            background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            transition: 0.3s ease; z-index: 1000; overflow-y: auto; padding: 20px;
-        }
-        .sidebar.active { left: 0; }
-        .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; }
-        .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
-        .sidebar-item:hover { background: #f0fdf4; color: var(--primary-color); }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
         .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;
         }
 
         .book-card {
             position: relative; cursor: pointer; border-radius: 12px;
             overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.4s; height: 350px; background: white;
+            transition: 0.4s; height: 380px; background: white;
         }
         .book-image { width: 100%; height: 100%; object-fit: cover; }
         
         .book-actions {
             position: absolute; bottom: 0; left: 0; right: 0;
             background: linear-gradient(180deg, rgba(6, 95, 70, 0.98) 0%, rgba(6, 78, 59, 1) 100%);
-            padding: 12px; transform: translateY(100%);
-            transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
-            max-height: 100%; overflow-y: auto;
+            padding: 15px 10px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 8px;
+            max-height: 100%; overflow-y: auto; color: white;
         }
         .book-card.active .book-actions { transform: translateY(0); }
 
+        .book-title { font-size: 14px; font-weight: 700; color: #fcc201; margin-bottom: 2px; text-align: center;}
+        .book-author { font-size: 11px; opacity: 0.9; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px; }
+        .book-feature { font-size: 10px; margin: 5px 0; line-height: 1.3; }
+
         .btn {
-            border: none; padding: 7px; border-radius: 6px;
-            cursor: pointer; font-size: 10px; font-weight: 700;
+            border: none; padding: 8px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
             width: 100%; display: flex; align-items: center; justify-content: center;
             gap: 5px; text-decoration: none; color: white;
         }
+        .read-btn { background: var(--accent-color); color: #000; }
 
-        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; }
-        .read-btn { background: var(--accent-color); }
-        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
-
-        .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
+        .download-links { display: flex; justify-content: space-around; gap: 5px; margin-top: 5px; }
         .dl-icon {
-            color: white; font-size: 14px; background: rgba(255, 255, 255, 0.1);
-            flex: 1; height: 30px; display: flex; align-items: center;
+            color: white; font-size: 16px; background: rgba(255, 255, 255, 0.15);
+            flex: 1; height: 35px; display: flex; align-items: center;
             justify-content: center; border-radius: 5px; text-decoration: none;
+            transition: 0.3s;
         }
+        .dl-icon:hover { background: rgba(255, 255, 255, 0.3); }
 
         #reader-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -94,26 +84,19 @@
             display: flex; justify-content: space-between; align-items: center; height: 60px;
         }
         .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
-        .iframe-wrapper { width: 100%; height: calc(100% - 60px); -webkit-overflow-scrolling: touch; }
-        #book-iframe { width: 100%; height: 100%; border: none; }
 
-        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 900; }
+        @media (max-width: 480px) {
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .book-card { height: 320px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-<div class="sidebar" id="sidebar">
-    <h2>📚 কিতাব তালিকা</h2>
-    <div id="sidebar-list"></div>
-</div>
-
 <div class="header">
-    <h1>📚 নাহবেমীর জামাত - লাইব্রেরি</h1>
-    <p>রাহবার টিম-২০২৬ ডিজিটাল প্ল্যাটফর্ম</p>
+    <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+    <h1>নাহবেমীর ব্যাখ্যাগ্রন্থসমূহ</h1>
+    <p>রাহবার টিম ডিজিটাল প্ল্যাটফর্ম</p>
 </div>
 
 <div class="container">
@@ -122,95 +105,99 @@
 
 <div id="reader-container">
     <div class="close-header">
-        <span id="reader-title">রাহবার টিম-২০২৬</span>
+        <span id="reader-title">পড়ছেন...</span>
         <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
     </div>
-    <div class="iframe-wrapper">
-        <iframe id="book-iframe" src="" allowfullscreen></iframe>
+    <div style="width: 100%; height: calc(100% - 60px);">
+        <iframe id="book-iframe" src="" style="width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
     </div>
-</div>
-
-<div class="footer">
-    <p>ডেভলপার: <strong>রাহবার টিম</strong> | ২০২৬</p>
 </div>
 
 <script>
-    const library = [
-        { id: "nahw_meer", title: "০১। নাহবেমীর (মতন)" },
-        { id: "4-250772729412715191-2", title: "০২। শরহে মিয়াতে আমিল" },
-        { id: "ilm-us-sarf-aakherain", title: "০৩। ইলমুস সরফ আখিরাইন" },
-        { id: "20230216_20230216_0503", title: "০৪। পাঞ্জেগঞ্জ" },
-        { id: "abo_abdrahman_kordi_barid_20160522_0808", title: "০৫। আল ফিকহুল মুয়াসসার" },
-        { id: "MaLaBuddaMinhufarsiWithUrduTranslation", title: "০৬। মা-লা-বুদ্দা মিনহু" },
-        { id: "rozat-ul-adab-mushtaq-ahmad-churthawli-ra", title: "০৭। রওযাতুল আদব" },
-        { id: "105-seerat-khatim-ul-nabieen-mufti-shafi-shb", title: "০৮। সিরাতে খাতামুল আম্বিয়া" },
-        { id: "GulistanByShaykhSaadiFarsiWithUrduTranslation", title: "০৯। গুলিস্তাঁ" }
+    const telegramGroup = "https://t.me/rahbar_to_truth";
+    
+    // আপনার দেওয়া তালিকা অনুযায়ী নিখুঁত ৪০টি কিতাব
+    const books = [
+        { id: "iknauj_jomir_arabic", title: "إقناع الضمير تعريب نحو مير", author: "আরবী শরাহ", feature: "নাহবেমীর কিতাবের আধুনিক আরবী সংস্করণ।" },
+        { id: "By_Md_Saif_Khan_Misbahi_20181007_1754", title: "التنوير شرح نحو مير", author: "সাইফ খান মিসবাহী", feature: "সহজ ও প্রাঞ্জল আরবী ব্যাখ্যা।" },
+        { id: "AlBasheerSharahNahavMeer", title: "البشير شرح نحو مير", author: "উর্দু শরাহ", feature: "দরসের উপযোগী আলোচনা।" },
+        { id: "1_20210824", title: "بدر منیر شرح نحو میر", author: "উর্দু শরাহ", feature: "বিস্তারিত উর্দু ব্যাখ্যা।" },
+        { id: "hadieatus_sogir", title: "ھدیہ صغیر شرح نحو میر", author: "উর্দু শরাহ", feature: "সংক্ষিপ্ত ও উপকারী নোট।" },
+        { id: "tanbir_sohe_urdu", title: "التنوير شرح اردو نحو مير", author: "উর্দু শরাহ", feature: "চমৎকার উর্দু ব্যাখ্যাগ্রন্থ।" },
+        { id: "TabseerUrduSharahNahavMeer_SardarAhmadHassanSaeedi", title: "تبصير اردو شرح نحو میر", author: "সর্দার আহমদ হাসান সাঈদী", feature: "জটিল বিষয়ের সহজ সমাধান।" },
+        { id: "saul_fokir", title: "سعی الفقیر شرح نحو میر", author: "উর্দু শরাহ", feature: "তাকরির ও তাহকিকের সমন্বয়।" },
+        { id: "tasbir_nahbemir", title: "تثویر اردو شرح نحو میر", author: "উর্দু শরাহ", feature: "নতুন আঙ্গিকে ব্যাখ্যা।" },
+        { id: "tajkir_sorhe_nahbemir", title: "تذکیر شرح نحو میر", author: "উর্দু শরাহ", feature: "শিক্ষার্থীদের জন্য সহায়ক।" },
+        { id: "TabeerSharhNahuMeer", title: "تعبیر شرح نحو میر", author: "উর্দু শরাহ", feature: "ব্যাকরণগত চমৎকার আলোচনা।" },
+        { id: "tuhfatun_nirir", title: "تحفۃ النحریر شرح نحو میر", author: "উর্দু শরাহ", feature: "সূক্ষ্ম মাসআলার সমাধান।" },
+        { id: "tuhfae_nasir_sorhe_nahbemir", title: "تحفۂ نصیر شرح نحو میر", author: "উর্দু শরাহ", feature: "জটিল জায়গার ব্যাখ্যা।" },
+        { id: "rihul_abir", title: "ریح العبیر شرح نحو میر", author: "উর্দু শরাহ", feature: "প্রাঞ্জল ভাষায় আলোচনা।" },
+        { id: "durre_be_nojir", title: "در بے نظیر شرح نحو میر", author: "উর্দু শরাহ", feature: "পরীক্ষার্থীদের জন্য বিশেষ সহায়ক।" },
+        { id: "tashilun_nahu_abdullah_gongohi", title: "تسهيل النحو عبد اللہ گنگوہی", author: "আব্দুল্লাহ গাঙ্গুহী", feature: "জনপ্রিয় নাহু কিতাব।" },
+        { id: "20230815_20230815_0844", title: "فیض النحو", author: "উর্দু শরাহ", feature: "সহজবোধ্য উর্দু ব্যাখ্যা।" },
+        { id: "TasheelUlNahav", title: "تسهيل النحو خان صاحب", author: "খান সাহেব", feature: "নাহু শিক্ষার অনন্য মাধ্যম।" },
+        { id: "tarkeeb-tasheel-ul-nahav", title: "تركيب تسهيل النحو", author: "উর্দু শরাহ", feature: "তারকিব শিক্ষার বই।" },
+        { id: "faijin_nahu_sibbir", title: "فيض النحو ندوي صاحب", author: "শাব্বির আহমদ নদভী", feature: "বিশেষ তাহকিক।" },
+        { id: "talimun_nahu_ustaja", title: "تعلیم النحو أستاذة", author: "উস্তাযা সাহেব", feature: "মহিলা মাদরাসার জন্য উপযোগী।" },
+        { id: "dorse_nahbemir_ahmad_mummtaj", title: "درس نحومীর-মুমতাজ", author: "আহমদ মুমতাজ", feature: "তাদরিসি আলোচনার সংকলন।" },
+        { id: "KHULASAUNN_NAHU-1", title: "خلاصة النحو جـ1", author: "উর্দু শরাহ", feature: "মৌলিক কায়দা কানুন।" },
+        { id: "KHULASATUN_NAHU-2", title: "خلاصة النحو جـ2", author: "উর্দু শরাহ", feature: "বিস্তারিত আলোচনা।" },
+        { id: "nahbemir_daeate_islami", title: "نحو میر دعوت اسلامی", author: "মাকতাবাতুল মদিনা", feature: "রঙিন ও পরিমার্জিত সংস্করণ।" },
+        { id: "nahbemir_kadriea", title: "نحو مير قادرية", author: "মাকতাবাতুল কাদরিয়া", feature: "সহজ পাঠ্য সংস্করণ।" },
+        { id: "nisabunnahu", title: "نصاب النحو دينية", author: "দ্বীনিয়া দাওয়াত", feature: "কোর্সের নির্ধারিত পাঠ্যবই।" },
+        { id: "naeimut_tahrir_sohe_nahbemir", title: "نعيم التحرير عبد الحكيم", author: "আব্দুল হাকিম সাহেব", feature: "তাহকিকি আলোচনা।" },
+        { id: "ilmunnahu_mustak_ahmad", title: "علم نحو مشتاق احمد", author: "মুশতাক আহমদ", feature: "কওমি মাদরাসার জনপ্রিয় বই।" },
+        { id: "20190922_20190922_0725", title: "نحو মীর مترجم عطر التحرير", author: "উর্দু অনুবাদ", feature: "অনুবাদ ও ব্যাখ্যার সমন্বয়।" },
+        { id: "urdu_nabemir", title: "اردো نحو میر ولی الرحمن", author: "ওয়ালিউর রহমান", feature: "সহজবোধ্য উর্দু অনুবাদ।" },
+        { id: "abu-abdurahman-kurdi-f_barid_20180209_1916", title: "نحو মীর أبو الحسين", author: "আবু হুসাইন", feature: "সহজ ও সংক্ষিপ্ত আলোচনা।" },
+        { id: "sohoj_farsi_bangla_nahnemir", title: "সহজ ফার্সি বাংলা নাহবেমীর", author: "বাংলা অনুবাদ", feature: "বাংলা ভাষাভাষীদের জন্য শ্রেষ্ঠ।" },
+        { id: "prosno_uttore_nahbemir", title: "প্রশ্নোত্তরে নাহবেমীর", author: "বাংলা সংকলন", feature: "পরীক্ষার প্রস্তুতির জন্য।" },
+        { id: "sohoje_nahob_sikhbo", title: "সহজে নাহব শিখব", author: "নাসিম আরাফাত", feature: "আধুনিক পদ্ধতিতে শিক্ষা।" },
+        { id: "asan_nahu_palonpuru-shaheb", title: "আসান নাহু", author: "পালনপুরী রহ.", feature: "অত্যন্ত সহজ ভাষায়।" },
+        { id: "dorse_nahbemir_ibrahim_helal_shaheb", title: "দরসে নাহবে মীর", author: "ইব্রাহীম হেলাল সাহেব", feature: "তাদরিসি চমৎকার আলোচনা।" },
+        { id: "sondo_akare_nahu", title: "ছন্দ আকারে নাহু", author: "মুফতী আজহার সাহেব", feature: "ছন্দ ও কাব্যের মাধ্যমে নাহু।" },
+        { id: "mukaddamae_nahbemir", title: "মুকাদ্দামায়ে নাহবেমীর", author: "আরবী-বাংলা", feature: "নাহবেমীর শুরু করার প্রস্তুতি।" },
+        { id: "NAHBEMIR_MOTON", title: "নহবমীর মতন", author: "মুফতী জহিরুল ইসলাম", feature: "নির্ভুল ও পরিষ্কার মতন টাইপ।" }
     ];
 
-    const pending = [{ title: "১০। বাংলা (৭ম)" }];
-
     const grid = document.getElementById('grid');
-    const sidebarList = document.getElementById('sidebar-list');
 
-    function renderItem(book, isPending = false) {
-        const imgSrc = isPending ? "https://via.placeholder.com/160x320?text=আসছে..." : `https://archive.org/services/img/${book.id}`;
-        const readFunc = isPending ? `alert('শীঘ্রই যুক্ত হবে')` : `openReader('${book.id}', '${book.title}')`;
-        
-        // নাহবেমীর কিতাবের জন্য আলাদা লিঙ্ক সেট করা
-        const bakkhaAction = (book.id === "nahw_meer") 
-            ? `window.location.href='nabemir_bakkha.html'` 
-            : `alert('শীঘ্রই আসছে')`;
+    function renderBooks() {
+        grid.innerHTML = "";
+        books.forEach(book => {
+            const html = `
+                <div class="book-card" onclick="toggleActions(this)">
+                    <img class="book-image" src="https://archive.org/services/img/${book.id}">
+                    <div class="book-actions">
+                        <div class="book-title">${book.title}</div>
+                        <div class="book-author">লেখক: ${book.author}</div>
+                        <div class="book-feature"><b>বৈশিষ্ট্য:</b> ${book.feature}</div>
 
-        const html = `
-            <div class="book-card" onclick="toggleActions(this)">
-                <img class="book-image" src="${imgSrc}">
-                <div class="book-actions">
-                    <a href="porisiti.html" class="btn info-btn" onclick="event.stopPropagation();">
-                        <i class="fas fa-info-circle"></i> ${book.title} (পরিচিতি)
-                    </a>
-
-                    <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
-                        <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
-                    </button>
-                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
-                        <i class="fas fa-list"></i> এ বিষয়ে আরো কিতাব
-                    </button>
-                    <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
-                        <i class="fas fa-pen-fancy"></i> এ লেখকের আরো কিতাব
-                    </button>
-                    <button class="btn secondary-btn" onclick="${bakkhaAction}; event.stopPropagation();">
-                        <i class="fas fa-book"></i> ব্যাখ্যাগ্রন্থসমূহ
-                    </button>
-                    
-                    <div class="download-links">
-                        <a class="dl-icon" title="আর্কাইভ" href="${isPending ? '#' : 'https://archive.org/download/'+book.id}" target="_blank" onclick="event.stopPropagation();">
-                            <i class="fas fa-archive"></i>
-                        </a>
-                        <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('ড্রাইভ লিঙ্ক নেই'); event.stopPropagation();">
-                            <i class="fab fa-google-drive"></i>
-                        </a>
-                        <a class="dl-icon" title="টেলিগ্রাম" onclick="alert('টেলিগ্রামে খুঁজুন'); event.stopPropagation();">
-                            <i class="fab fa-telegram"></i>
-                        </a>
+                        <button class="btn read-btn" onclick="openReader('${book.id}', '${book.title}'); event.stopPropagation();">
+                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                        </button>
+                        
+                        <div class="download-links">
+                            <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/download/${book.id}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fas fa-archive"></i>
+                            </a>
+                            <a class="dl-icon" title="গুগল ড্রাইভ" onclick="alert('গুগল ড্রাইভ লিঙ্ক যুক্ত নেই।'); event.stopPropagation();">
+                                <i class="fab fa-google-drive"></i>
+                            </a>
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${telegramGroup}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        grid.innerHTML += html;
-        sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
+            `;
+            grid.innerHTML += html;
+        });
     }
-
-    library.forEach(book => renderItem(book));
-    pending.forEach(book => renderItem(book, true));
 
     function toggleActions(card) {
         document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
         card.classList.toggle('active');
-    }
-
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('active');
-        document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
     }
 
     function openReader(id, title) {
@@ -231,6 +218,8 @@
             document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
         }
     });
+
+    renderBooks();
 </script>
 </body>
 </html>
