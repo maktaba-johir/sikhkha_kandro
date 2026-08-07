@@ -69,8 +69,26 @@
         p {
             font-size: 1.15rem;
             color: #37474f;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             font-weight: 500;
+        }
+
+        /* সেকশন শিরোনাম */
+        .section-title {
+            font-size: 1.8rem;
+            color: #0d47a1;
+            font-weight: 700;
+            margin: 35px 0 25px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* ডিভাইডার লাইন */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #1b5e20, transparent);
+            margin: 40px 0 20px 0;
+            border: none;
         }
 
         .button-container {
@@ -116,13 +134,18 @@
             filter: drop-shadow(3px 5px 4px rgba(0,0,0,0.3));
         }
 
-        /* বাটন কালার ও গ্রেডিয়েন্ট */
+        /* কিতাব ক্যাটাগরি কালার */
         .btn-usul { background: linear-gradient(135deg, #2E7D32, #66BB6A); }       /* উসূল ও মুসতালাহ */
         .btn-jarh { background: linear-gradient(135deg, #1565C0, #42A5F5); }       /* জারহ ওয়াত তা'দীল */
         .btn-fiqh { background: linear-gradient(135deg, #6A1B9A, #AB47BC); }       /* ফিকহুল হাদীস */
         .btn-ilal { background: linear-gradient(135deg, #D84315, #FF7043); }       /* ইলাল ও মুশকিল */
         .btn-takhreej { background: linear-gradient(135deg, #00695C, #26A69A); }   /* তাখরীজ ও আসানীদ */
-        .btn-research { background: linear-gradient(135deg, #AD1457, #EC407A); }   /* মাকালা ও বুহুস */
+        .btn-research { background: linear-gradient(135deg, #AD1457, #EC407A); }   /* মাকালা ও গবেষণা */
+
+        /* দরস ও লেকচার ক্যাটাগরি কালার */
+        .btn-dors-nomani   { background: linear-gradient(135deg, #1A237E, #3F51B5); } /* উস্তাদ নাজমুল হুদা নোমানী */
+        .btn-dors-general  { background: linear-gradient(135deg, #37474F, #78909C); } /* অনলাইন দরস ও সিরিজ */
+        .btn-dors-scholars { background: linear-gradient(135deg, #827717, #AFB42B); } /* বিশিষ্ট মুহাদ্দিসগণের দরস */
 
         .btn:hover {
             transform: translateY(-10px) scale(1.03);
@@ -138,6 +161,7 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
+            .section-title { font-size: 1.5rem; }
             .btn { padding: 20px 15px; font-size: 1.15rem; }
             .container { padding: 40px 15px; }
         }
@@ -155,6 +179,7 @@
         <h1>তাখাসসুস ফিল হাদীস</h1>
         <p>প্রয়োজনীয় কিতাব বা বিষয়ভিত্তিক বিভাগ নির্বাচন করুন</p>
 
+        <!-- বিষয়ভিত্তিক কিতাবসমূহের বাটন -->
         <div class="button-container">
             <!-- ক্যাটাগরি ১: উসূল ও মুসতালাহুল হাদীস -->
             <a href="hadis_usul.html" class="btn btn-usul">
@@ -190,6 +215,32 @@
             <a href="hadis_research.html" class="btn btn-research">
                 <i class="fas fa-file-lines"></i>
                 গবেষণাপত্র <br> ও মাকালাত
+            </a>
+        </div>
+
+        <!-- সেপারেটর/ডিভাইডার লাইন -->
+        <hr class="divider">
+
+        <!-- ২য় সেকশন: দরসসমূহ -->
+        <h2 class="section-title"><i class="fas fa-chalkboard-user"></i> উলূমুল হাদীস বিষয়ক দরসসমূহ</h2>
+
+        <div class="button-container">
+            <!-- দরস ১: উস্তাদ নাজমুল হুদা নোমানী দা. বা. -->
+            <a href="dors_nomani.html" class="btn btn-dors-nomani">
+                <i class="fas fa-microphone-lines"></i>
+                উস্তাদ নাজমুল হুদা নোমানী দা.বা.-এর আলোচনাসমগ্র
+            </a>
+
+            <!-- দরস ২: অন্যান্য অনলাইন দরস ও সিরিজ -->
+            <a href="dors_online.html" class="btn btn-dors-general">
+                <i class="fas fa-laptop-code"></i>
+                অনলাইন উলূমুল হাদীস দরস ও সিরিজ
+            </a>
+
+            <!-- দরস ৩: দেশী-বিদেশী মুহাদ্দিসগণের বক্তৃতা ও দরস -->
+            <a href="dors_scholars.html" class="btn btn-dors-scholars">
+                <i class="fas fa-users-rectangle"></i>
+                প্রসিদ্ধ মুহাদ্দিসগণের দরস ও মুহাযারা
             </a>
         </div>
 
