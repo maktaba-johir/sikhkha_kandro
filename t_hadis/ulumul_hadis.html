@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>তাখাসসুস ফিল হাদীস - উলূমুল হাদীস বিভাগ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background: url('../b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        /* গাঢ় ওভারলে */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1;
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 45px 35px;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+            max-width: 1000px;
+            width: 92%;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: auto;
+        }
+
+        /* ব্যাক বাটন */
+        .back-btn {
+            position: absolute;
+            top: 15px; left: 15px;
+            color: #1b5e20;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex; align-items: center; gap: 6px;
+            font-weight: 600; transition: 0.3s; z-index: 20;
+        }
+
+        .back-btn:hover { color: #2e7d32; transform: translateX(-5px); }
+
+        h1 {
+            font-size: 2.6rem;
+            color: #1b5e20;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: #37474f;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            justify-items: center;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 25px 20px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        /* গ্লস ইফেক্ট */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.6s;
+        }
+        .btn:hover::before { left: 100%; }
+
+        .btn i {
+            font-size: 2.3rem;
+            filter: drop-shadow(3px 5px 4px rgba(0,0,0,0.3));
+        }
+
+        /* বাটন কালার ও গ্রেডিয়েন্ট */
+        .btn-usul { background: linear-gradient(135deg, #2E7D32, #66BB6A); }       /* উসূল ও মুসতালাহ */
+        .btn-jarh { background: linear-gradient(135deg, #1565C0, #42A5F5); }       /* জারহ ওয়াত তা'দীল */
+        .btn-fiqh { background: linear-gradient(135deg, #6A1B9A, #AB47BC); }       /* ফিকহুল হাদীস */
+        .btn-ilal { background: linear-gradient(135deg, #D84315, #FF7043); }       /* ইলাল ও মুশকিল */
+        .btn-takhreej { background: linear-gradient(135deg, #00695C, #26A69A); }   /* তাখরীজ ও আসানীদ */
+        .btn-research { background: linear-gradient(135deg, #AD1457, #EC407A); }   /* মাকালা ও বুহুস */
+
+        .btn:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.95rem;
+            color: #37474f;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .btn { padding: 20px 15px; font-size: 1.15rem; }
+            .container { padding: 40px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <a href="../takhassus.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> তাখাসসুসে ফিরুন
+    </a>
+
+    <div class="container">
+        <h1>তাখাসসুস ফিল হাদীস</h1>
+        <p>প্রয়োজনীয় কিতাব বা বিষয়ভিত্তিক বিভাগ নির্বাচন করুন</p>
+
+        <div class="button-container">
+            <!-- ক্যাটাগরি ১: উসূল ও মুসতালাহুল হাদীস -->
+            <a href="hadis_usul.html" class="btn btn-usul">
+                <i class="fas fa-book-bookmark"></i>
+                উসূল ও <br> মুসতালাহুল হাদীস
+            </a>
+
+            <!-- ক্যাটাগরি ২: ইলমুল জারহ ওয়াত তা'দীল -->
+            <a href="hadis_jarh.html" class="btn btn-jarh">
+                <i class="fas fa-user-check"></i>
+                ইলমুল জারহ <br> ওয়াত তা'দীল
+            </a>
+
+            <!-- ক্যাটাগরি ৩: ফিকহুল হাদীস ও শরহ -->
+            <a href="hadis_fiqh.html" class="btn btn-fiqh">
+                <i class="fas fa-book-open"></i>
+                ফিকহুল হাদীস <br> ও শুরূহাত
+            </a>
+
+            <!-- ক্যাটাগরি ৪: ইলালুল হাদীস ও মুশকিল -->
+            <a href="hadis_ilal.html" class="btn btn-ilal">
+                <i class="fas fa-magnifying-glass-chart"></i>
+                ইলালুল হাদীস <br> ও মুশকিল
+            </a>
+
+            <!-- ক্যাটাগরি ৫: তাখরীজ ও দিরাসাতুল আসানীদ -->
+            <a href="hadis_takhreej.html" class="btn btn-takhreej">
+                <i class="fas fa-diagram-project"></i>
+                তাখরীজ ও <br> দিরাসাতুল আসানীদ
+            </a>
+
+            <!-- ক্যাটাগরি ৬: মাকালা ও গবেষণা -->
+            <a href="hadis_research.html" class="btn btn-research">
+                <i class="fas fa-file-lines"></i>
+                গবেষণাপত্র <br> ও মাকালাত
+            </a>
+        </div>
+
+        <div class="footer">
+            &copy; ২০২৬ রাহবার গবেষণা কেন্দ্র। সর্বস্বত্ব সংরক্ষিত।
+        </div>
+    </div>
+
+</body>
+</html>
