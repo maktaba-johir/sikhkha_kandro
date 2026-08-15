@@ -180,7 +180,7 @@
         <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
     </div>
     <div class="iframe-wrapper">
-        <iframe id="book-iframe" src="" allowfullscreen></iframe>
+        <iframe id="book-iframe" src="" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="fullscreen"></iframe>
     </div>
 </div>
 
@@ -199,7 +199,7 @@
         { id: "lamahatun_nojor", title: "০৫। لمحات النظر في سيرة الإمام زفر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1piuCDwinnC1ahqwNo3uOOsdL3Hq4CBwd/view?usp=sharing" },
         { id: "manakibu_abu_hanifa_wa_sahibaihi", title: "০৬। مناقب الإمام أبي حنيفة وصاحبيه أبي يوسف ومحمد الحسن مكتبة الأزهر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1_uGrC7ouNWjRc7Gi07gVNFXc_hln4NCu/view?usp=sharing" },
         { id: "kasrus_sitri_an_forjieatil_bitri", title: "০৭। كشف الستر عن فرضية الوتر", telegram: telegramLink, drive: "https://drive.google.com/file/d/12alc4XU-7IUagFKTkkTjm9-wXXtWYKqQ/view?usp=sharing" },
-        { id: "ahadisu_mueatta", title: "০৮। أحاديث الموطأ واتفاق الرواة عن مالك واختلافهم فيها زيادة ونقصاً", telegram: telegramLink, drive: "https://drive.google.com/file/d/1DrkQ19rStQXCHSztoCjMzHktJtIMJTPU/view?usp=sharing" },
+        { id: "ahadisu_mueatta", title: "০৮। أحاديث الموطأ واتفاق الرواة عن مالك وااختلافهم فيها زيادة ونقصاً", telegram: telegramLink, drive: "https://drive.google.com/file/d/1DrkQ19rStQXCHSztoCjMzHktJtIMJTPU/view?usp=sharing" },
         { id: "bulugul_amani", title: "০৯। بلوغ الأماني في سيرة الإمام محمد بن الحسن الشيباني", telegram: telegramLink, drive: "https://drive.google.com/file/d/1dBY4iR3AAYeRHltQ1eDwJXyo7U0csDwF/view?usp=sharing" },
         { id: "ehkakul_haq", title: "১০। إحقاق الحق بإبطال الباطل في مغيث الحق", telegram: telegramLink, drive: "https://drive.google.com/file/d/1-iAxCRczduh7So_o8jNO_CdEnToNA09z/view?usp=sharing" },
         { id: "tanhih_War_raddi", title: "১১। التنبيه والرد على أهل الأهواء والبدع", telegram: telegramLink, drive: "https://drive.google.com/file/d/12XNy61zANPBb33iqyiLT2bmcILFmTmbL/view?usp=sharing" },
@@ -255,7 +255,7 @@
         { id: "moqademate_202006", title: "৬১। إشارات المرام من عبارات الإمام", telegram: telegramLink, drive: "https://drive.google.com/file/d/1KXKA5tLPcwWFl88-Mtus7wze8LWIFPcB/view?usp=sharing" },
         { id: "asrul_imam_kawsari", title: "৬২। أثر_الإمام_الكوثري_في_نصرة_وتأييد_المذاهب_الفقهية_السنية", telegram: telegramLink, drive: "https://drive.google.com/file/d/18TWCbNyO53zHUoPp1pJco7HKbJFgd-yu/view?usp=sharing" },
         { id: "Pdf1889", title: "৬৩। الفقه وأصول الفقه من أعمال الإمام محمد زاهر الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1MuIkRHk5qnyP-u5Sq2uCkQ0dijuRyjso/view?usp=sharing" },
-        { id: "20200317_20200317_2032", title: "৬৪। المدخل_إلى_علوم_الحديث", telegram: telegramLink, drive: "https://drive.google.com/file/d/1jMpFkuCrUHyChzcNihJAoFfQzwVb4zlU/view?usp=sharing" },
+        { id: "20200317_20200317_2032", title: "৬٤। المدخل_إلى_علوم_الحديث", telegram: telegramLink, drive: "https://drive.google.com/file/d/1jMpFkuCrUHyChzcNihJAoFfQzwVb4zlU/view?usp=sharing" },
         { id: "tabyin-kadhb-al-muftara", title: "৬৫। تبيين_كذب_المفترى_فيما_نسب_إلى_الإمام_الأشعري_ابن_عساكر_ت_الشرفاوي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1v9iqA_maPYDzqS7o2iHBx04ouX3S3nlP/view?usp=sharing" },
         { id: "tartibul_imam_ajom", title: "৬৬। ترتيب الإمام المعظم والمجتهد المقدم أبي عبد الله محمد بن إدريس الشافعي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1p4wdPVGlWyg-80WwmDahnx2hVn5C-WpE/view?usp=sharing" },
         { id: "talikatu_muhamad_ibnu_mane", title: "৬৭। تعليقات_العلامة_محمد_بن_مانع_على_مقالات_الكوثري_وبعض_كتبه المؤلف", telegram: telegramLink, drive: "https://drive.google.com/file/d/1s8sznnOTtip18InbS7I2iC0Z_520jOmQ/view?usp=sharing" },
@@ -350,14 +350,16 @@
     }
 
     function openReader(id, title) {
-        document.getElementById('book-iframe').src = `https://archive.org/embed/${id}?ui=full`;
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = `https://archive.org/embed/${id}?ui=full`;
         document.getElementById('reader-title').innerText = title;
         document.getElementById('reader-container').style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 
     function closeReader() {
-        document.getElementById('book-iframe').src = "";
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = "";
         document.getElementById('reader-container').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
