@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল্লামা জাহিদ কাউসারী রহ.-এর কিতাব লাইব্রেরি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-dark: #1e40af;
+            --accent-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --text-dark: #1e293b;
+        }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Search */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .menu-btn {
+            position: absolute; left: 20px; top: 25px;
+            font-size: 24px; cursor: pointer; color: white; z-index: 100;
+        }
+
+        .search-box-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Hind Siliguri', sans-serif;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
+            background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease; z-index: 1000; overflow-y: auto; padding: 20px;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; font-size: 18px; }
+        .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; }
+        .sidebar-item:hover { background: #f3f4f6; color: var(--primary-color); }
+
+        /* Grid & Cards */
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px;
+        }
+
+        .book-card {
+            position: relative; cursor: pointer; border-radius: 12px;
+            overflow: hidden; 
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.4s; height: 360px; background: #1e3a8a;
+        }
+        .book-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: var(--primary-color); 
+        }
+        
+        /* Dynamic Cover Wrapper */
+        .book-cover-wrapper {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #1e3a8a, #0f172a);
+            color: white; text-align: center; padding: 15px; font-weight: 600; font-size: 14px;
+            position: relative;
+        }
+        .book-image { 
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover; display: block; 
+        }
+        
+        .book-actions {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(30, 58, 138, 0.95) 0%, rgba(30, 64, 175, 1) 100%);
+            padding: 12px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
+            max-height: 100%; overflow-y: auto; z-index: 2;
+        }
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .btn {
+            border: none; padding: 7px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 5px; text-decoration: none; color: white;
+        }
+
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; text-align: center; }
+        .read-btn { background: var(--accent-color); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
+        .dl-icon {
+            color: white; font-size: 14px; background: rgba(255, 255, 255, 0.15);
+            flex: 1; height: 32px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; text-decoration: none; transition: 0.2s;
+        }
+        .dl-icon:hover { background: rgba(255, 255, 255, 0.3); }
+
+        /* Reader Popup */
+        #reader-container {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+        }
+        .close-header {
+            background: #1e293b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 60px;
+        }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .iframe-wrapper { width: 100%; height: calc(100% - 60px); -webkit-overflow-scrolling: touch; }
+        #book-iframe { width: 100%; height: 100%; border: none; }
+
+        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 900; }
+    </style>
+</head>
+<body>
+
+<div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+    <h2>📚 কিতাব তালিকা</h2>
+    <div id="sidebar-list"></div>
+</div>
+
+<div class="header">
+    <h1>📚 আল্লামা জাহিদ কাউসারী রহ.-এর কিতাব লাইব্রেরি</h1>
+    <p>রাহবার টিম ডিজিটাল প্ল্যাটফর্ম</p>
+    
+    <div class="search-box-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 কিতাবের নাম অনুসন্ধান করুন..." oninput="filterBooks()">
+    </div>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
+
+<div id="reader-container">
+    <div class="close-header">
+        <span id="reader-title">রাহবার টিম</span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
+    </div>
+    <div class="iframe-wrapper">
+        <iframe id="book-iframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<div class="footer">
+    <p>ডেভলপার: <strong>রাহবার টিম</strong></p>
+</div>
+
+<script>
+    const telegramLink = "https://t.me/rahbar_to_truth/286";
+
+    const library = [
+        { id: "20260531_20260531_1533", title: "০১। الانتصار والترجيح للمذهب الصحيح", telegram: telegramLink, drive: "https://drive.google.com/file/d/1c_jkfCNqPkyfBvtJcGYdrMRgpZI1YdM0/view?usp=sharing" },
+        { id: "raful-ishtibah-zahid-al-kawthari", title: "০২। رفع الاشتباه عن مسئلتي كشف الرؤوس ولبس النعال في الصلاة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1BGDO37bwegIp8PpFw3xsA_JyFna13npc/view?usp=sharing" },
+        { id: "Al-Hawi", title: "০৩। الحاوي في سيرة الإمام أبي جعفر الطحاوي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1dIXgKVLAhYLvTmLU5_nu9SQbpX8KhHkm/view?usp=sharing" },
+        { id: "muniyatul-_al-mai", title: "০৪। منيفة الألمعي فيما فات من تخريج أحاديث الهداية للزيلعي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uDFkig1NABnCGIYWcn1L_qVRwZpbxbBc/view?usp=sharing" },
+        { id: "lamahatun_nojor", title: "০৫। لمحات النظر في سيرة الإمام زفر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1piuCDwinnC1ahqwNo3uOOsdL3Hq4CBwd/view?usp=sharing" },
+        { id: "manakibu_abu_hanifa_wa_sahibaihi", title: "০৬। مناقب الإمام أبي حنيفة وصاحبيه أبي يوسف ومحمد الحسن مكتبة الأزهر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1_uGrC7ouNWjRc7Gi07gVNFXc_hln4NCu/view?usp=sharing" },
+        { id: "kasrus_sitri_an_forjieatil_bitri", title: "০৭। كشف الستر عن فرضية الوتر", telegram: telegramLink, drive: "https://drive.google.com/file/d/12alc4XU-7IUagFKTkkTjm9-wXXtWYKqQ/view?usp=sharing" },
+        { id: "ahadisu_mueatta", title: "০৮। أحاديث الموطأ واتفاق الرواة عن مالك واختلافهم فيها زيادة ونقصاً", telegram: telegramLink, drive: "https://drive.google.com/file/d/1DrkQ19rStQXCHSztoCjMzHktJtIMJTPU/view?usp=sharing" },
+        { id: "bulugul_amani", title: "০৯। بلوغ الأماني في سيرة الإمام محمد بن الحسن الشيباني", telegram: telegramLink, drive: "https://drive.google.com/file/d/1dBY4iR3AAYeRHltQ1eDwJXyo7U0csDwF/view?usp=sharing" },
+        { id: "ehkakul_haq", title: "১০। إحقاق الحق بإبطال الباطل في مغيث الحق", telegram: telegramLink, drive: "https://drive.google.com/file/d/1-iAxCRczduh7So_o8jNO_CdEnToNA09z/view?usp=sharing" },
+        { id: "tanhih_War_raddi", title: "১১। التنبيه والرد على أهل الأهواء والبدع", telegram: telegramLink, drive: "https://drive.google.com/file/d/12XNy61zANPBb33iqyiLT2bmcILFmTmbL/view?usp=sharing" },
+        { id: "Dafu_Shubahi_Tashbih_Kawtheri", title: "১২। دفع شبهة التشبيه", telegram: telegramLink, drive: "https://drive.google.com/file/d/1khQVHfqAD1HZf7HTAWlNFyglndrOWiMX/view?usp=sharing" },
+        { id: "alfirdwsiy2018_gmail_0340", title: "১৩। تأنيب الخطيب على ما ساقه في ترجمة أبي حنيفة من الأكايب", telegram: telegramLink, drive: "https://drive.google.com/file/d/19YocJImnsmZ84BF6AY_ghyIysyxARJJb/view?usp=sharing" },
+        { id: "al_gurratul_mnifa", title: "১৪। الغرة المنيفة في تحقيق بعض مسائل الإمام أبي حنيفة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1wdsoQvhGI9HN-VO5FNG0xa3CGoJKLPZj/view?usp=sharing" },
+        { id: "at_tabsir_fiddin", title: "১৫। التبصير في الدين وتمييز الفرق الناجية عن الفرق الهالكين", telegram: telegramLink, drive: "https://drive.google.com/file/d/1lUYn8g2YpzijCTfzz08mS_dny9sLNv33/view?usp=sharing" },
+        { id: "kitabul_asma_was_sifat_202608", title: "১৬। كتاب الأسماء والصفات", telegram: telegramLink, drive: "https://drive.google.com/file/d/1j3z3ymkGRGyYuiZ26eUkTboE-9s-ePYW/view?usp=sharing" },
+        { id: "tabinu_kijbil_muftara", title: "১৭। تبين كذب المفترى فيما نسب إلى الإمام أبي الحسن الأشعري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1ujOWegvcN1AcFpDr392MPLNr8zH3RVi1/view?usp=sharing" },
+        { id: "Al_imam_Al_kausari", title: "১৮। الامام الکوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1L6yAhDOAvQ93kEER1EFzuUJKvSHj3UzH/view?usp=sharing" },
+        { id: "an_nukatut_tarifa", title: "১৯। النكت الطريفة في التحدث عن ورود ابن أبي شيبة على أبي حنيفة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1LjJvm75OnAP_NKQEArNzkBBD5EB2IlGi/view?usp=sharing" },
+        { id: "al_insaf_202608", title: "২০। الإنصاف فيما يجب اعتقاده ولا يجب الجهل به", telegram: telegramLink, drive: "https://drive.google.com/file/d/1LjJvm75OnAP_NKQEArNzkBBD5EB2IlGi/view?usp=sharing" },
+        { id: "Irgamul_Murid", title: "২১। إرغام المريد", telegram: telegramLink, drive: "https://drive.google.com/file/d/1PkCGEgU_vOpBipH3EyXAovA1ybnY60y8/view?usp=sharing" },
+        { id: "Al_Alim_Wal_Mutaallim", title: "২২। العالم والمتعلم مكتبة الأزهر التراث", telegram: telegramLink, drive: "https://drive.google.com/file/d/106bvpe_rwpdijkdbb803F6lc_zcEfaMr/view?usp=sharing" },
+        { id: "al-aqida_an-nizamia_202002/ANFAI_01", title: "২৩। العقيدة النظامية في الأركان الإسلامية", telegram: telegramLink, drive: "https://drive.google.com/file/d/16jv4tNYzR5ceOTQ9CmBsyaQlt--DqC61/view?usp=sharing" },
+        { id: "Al_Ikhtilaf_firl_Alfaz_war_Raddi_alal_jahmieah_wal_musabbiha", title: "২৪। الاختلاف في اللفظ والرد على الجهمية والمشبهة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1yRy0HEtUxh6_GWehuIL_IBteYbJMwESx/view?usp=sharing" },
+        { id: "al_muntaka_mufid", title: "২৫। المنتقى المفيد من عقد الفريد في علو الأسانيد", telegram: telegramLink, drive: "https://drive.google.com/file/d/1MWMVvoeHL8RWL_zRI48_dOZon7KSQtHp/view?usp=sharing" },
+        { id: "Al-buhusus_snieeah", title: "২৬। البحوث السنية عن بعض رجال أسانيد الطريقة الخلوتية", telegram: telegramLink, drive: "https://drive.google.com/file/d/1I3ijT67vn8u1XOaY-8acUriNQ0eonIjS/view?usp=sharing" },
+        { id: "fiqh3iraq", title: "২৭। فقه أهل العراق وحديثهم", telegram: telegramLink, drive: "https://drive.google.com/file/d/13W2lqhvMW6zXYR_A6ia6jbpJ7mmvSeel/view?usp=sharing" },
+        { id: "hosntaqadi", title: "২৮। حسن_التقاضي_في_سيرة_الامام_ابي_يوسف_القاضي_محمد_زاهد_الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1i1XGHvhWTr4RlUWwmp2fU5cYhmgM_cQR/view?usp=sharing" },
+        { id: "Aqida_wa_IlmKalam", title: "২৯। العقيدة وعلم الكلام", telegram: telegramLink, drive: "https://drive.google.com/file/d/16Opgi_vnRgHzGYdcCmYGBrozi43iI0M2/view?usp=sharing" },
+        { id: "Sayfu_Saghil", title: "৩০। السيف الصقيل في الرد على ابن زفيل", telegram: telegramLink, drive: "https://drive.google.com/file/d/1rTScKFlHgtzWmpd4thRfhNhQfQMY-5R4/view?usp=sharing" },
+        { id: "20220216_20220216_2340", title: "৩১। الإشفاق على أحكام الطلاق مكتبة الأزهر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1XczKMAAu0cDhxZ9qY7PrdRF6SnOrFD46/view?usp=sharing" },
+        { id: "Lumaa_Kawtheri", title: "৩২। اللمعة في تحقيق مذاهب الوجود والحدوث والقدر وأفعال العباد", telegram: telegramLink, drive: "https://drive.google.com/file/d/1VJTjhl0XPs9ELVnmSWG8vE57UxaWcA6j/view?usp=sharing" },
+        { id: "Dafu_Shubahi_Man_Shabah", title: "৩৩। دفع شُبَه من شَبَّه وتمرد ونسب ذلك إلى الإمام أحمد (للحصني الدمشقي)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1XWoKKcI0g_mwlv-jtcxSatCDMnuyWkun/view?usp=sharing" },
+        { id: "24092023191217", title: "৩৪। نظرة عابرة في مزاعم من ينكر نزول عيسى عليه السلام قبل الآخرة محمد زاهد الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1LWKPpdygUDFvi0KVm9XWqNCeIIRPcoLt/view?usp=sharing" },
+        { id: "RisalatuL_kausari_Ila_bin_nuri", title: "৩৫। رسائل_الإمام_الكوثري_إلى_العلامة_البنوري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1XSmFJEpoF0SGya5B1F-yPpdmat9lwWnu/view?usp=sharing" },
+        { id: "Al_imta", title: "৩৬। الامتاع بسيرة الإمامين الحسن بن زياد وصاحبه محمد بن الشجاع", telegram: telegramLink, drive: "https://drive.google.com/file/d/1WLolw7oViVKdJMFKdECOcVhvfEUhtoTX/view?usp=sharing" },
+        { id: "hanafi_20150713", title: "৩৭। من_عبر_التاريخ_في_الكيد_للإسلام_محمد_زاهد_الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1AFb6bdoKpmtZn66iEb1ByJ4cN84Mmr8O/view?usp=sharing" },
+        { id: "surutl_aimmatul_khamsa", title: "৩৮। شروط الأئمة الخمسة", telegram: telegramLink, drive: "https://drive.google.com/file/d/10RE0N1nDj3mjcD_i81hyG0rYHOBfK9aA/view?usp=sharing" },
+        { id: "surutul_aimmatus_sittah", title: "৩৯। شروط الأئمة الستة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1rBv3A4W84DYYyfQOuhhKUiTVk-viWl3H/view?usp=sharing" },
+        { id: "Al_istibsar", title: "৪০। الاستبصار_الإمام_الحافظ_محمد_زاهد_الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tftrggSgV8IUxlLEr2ASa7vleEIQ8GnG/view?usp=sharing" },
+        { id: "sofwatul_birhan", title: "৪১। صفعات البرهان على صفحات العدوان", telegram: telegramLink, drive: "https://drive.google.com/file/d/14V8PxDvTLFlMySRnaUXxNrPhKwsELQus/view?usp=sharing" },
+        { id: "moqademate_202006", title: "৪২। المقدمات الإمام الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1H8yZy7BOukfHj9XowAeZB28u5M7UX5Ha/view?usp=sharing" },
+        { id: "batiniya", title: "৪৩। كشف أسرار الباطنية وأخبار القرامطة", telegram: telegramLink, drive: "https://drive.google.com/file/d/172AETVNsfYrOXtpbAc5SLjdT7JT975eC/view?usp=sharing" },
+        { id: "Al_haqaeq", title: "৪৪। الحدائق في المطالب العالية الفلسفية العريصة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1ncrpsyk0XiZ4UVT23cHMF7LuuYFE1V5F/view?usp=sharing" },
+        { id: "haqiqatul_insan", title: "৪৫। حقيقة الإنسان والروح الجوال في العوالم", telegram: telegramLink, drive: "https://drive.google.com/file/d/10GMPAQPAtn1vpdnKwAAOJGi3l_UkeqB0/view?usp=sharing" },
+        { id: "qanunut_tabil", title: "৪৬। قانون التأويل (للإمام الغزالي بتحقيق الكوثري)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1mwlvhXbpXrUvLMvqOvs3PQpbMcsdeTdu/view?usp=sharing" },
+        { id: "0226Pdf_201804", title: "৪৭। إقامة البرهان على نزول عيسى في آخر الزمان", telegram: telegramLink, drive: "https://drive.google.com/file/d/1ij8FF7sdU9oECkISr7bxyiP6Gwqd1uRA/view?usp=sharing" },
+        { id: "intikadul_mugni", title: "৪৮। انتقاد المغني عن الحفظ والكتاب", telegram: telegramLink, drive: "https://drive.google.com/file/d/1o9Xick6xkIJ7dXttUys3Y13HpVPyidjW/view?usp=sharing" },
+        { id: "izahul_kalam", title: "৪৯। إيضاح الكلام فيما جريى لعز بن عبد السلام في مسئلة علم الكلام", telegram: telegramLink, drive: "https://drive.google.com/file/d/1Y-Y7ENtPYIT0B_Ncp7n3qA-5ko7dX8fU/view?usp=sharing" },
+        { id: "Muhiku_Taghawul_Kawtheri", title: "৫০। محق التقول في مسئلة التوسل", telegram: telegramLink, drive: "https://drive.google.com/file/d/1jx0tp1dAVW-jyZxfDZnPlVqge9OVPAFB/view?usp=sharing" },
+        { id: "20230618_20230618_0930", title: "৫১। اللامذهبية قنطرة اللادينية", telegram: telegramLink, drive: "https://drive.google.com/file/d/1zFtUrX0SdEv0mtlwv2LflomyLmeEKai3/view?usp=sharing" },
+        { id: "qawaeide_aqaeide_muhammad", title: "৫২। قواعد عقائد المحمد (الباطنية)", telegram: telegramLink, drive: "https://drive.google.com/file/d/142o5TteE_ek2Qe6gaZ365ISeK23EZZ_6/view?usp=sharing" },
+        { id: "nibrasul_muhtadi", title: "৫૩। نبراس المهتدي في اجتلاء أنباء العارف دمرداش المحمدي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1A0Xa72CO1EkICBRlBh2T_NcEgcQ1t4Lh/view?usp=sharing" },
+        { id: "kitabu_bagdad", title: "৫৪। كتاب بغداد", telegram: telegramLink, drive: "https://drive.google.com/file/d/1QqhEJjWuug2xRbhqLC_bZjv_VD3gmmck/view?usp=sharing" },
+        { id: "ZaghluAl_Elm", title: "৫৫। بيان زغل العلم والطلب", telegram: telegramLink, drive: "https://drive.google.com/file/d/1BSE-fmeeQecnZ5pSE4Fcrrsydpzy59_4/view?usp=sharing" },
+        { id: "20210411_20210411_0737", title: "৫৬। النبذ في أصول الفقه الظاهري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1fI5u05ihDyzth6ScyJ2KiAfvpIlWqs0Y/view?usp=sharing" },
+        { id: "moqademate_202006", title: "৫৭। جهود الشيخ الكوثري في خدمة السنة والمذاهب الفقهية السنية والدفاع عن العقيدة الإسلاميية", telegram: telegramLink, drive: "https://drive.google.com/file/d/1vTqIr3e2KXO8IgTe9F-NE3F_R24r3efv/view?usp=sharing" },
+        { id: "sorhu_haninul_mutafazzi", title: "৫৮। شرح حنين المتفجع وأنين المتوجع", telegram: telegramLink, drive: "https://drive.google.com/file/d/1de9qCIdgNjfYPBiGz4evvZ_TlTeUuN4B/view?usp=sharing" },
+        { id: "hanafi_20150708", title: "৫৯। العقل وفضله", telegram: telegramLink, drive: "https://drive.google.com/file/d/1VrOICb542BfYost9iJ4kFCOO3gfdJnIt/view?usp=sharing" },
+        { id: "20191125_20191125_2130", title: "৬০। التحرير الوجيز فيما يبتغيه المستجيز للإمام الكوثري ، اعتناء عبد الفتاح أبو غدة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1vVS6X1vB1QbjPOZMh6KOmoTs_bVAGavr/view?usp=sharing" },
+        { id: "moqademate_202006", title: "৬১। إشارات المرام من عبارات الإمام", telegram: telegramLink, drive: "https://drive.google.com/file/d/1KXKA5tLPcwWFl88-Mtus7wze8LWIFPcB/view?usp=sharing" },
+        { id: "asrul_imam_kawsari", title: "৬২। أثر_الإمام_الكوثري_في_نصرة_وتأييد_المذاهب_الفقهية_السنية", telegram: telegramLink, drive: "https://drive.google.com/file/d/18TWCbNyO53zHUoPp1pJco7HKbJFgd-yu/view?usp=sharing" },
+        { id: "Pdf1889", title: "৬৩। الفقه وأصول الفقه من أعمال الإمام محمد زاهر الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1MuIkRHk5qnyP-u5Sq2uCkQ0dijuRyjso/view?usp=sharing" },
+        { id: "20200317_20200317_2032", title: "৬৪। المدخل_إلى_علوم_الحديث", telegram: telegramLink, drive: "https://drive.google.com/file/d/1jMpFkuCrUHyChzcNihJAoFfQzwVb4zlU/view?usp=sharing" },
+        { id: "tabyin-kadhb-al-muftara", title: "৬৫। تبيين_كذب_المفترى_فيما_نسب_إلى_الإمام_الأشعري_ابن_عساكر_ت_الشرفاوي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1v9iqA_maPYDzqS7o2iHBx04ouX3S3nlP/view?usp=sharing" },
+        { id: "tartibul_imam_ajom", title: "৬৬। ترتيب الإمام المعظم والمجتهد المقدم أبي عبد الله محمد بن إدريس الشافعي", telegram: telegramLink, drive: "https://drive.google.com/file/d/1p4wdPVGlWyg-80WwmDahnx2hVn5C-WpE/view?usp=sharing" },
+        { id: "talikatu_muhamad_ibnu_mane", title: "৬৭। تعليقات_العلامة_محمد_بن_مانع_على_مقالات_الكوثري_وبعض_كتبه المؤلف", telegram: telegramLink, drive: "https://drive.google.com/file/d/1s8sznnOTtip18InbS7I2iC0Z_520jOmQ/view?usp=sharing" },
+        { id: "Mughadimat_Kawtheri", title: "৬৮। مقدمات الإمام الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1DCvRjbT1W5xOKgUW9aQQdWVYrLJaqfTK/view?usp=sharing" },
+        { id: "manhajul_kawsari_fi_muharabtul_bidea", title: "৬৯। منهج الإمام الكوثري في محاربة البدع العقدية", telegram: telegramLink, drive: "https://drive.google.com/file/d/1Es_TJfsmhwCERM1kTYtvPduVWHFOMkP5/view?usp=sharing" },
+        { id: "manhajul_kawsari_fi_nokdir_rijal", title: "৭০। منهج الكوثري في نقد الرجال", telegram: telegramLink, drive: "https://drive.google.com/file/d/19rzlpszhTm1ZXw_LZOFV69b7EnTUFYg3/view?usp=sharing" },
+        { id: "bawadu_wasaek", title: "৭১। بعض وثائق تاريخية من عهدي ساكن الجنان إسماعيل باشا وتوفيق باشا خدوي مصر", telegram: telegramLink, drive: "https://drive.google.com/file/d/1wEMsrTS7Djkd_1qzqpfILzOvrUFx-mvl/view?usp=sharing" },
+        { id: "fi_sohbatik_saikhine", title: "৭২। في_صحبة_الشيخين_شيخ_الإسلام_مصطفى_صبري_و_وكيله_الإمام_محمد_زاهد", telegram: telegramLink, drive: "https://drive.google.com/file/d/1JNRY5ZBzn0Y9_NTWyFP1d_AJuNXg2vrw/view?usp=sharing" },
+        { id: "Maghalat_Alkawtheri", title: "৭৩। مقالات الكوثري", telegram: telegramLink, drive: "https://drive.google.com/file/d/1kXqKvZiJgmp9dpLhIT71JqeYOvOOgnn8/view?usp=sharing" },
+        { id: "fi_sohbatik_saikhine", title: "৭٤। حول_ترحيب_الكوثري_بنقد_تأنيبه_ المؤلف_محمد_عبد_الرزاق_حمزة", telegram: telegramLink, drive: "https://drive.google.com/file/d/1o7IA-5gWI46ToZDdWPaWwTXllkXGNj6Z/view?usp=sharing" },
+        { id: "063_20201223", title: "৭৫। المقدمات الخمس والعشرون", telegram: telegramLink, drive: "https://drive.google.com/file/d/1d3ibenSqUIesPtLWoHB11kmYaJlXPwTm/view?usp=sharing" },
+        { id: "ulama_ahnaf_ka_makam", title: "৭৬। فقہ_وحدیث_میں_علمائے_احناف_کا_مقام", telegram: telegramLink, drive: "https://drive.google.com/file/d/1DvRiVjQKi3_irLuYfS3-Hs-0RFLsfR4s/view?usp=sharing" },
+        { id: "newbooks767567657", title: "৭৭। الإمام_محمد_زاهد_الكوثري_وإسهاماته", telegram: telegramLink, drive: "https://drive.google.com/file/d/1i5Q13xJTJYaLkkaqeFVfS30wbwuVqN7n/view?usp=sharing" }
+    ];
+
+    const grid = document.getElementById('grid');
+    const sidebarList = document.getElementById('sidebar-list');
+
+    function renderLibrary(books) {
+        grid.innerHTML = '';
+        sidebarList.innerHTML = '';
+
+        if(books.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 18px; color: #64748b;">কোনো কিতাব পাওয়া যায়নি!</div>';
+            return;
+        }
+
+        books.forEach(book => {
+            const imgSrc = `https://archive.org/services/img/${book.id}`;
+            const readFunc = `openReader('${book.id}', '${book.title.replace(/'/g, "\\'")}')`;
+            
+            const html = `
+                <div class="book-card" onclick="toggleActions(this)">
+                    <div class="book-cover-wrapper">
+                        <span>${book.title}</span>
+                        <img class="book-image" src="${imgSrc}" alt="${book.title}" loading="lazy" 
+                             onerror="this.style.display='none';">
+                    </div>
+
+                    <div class="book-actions">
+                        <div class="btn info-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-info-circle"></i> ${book.title}
+                        </div>
+
+                        <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
+                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                        </button>
+                        
+                        <a href="../../porichiti/subjects.html" class="btn secondary-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-shield-alt"></i> কিতাবটি সম্পর্কে বিস্তারিত
+                        </a>
+
+                        <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                            <i class="fas fa-pen-fancy"></i> এ লেখকের জীবনী
+                        </button>
+                        
+                        <div class="download-links">
+                            <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/details/${book.id}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fas fa-archive"></i>
+                            </a>
+                            <a class="dl-icon" title="গুগল ড্রাইভ" href="${book.drive || '#'}" target="_blank" onclick="${book.drive ? 'event.stopPropagation();' : 'alert(\'গুগল ড্রাইভ লিংক শীঘ্রই যুক্ত হবে\'); event.stopPropagation(); return false;'}">
+                                <i class="fab fa-google-drive"></i>
+                            </a>
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${book.telegram}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += html;
+            sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
+        });
+    }
+
+    renderLibrary(library);
+
+    function filterBooks() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const filtered = library.filter(book => book.title.toLowerCase().includes(query));
+        renderLibrary(filtered);
+    }
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    }
+
+    function openReader(id, title) {
+        document.getElementById('book-iframe').src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-title').innerText = title;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        document.getElementById('book-iframe').src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('.book-card')) {
+            document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
+        }
+    });
+</script>
+</body>
+</html>
