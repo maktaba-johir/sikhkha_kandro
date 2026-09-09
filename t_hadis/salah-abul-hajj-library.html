@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ড. সালাহ মুহাম্মাদ আবুল হাজ্জ-এর কিতাব লাইব্রেরি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #0f766e;
+            --primary-dark: #115e59;
+            --accent-color: #d97706;
+            --bg-color: #f8fafc;
+            --text-dark: #0f172a;
+        }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Search */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .menu-btn {
+            position: absolute; left: 20px; top: 25px;
+            font-size: 24px; cursor: pointer; color: white; z-index: 100;
+        }
+
+        .search-box-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Hind Siliguri', sans-serif;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
+            background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease; z-index: 1000; overflow-y: auto; padding: 20px;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; font-size: 18px; }
+        .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; }
+        .sidebar-item:hover { background: #f3f4f6; color: var(--primary-color); }
+
+        /* Grid & Cards */
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px;
+        }
+
+        .book-card {
+            position: relative; cursor: pointer; border-radius: 12px;
+            overflow: hidden; 
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.4s; height: 360px; background: var(--primary-color);
+        }
+        .book-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: var(--primary-color); 
+        }
+        
+        /* Dynamic Cover Wrapper */
+        .book-cover-wrapper {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), #042f2e);
+            color: white; text-align: center; padding: 15px; font-weight: 600; font-size: 14px;
+            position: relative;
+        }
+        .book-image { 
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover; display: block; 
+        }
+        
+        .book-actions {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(15, 118, 110, 0.95) 0%, rgba(17, 94, 89, 1) 100%);
+            padding: 12px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
+            max-height: 100%; overflow-y: auto; z-index: 2;
+        }
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .btn {
+            border: none; padding: 7px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 5px; text-decoration: none; color: white;
+        }
+
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; text-align: center; }
+        .read-btn { background: var(--accent-color); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
+        .dl-icon {
+            color: white; font-size: 14px; background: rgba(255, 255, 255, 0.15);
+            flex: 1; height: 32px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; text-decoration: none; transition: 0.2s;
+        }
+        .dl-icon:hover { background: rgba(255, 255, 255, 0.3); }
+
+        /* Reader Popup */
+        #reader-container {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+        }
+        .close-header {
+            background: #1e293b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 60px;
+        }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .iframe-wrapper { width: 100%; height: calc(100% - 60px); -webkit-overflow-scrolling: touch; }
+        #book-iframe { width: 100%; height: 100%; border: none; }
+
+        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 900; }
+    </style>
+</head>
+<body>
+
+<div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+    <h2>📚 কিতাব তালিকা</h2>
+    <div id="sidebar-list"></div>
+</div>
+
+<div class="header">
+    <h1>📚 ড. সালাহ মুহাম্মাদ আবুল হাজ্জ-এর কিতাব লাইব্রেরি</h1>
+    <p>রাহবার টিম ডিজিটাল প্ল্যাটফর্ম</p>
+    
+    <div class="search-box-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 কিতাবের নাম অনুসন্ধান করুন..." oninput="filterBooks()">
+    </div>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
+
+<div id="reader-container">
+    <div class="close-header">
+        <span id="reader-title">রাহবার টিম</span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
+    </div>
+    <div class="iframe-wrapper">
+        <iframe id="book-iframe" src="" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="fullscreen"></iframe>
+    </div>
+</div>
+
+<div class="footer">
+    <p>ডেভলপার: <strong>রাহবার টিম</strong></p>
+</div>
+
+<script>
+    const telegramLink = "https://t.me/rahbar_to_truth/456";
+
+    // কিতাবের অবজেক্ট লিফটে drive খালি থাকলে ফাঁকা স্ট্রিং "" ব্যবহার করুন
+    const library = [
+        { id: "012-pdf", title: "০১। إرواء الظمآن في أختصار مناهل العرفان في علوم الفرآن", telegram: telegramLink, drive: "https://drive.google.com/file/d/1JWVFGP0GDPlYwilNiBh2fJ6GC0fvIEIc/view?usp=sharing" },
+        { id: "20210925_20210925_1507", title: "০২। إسعاد المفتي على شرح عقود رسم المفتي", telegram: telegramLink, drive: "" },
+        { id: "20231001_20231001_0804", title: "০৩। الإسعاف في أحكام الأوقاف", telegram: telegramLink, drive: "" },
+        { id: "20231001_20231001_0724", title: "০৪। التوضيح والبيان على مجلة الأحكام العدلية", telegram: telegramLink, drive: "" },
+        { id: "20231001_20231001_0610", title: "০৫। السياسة الراشدة في الدولة الماجدة", telegram: telegramLink, drive: "" },
+        { id: "20200514_20200514_2037", title: "০৬। الغرة المنيفة في ترجيح مذهب الإمام أبو حنيفة", telegram: telegramLink, drive: "" },
+        { id: "lionsunna_ALMADKHAL_ELMUFASSAL", title: "০৭। المدخل المفصل إلى الفقه الحنفي", telegram: telegramLink, drive: "" },
+        { id: "059-pdf", title: "০৮। المدخل الوجيز في دراسة الفقه الإسلامي", telegram: telegramLink, drive: "" },
+        { id: "almarqat", title: "০৯। المرقاة شرح مقدمة الصلاة", telegram: telegramLink, drive: "" },
+        { id: "063-pdf", title: "১০। المنهاج المفصل في فقه المعاملات", telegram: telegramLink, drive: "" },
+        { id: "Al_minhajul_wajiji_Fil_Fiqhi", title: "১১। المنهاج الوجيز في فقه الاختلاف", telegram: telegramLink, drive: "" },
+        { id: "066-pdf", title: "১২। المنهاج الوجيز في فقه الايمان والنذور والحظر والإباحة", telegram: telegramLink, drive: "" },
+        { id: "067-pdf", title: "১৩। المنهاج الوجيز في فقه الزكاة والحج", telegram: telegramLink, drive: "" },
+        { id: "Al_minhajul_wajij_Fi_Fiqhik_kaharat", title: "১৪। المنهاج الوجيز في فقه الطهارة والصلاة والصيام والاعتكاف", telegram: telegramLink, drive: "" },
+        { id: "069-pdf", title: "১৫। المنهاج الوجيز في فقه المعاملات", telegram: telegramLink, drive: "" },
+        { id: "070-pdf", title: "১৬। المنهاج الوجيز في فقه الوصايا والفرائض", telegram: telegramLink, drive: "" },
+        { id: "085-pdf", title: "১৭। تهذيب المدخل المفصل للفقه الحنفي", telegram: telegramLink, drive: "" },
+        { id: "087-pdf", title: "১৮। تهذيب خلاصة الدلائل وتنقيح المسائل في شرح القدوري", telegram: telegramLink, drive: "" },
+        { id: "088-pdf", title: "১৯। تهذيب مسار الوصول إلى علم أصول فقه الحنفية", telegram: telegramLink, drive: "" },
+        { id: "20230926_20230926_1023", title: "২০। تهذيب نفع المفتي والسائل بجمع متفرقات المسائل", telegram: telegramLink, drive: "" },
+        { id: "102-pdf", title: "২১। زبدة الكلام على منظومة كفاية الغلام", telegram: telegramLink, drive: "" },
+        { id: "20200622_20200622_0204", title: "২২। شرح الوقاية ومعه منتقى النقاية على شرح الوقاية", telegram: telegramLink, drive: "" },
+        { id: "7_20200621_202006", title: "২৩। عمدة الرعاية و بهاشمه غاية الغاية على عمدة الرعاية", telegram: telegramLink, drive: "" },
+        { id: "20200706_20200706_1254", title: "২৪। فتاوى اللكنوي", telegram: telegramLink, drive: "" },
+        { id: "115-pdf", title: "২৫। فقه الترجيح المذهبي عند السادة الحنفية", telegram: telegramLink, drive: "" },
+        { id: "mawalimu_madrasatul_FuqaHA", title: "২৬। معالم مدرسة فقهاء الحنفية في قبول الحديث ورده", telegram: telegramLink, drive: "" },
+        { id: "122-pdf", title: "২৭। مقاصد الوسائل والمعاني والغايات عند السادة الحنفية", telegram: telegramLink, drive: "" },
+        { id: "124-pdf", title: "২৮। مناهج البحث الفقهي عند الحنفية", telegram: telegramLink, drive: "" },
+        { id: "20200426_20200426_1317", title: "২৯। منة الفتاح على مراق الفلاح", telegram: telegramLink, drive: "" },
+        { id: "130-pdf", title: "৩০। تحفة الملوك ومعه نفحات السكوك على تحفة الملوك", telegram: telegramLink, drive: "" },
+        { id: "20200605_20200605_0117", title: "৩১। نور الأنوار في شرح المنار", telegram: telegramLink, drive: "" },
+        { id: "Nailul_maram_Fi_aeatul_Ahkam", title: "৩২। نيل المرام في آيات الأحكام على مذهب أبي حنيفة النعمان", telegram: telegramLink, drive: "" },
+        { id: "136-pdf", title: "৩৩। ومضات النور في طلب العلم المبرور", telegram: telegramLink, drive: "" },
+        { id: "badiul_furu_fi_ahkamul_buwu", title: "৩৪। بديع الفروع في أحكام البيوع عند الحنفية", telegram: telegramLink, drive: "" },
+        { id: "Sabilul_ususl_ila_ilmul_usul", title: "৩৫। سبيل الوصول إلى علم الأصول", telegram: telegramLink, drive: "" },
+        { id: "024-pdf", title: "৩৬। الأفهام السنية في الثقافة الاسلامية", telegram: telegramLink, drive: "" },
+        { id: "20200714_20200714_1313", title: "৩৭। أثر الصلاة على الحياة", telegram: telegramLink, drive: "" },
+        { id: "Ikhtilaful_Fuqaha_Usuli", title: "৩৮। اختلاف الفقهاء أصولي", telegram: telegramLink, drive: "" },
+        { id: "ikhtilaful_fuqaha_lil_hadis", title: "৩৯। استيعاب_الفقهاء_للحديث_وااختلافهم_في_أصوله", telegram: telegramLink, drive: "" },
+        { id: "Akamun_nafaes", title: "৪০। آكام_النفائس_بأداء_الاذكار_بلسان_فارس", telegram: telegramLink, drive: "" },
+        { id: "032-pdf", title: "৪১। الاعتماد_على_النقل_المتوارث_في_مدرسة_الكوفة_الفقهية", telegram: telegramLink, drive: "" },
+        { id: "As_sunnatul_mutawatira_indal_fuqaha", title: "৪২। السنة_المتواترة_عند_الفقهاء_وتطبيقاتها_عند_الحنفية", telegram: telegramLink, drive: "" },
+        { id: "20231001_20231001_0620", title: "৪৩। السنة_المشهورة_عند_الحنفية_وتطبيقاتها_في_كتبهم", telegram: telegramLink, drive: "" },
+        { id: "20230926_20230926_1107", title: "৪৪। إمام_الأئمة_الفقهاء_أبو_حنيفة_النعمان", telegram: telegramLink, drive: "" },
+        { id: "092-pdf", title: "৪৫। حكم_حديث_الأحاد_فيما_تعم_به_البلوى_عند_الحنفية", telegram: telegramLink, drive: "" }
+    ];
+
+    const grid = document.getElementById('grid');
+    const sidebarList = document.getElementById('sidebar-list');
+
+    function renderLibrary(books) {
+        grid.innerHTML = '';
+        sidebarList.innerHTML = '';
+
+        if(books.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 18px; color: #64748b;">কোনো কিতাব পাওয়া যায়নি!</div>';
+            return;
+        }
+
+        books.forEach(book => {
+            const imgSrc = `https://archive.org/services/img/${book.id}`;
+            const readFunc = `openReader('${book.id}', '${book.title.replace(/'/g, "\\'")}')`;
+            
+            const html = `
+                <div class="book-card" onclick="toggleActions(this)">
+                    <div class="book-cover-wrapper">
+                        <span>${book.title}</span>
+                        <img class="book-image" src="${imgSrc}" alt="${book.title}" loading="lazy" 
+                             onerror="this.style.display='none';">
+                    </div>
+
+                    <div class="book-actions">
+                        <div class="btn info-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-info-circle"></i> ${book.title}
+                        </div>
+
+                        <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
+                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                        </button>
+                        
+                        <a href="../../porichiti/subjects.html" class="btn secondary-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-shield-alt"></i> কিতাবটি সম্পর্কে বিস্তারিত
+                        </a>
+
+                        <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                            <i class="fas fa-pen-fancy"></i> এ লেখকের জীবনী
+                        </button>
+                        
+                        <div class="download-links">
+                            <a class="dl-icon" title="আর্কাইভ" href="https://archive.org/details/${book.id}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fas fa-archive"></i>
+                            </a>
+                            <a class="dl-icon" title="গুগল ড্রাইভ" href="${book.drive || '#'}" target="_blank" onclick="${book.drive ? 'event.stopPropagation();' : 'alert(\'গুগল ড্রাইভ লিংক শীঘ্রই যুক্ত হবে\'); event.stopPropagation(); return false;'}">
+                                <i class="fab fa-google-drive"></i>
+                            </a>
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${book.telegram}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += html;
+            sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
+        });
+    }
+
+    renderLibrary(library);
+
+    function filterBooks() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const filtered = library.filter(book => book.title.toLowerCase().includes(query));
+        renderLibrary(filtered);
+    }
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    }
+
+    function openReader(id, title) {
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-title').innerText = title;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('.book-card')) {
+            document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
+        }
+    });
+</script>
+</body>
+</html>
