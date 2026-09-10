@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>হাকীমুল উম্মত মাওলানা আশরাফ আলী থানভী (রহ.) - বাংলা কিতাব লাইব্রেরি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #854d0e;
+            --primary-dark: #713f12;
+            --accent-color: #d97706;
+            --bg-color: #f8fafc;
+            --text-dark: #0f172a;
+        }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Search */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .menu-btn {
+            position: absolute; left: 20px; top: 25px;
+            font-size: 24px; cursor: pointer; color: white; z-index: 100;
+        }
+
+        .search-box-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Hind Siliguri', sans-serif;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: -300px; top: 0; width: 300px; height: 100%;
+            background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease; z-index: 1000; overflow-y: auto; padding: 20px;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar h2 { border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; font-size: 18px; }
+        .sidebar-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; }
+        .sidebar-item:hover { background: #f3f4f6; color: var(--primary-color); }
+
+        /* Grid & Cards */
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 15px; }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px;
+        }
+
+        .book-card {
+            position: relative; cursor: pointer; border-radius: 12px;
+            overflow: hidden; 
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.4s; height: 360px; background: var(--primary-color);
+        }
+        .book-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: var(--primary-color); 
+        }
+        
+        /* Dynamic Cover Wrapper */
+        .book-cover-wrapper {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), #451a03);
+            color: white; text-align: center; padding: 15px; font-weight: 600; font-size: 14px;
+            position: relative;
+        }
+        .book-image { 
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover; display: block; 
+        }
+        
+        .book-actions {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(133, 77, 14, 0.95) 0%, rgba(113, 63, 18, 1) 100%);
+            padding: 12px; transform: translateY(100%);
+            transition: 0.4s ease; display: flex; flex-direction: column; gap: 6px;
+            max-height: 100%; overflow-y: auto; z-index: 2;
+        }
+        .book-card.active .book-actions { transform: translateY(0); }
+
+        .btn {
+            border: none; padding: 7px; border-radius: 6px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 5px; text-decoration: none; color: white;
+        }
+
+        .info-btn { background: white; color: var(--primary-color); margin-bottom: 4px; border: 1px solid white; text-align: center; }
+        .read-btn { background: var(--accent-color); }
+        .secondary-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .download-links { display: flex; justify-content: space-around; padding-top: 5px; gap: 5px; }
+        .dl-icon {
+            color: white; font-size: 14px; background: rgba(255, 255, 255, 0.15);
+            flex: 1; height: 32px; display: flex; align-items: center;
+            justify-content: center; border-radius: 5px; text-decoration: none; transition: 0.2s;
+        }
+        .dl-icon:hover { background: rgba(255, 255, 255, 0.3); }
+
+        /* Reader Popup */
+        #reader-container {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+        }
+        .close-header {
+            background: #1e293b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 60px;
+        }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .iframe-wrapper { width: 100%; height: calc(100% - 60px); -webkit-overflow-scrolling: touch; }
+        #book-iframe { width: 100%; height: 100%; border: none; }
+
+        .footer { text-align: center; padding: 30px; background: white; margin-top: 50px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 900; }
+    </style>
+</head>
+<body>
+
+<div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+    <h2>📚 কিতাব তালিকা</h2>
+    <div id="sidebar-list"></div>
+</div>
+
+<div class="header">
+    <h1>📚 মাওলানা আশরাফ আলী থানভী (রহ.)-এর বাংলা লাইব্রেরি</h1>
+    <p>রাহবার টিম ডিজিটাল প্ল্যাটফর্ম</p>
+    
+    <div class="search-box-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 কিতাবের নাম অনুসন্ধান করুন..." oninput="filterBooks()">
+    </div>
+</div>
+
+<div class="container">
+    <div class="grid-container" id="grid"></div>
+</div>
+
+<div id="reader-container">
+    <div class="close-header">
+        <span id="reader-title">রাহবার টিম</span>
+        <button class="close-btn" onclick="closeReader()">বন্ধ করুন (X)</button>
+    </div>
+    <div class="iframe-wrapper">
+        <iframe id="book-iframe" src="" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="fullscreen"></iframe>
+    </div>
+</div>
+
+<div class="footer">
+    <p>ডেভলপার: <strong>রাহবার টিম</strong></p>
+</div>
+
+<script>
+    const telegramLink = "https://t.me/rahbar_to_truth/468";
+
+    // কিতাবের তালিকা (আর্কাইভ ID থাকলে অনলাইন রিডার কাজ করবে, খালি থাকলে সতর্কবার্তা দেবে)
+    const library = [
+        { id: "ashrafali", title: "০১। আদাবুল মুআশারাত", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tZHcXIfH0CUk8W6uFOWn00jSeyXv430y/view" },
+        { id: "bde-books.-com", title: "০২। আমলে কোরআনী", telegram: telegramLink, drive: "https://drive.google.com/file/d/14Qtflua0Id_lhgz35WSnepE3m4j-3LWj/view" },
+        { id: "", title: "০৩। আশরাফুল জওয়াব-১ম খণ্ড", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uhHfmwl4GS-xXLCjDFQDNfwAzSGiWQ6y/view" },
+        { id: "", title: "০৪। ইছলাহুন নিসওয়ান (নারী জাতির সংশোধন)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1unHh20RP5tWKx2s8t6_HshrABxIiCkE3/view" },
+        { id: "", title: "০৫। ইছলাহুন মুসলিমীন", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tMbv8tGh2qngNPE5sr-pT7L6yoguONIx/view" },
+        { id: "", title: "০৬। ইসলাহী নেসাব", telegram: telegramLink, drive: "https://drive.google.com/file/d/1-GWLvguzWqKwSXtP1TpeyyMSVaZ_K_28/view" },
+        { id: "", title: "০৭। জাযাউল আ’মাল (কর্মের ফলাফল)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1u-UtfwUmfhrG4sGzB9pGmn_K_BmlPJsC/view" },
+        { id: "", title: "০৮। ইসলাহুররুসূম (কুসংস্কার সংশোধন)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uYjVPq6DNo8LJLBgJVRd6yk6Tu1MPHT2/view" },
+        { id: "khutbatul-ahkam-page-0-80-maulana-ashraf-ali-thanvi", title: "০৯। খুতবাতুল আহকাম", telegram: telegramLink, drive: "https://drive.google.com/file/d/15kVLj8bNOXb5wz8HN766ZIDI88aJzidY/view" },
+        { id: "", title: "১০। তকদীর কি", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tTj8NmWaoG8fgHjH_kXZ0wOhia_wZLVx/view" },
+        { id: "", title: "১১। তরবিয়তে আওলাদ (ইসলামের দৃষ্টিতে সন্তান প্রতিপালন)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1udyYw_wMZaHt2C7ozx4JrRrIvX0eKSLs/view" },
+        { id: "", title: "১২। তারবিয়াতুস সালিক", telegram: telegramLink, drive: "https://drive.google.com/file/d/1-6Eg1_Hqmss_gV9U4a_1LQ_MESZ53693/view" },
+        { id: "", title: "১৩। নেক আমল", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uOF7UutcSnH4yBM2lvL0tMJ8XsjwYn_I/view" },
+        { id: "", title: "১৪। পারিবারিক জীবন", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uc2QBLB_XWPKwyXS115Kt__X7CCLapZj/view" },
+        { id: "", title: "১৫। বেহেশতী গাওহার", telegram: telegramLink, drive: "https://drive.google.com/file/d/1thunBRADMia33NM-w_xI1zynZ0kdl4gL/view" },
+        { id: "", title: "১৬। বেহেশতী জেওর (একত্রে)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1-JSpuNygrZODIV3YkMaD2NAWH45JU3vI/view" },
+        { id: "", title: "১৭। মাজালিসে হাকীমুল উম্মত", telegram: telegramLink, drive: "https://drive.google.com/file/d/11n9cpHujX-f-VHJXOuWZ3nbrBzcqCddQ/view" },
+        { id: "", title: "১৮। রাহে তাসাওউফ (মারেফাতের মর্মকথা)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uC_RpnOVoDZIm0krmV6CxIOdYxHJ0QDA/view" },
+        { id: "", title: "১৯। মিরাজ ও বিজ্ঞান", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tvLTqx2z_CA9FyWSzwDdtXlFSDRbyl3Q/view" },
+        { id: "", title: "২০। মুমিন ও মুনাফিক", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uA32d4FypHyNl0D4IZpi62bIbPDIPGQY/view" },
+        { id: "", title: "২১। মুসলমানের হাসি", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uBnhpPHzo9nqwMbXIlkXhzsvB7ljGAUX/view" },
+        { id: "", title: "২২। মুসলিম বর কনে", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uOJToAMowt9iVYgyP3Zxo-3W_h5o5AbG/view" },
+        { id: "", title: "২৩। যে ফুলের খুশবুতে সারা জাহান মাতোয়ারা", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tjbqJZMA6tdZ5l14Z5Ck6aRlpyZ-OKza/view" },
+        { id: "AsrafAliThanbiAllBooks", title: "২৪। শওকে ওয়াতান (মৃত্যু, মোমেনের শান্তি)", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uLhUY8X8TY76S_pjUYVTBjaKwg3peN0k/view" },
+        { id: "", title: "২৫। শরীয়তের দৃষ্টিতে পর্দার হুকুম", telegram: telegramLink, drive: "https://drive.google.com/file/d/1uCk_oSn_JuHimDGp7lcKnlvdG7mhLrir/view" },
+        { id: "", title: "২৬। সহজ আমালুল কুরআন", telegram: telegramLink, drive: "https://drive.google.com/file/d/1tpmrNxkfAFbti2SeJxXjO5NPn5mpvDLI/view" },
+        { id: "", title: "২৭। হকুকুল ইসলাম ও হকুকুল ওয়ালিদাইন", telegram: telegramLink, drive: "https://drive.google.com/file/d/1undpv94Ost2h_ntqBRIs2sJgrkY0RV1K/view" },
+        { id: "", title: "২৮। ফুরুউল ঈমান", telegram: telegramLink, drive: "https://drive.google.com/file/d/1VJNoAI3L-U00MU6zD2AJ4U2FA_yh2HgF/view?usp=sharing" },
+        { id: "", title: "২৯। মাওয়ায়েজে আশরাফিয়া-১", telegram: telegramLink, drive: "https://muslimbangla.com/book/445/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%A7%E0%A6%AE%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩০। মাওয়ায়েজে আশরাফিয়া-২", telegram: telegramLink, drive: "https://muslimbangla.com/book/446/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%A8%E0%A7%9F%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩১। মাওয়ায়েজে আশরাফিয়া-৩", telegram: telegramLink, drive: "https://muslimbangla.com/book/447/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%A9%E0%A7%9F%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩২। মাওয়ায়েজে আশরাফিয়া-৪", telegram: telegramLink, drive: "https://muslimbangla.com/book/448/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%AA%E0%A6%B0%E0%A7%8D%E0%A6%A5%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩৩। মাওয়ায়েজে আশরাফিয়া-৫", telegram: telegramLink, drive: "https://muslimbangla.com/book/449/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%AB%E0%A6%AE%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩৪। মাওয়ায়েজে আশরাফিয়া-৬", telegram: telegramLink, drive: "https://muslimbangla.com/book/450/%E0%A6%AE%E0%A6%BE%E0%A6%93%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%AF%E0%A7%87%20%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%BE%20%E0%A7%AC%E0%A6%B7%E0%A7%8D%E0%A6%A0%20%E0%A6%96%E0%A6%A3%E0%A7%8D%E0%A6%A1" },
+        { id: "", title: "৩৫। রাহে নাজাত (মুক্তির পথ)", telegram: telegramLink, drive: "https://muslimbangla.com/book/6162/%E0%A6%B0%E0%A6%BE%E0%A6%B9%E0%A7%87%20%E0%A6%A8%E0%A6%BE%E0%A6%9C%E0%A6%BE%E0%A6%A4" },
+        { id: "", title: "৩৬। সফল ছাত্র", telegram: telegramLink, drive: "https://drive.google.com/file/d/1VmxiYBRvQWPN9ier1ZjXw_ghwSbInbY6/view?usp=sharing" },
+        { id: "", title: "৩৭। আশরাফ চরিত", telegram: telegramLink, drive: "https://muslimbangla.com/book/6152/%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB-%E0%A6%9A%E0%A6%B0%E0%A6%BF%E0%A6%A4" },
+        { id: "", title: "৩৮। মুনাজাতে মাকবুল ও হিজবুল বাহার", telegram: telegramLink, drive: "https://muslimbangla.com/book/6152/%E0%A6%86%E0%A6%B6%E0%A6%B0%E0%A6%BE%E0%A6%AB%20%E0%A6%9A%E0%A6%B0%E0%A6%BF%E0%A6%A4" }
+    ];
+
+    const grid = document.getElementById('grid');
+    const sidebarList = document.getElementById('sidebar-list');
+
+    function renderLibrary(books) {
+        grid.innerHTML = '';
+        sidebarList.innerHTML = '';
+
+        if(books.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 18px; color: #64748b;">কোনো কিতাব পাওয়া যায়নি!</div>';
+            return;
+        }
+
+        books.forEach(book => {
+            const imgSrc = book.id ? `https://archive.org/services/img/${book.id}` : '';
+            const readFunc = book.id 
+                ? `openReader('${book.id}', '${book.title.replace(/'/g, "\\'")}')` 
+                : `alert('অনলাইনে পড়ার জন্য পিডিএফ রিডারটি এখনও সংযুক্ত করা হয়নি। কিতাবটি পড়তে ডাইরেক্ট ডাউনলোড/ড্রাইভ লিংক ব্যবহার করুন।')`;
+            
+            const html = `
+                <div class="book-card" onclick="toggleActions(this)">
+                    <div class="book-cover-wrapper">
+                        <span>${book.title}</span>
+                        ${book.id ? `<img class="book-image" src="${imgSrc}" alt="${book.title}" loading="lazy" onerror="this.style.display='none';">` : ''}
+                    </div>
+
+                    <div class="book-actions">
+                        <div class="btn info-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-info-circle"></i> ${book.title}
+                        </div>
+
+                        <button class="btn read-btn" onclick="${readFunc}; event.stopPropagation();">
+                            <i class="fas fa-book-open"></i> অনলাইনে পড়ুন
+                        </button>
+                        
+                        <a href="../../porichiti/subjects.html" class="btn secondary-btn" onclick="event.stopPropagation();">
+                            <i class="fas fa-shield-alt"></i> কিতাবটি সম্পর্কে বিস্তারিত
+                        </a>
+
+                        <button class="btn secondary-btn" onclick="alert('শীঘ্রই আসছে'); event.stopPropagation();">
+                            <i class="fas fa-pen-fancy"></i> এ লেখকের জীবনী
+                        </button>
+                        
+                        <div class="download-links">
+                            <a class="dl-icon" title="আর্কাইভ" href="${book.id ? 'https://archive.org/details/' + book.id : '#'}" target="_blank" onclick="${book.id ? 'event.stopPropagation();' : 'alert(\'আর্কাইভ লিংক শীঘ্রই যুক্ত হবে\'); event.stopPropagation(); return false;'}">
+                                <i class="fas fa-archive"></i>
+                            </a>
+                            <a class="dl-icon" title="ড্রাইভ / ডাউনলোড" href="${book.drive || '#'}" target="_blank" onclick="${book.drive ? 'event.stopPropagation();' : 'alert(\'ড্রাইভ লিংক শীঘ্রই যুক্ত হবে\'); event.stopPropagation(); return false;'}">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <a class="dl-icon" title="টেলিগ্রাম" href="${book.telegram}" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += html;
+            sidebarList.innerHTML += `<div class="sidebar-item" onclick="${readFunc}; toggleSidebar();">${book.title}</div>`;
+        });
+    }
+
+    renderLibrary(library);
+
+    function filterBooks() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const filtered = library.filter(book => book.title.toLowerCase().includes(query));
+        renderLibrary(filtered);
+    }
+
+    function toggleActions(card) {
+        document.querySelectorAll('.book-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
+        card.classList.toggle('active');
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+    }
+
+    function openReader(id, title) {
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = `https://archive.org/embed/${id}?ui=full`;
+        document.getElementById('reader-title').innerText = title;
+        document.getElementById('reader-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+        const iframe = document.getElementById('book-iframe');
+        iframe.src = "";
+        document.getElementById('reader-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('.book-card')) {
+            document.querySelectorAll('.book-card').forEach(c => c.classList.remove('active'));
+        }
+    });
+</script>
+</body>
+</html>
