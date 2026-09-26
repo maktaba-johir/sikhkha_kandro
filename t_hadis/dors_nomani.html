@@ -36,15 +36,27 @@ const lessons=[
 ['১০ম','الحديث الضعيف (যঈফ হাদীস) ও ফুকাহাগণের আমল','https://www.youtube.com/live/2QBJJR4J5i8'],
 ['১১শ','القياس (কিয়াস) ও হাদীসের পারস্পরিক সম্পর্ক','https://www.youtube.com/live/98u8XvLsVg8'],
 ['১২শ','عمل أهل المدينة (আমলে আহলে মাদীনা) ও উসূলে ফিকহ','https://www.youtube.com/live/60GfHq8F2wY'],
-['১৩শ','উসূলে হাদীস ও উসূলে জারহ তা‘দীল','https://www.youtube.com/live/f78C5yoy1qs?si=rQ2HV4vgaiDFFQT3'],
-['১৪শ','সহীহ হাদীসের সংজ্ঞা ও শর্তাবলী: ফকীহ ও মুহাদ্দিসগণের দৃষ্টিভঙ্গি','https://www.youtube.com/live/E0n3cw0UjQE?si=N212VP_6KqtKAUeG'],
-['১৫শ','২০০ হিজরী পরবর্তী ইমাম শাফেঈ (রহ.) কর্তৃক সালাফদের উসূলে হাদীসের বিপরীত অবস্থান','https://www.youtube.com/live/0GZOjzgnWHg?si=srQsoNdRcI14fUlf'],
-['১৬শ','হানাফীদের আমলে মুতাওয়ারাসের পরিচয়','https://www.youtube.com/live/lgVj5ZNwuww?si=L1OHj7q75ElgsnKV'],
-['১৭শ','العمل المتوارث ও এতে মালেকিয়া ও হানাফিয়াদের মধ্যকার বৈচিত্র্য','https://www.youtube.com/live/oxxC_zD3QRU?si=OJmoNQndX0UigDtH']
+['১৩শ','উসূলে হাদীস ও উসূলে জারহ তা‘দীল','https://www.youtube.com/live/f78C5yoy1qs?si=rQ2HV4vgaiDFFQT3','https://archive.org/details/dorse_numani-13','https://t.me/rahbar_to_truth/605','https://drive.google.com/file/d/1QephpWgCIl46VXmadeH-2j5sujnDFVaD/view?usp=sharing'],
+['১৪শ','সহীহ হাদীসের সংজ্ঞা ও শর্তাবলী: ফকীহ ও মুহাদ্দিসগণের দৃষ্টিভঙ্গি','https://www.youtube.com/live/E0n3cw0UjQE?si=N212VP_6KqtKAUeG','','https://t.me/rahbar_to_truth/606','https://drive.google.com/file/d/1xkZkr12XE7B4r6nE6kEj1OvFoG_TQyDs/view?usp=sharing'],
+['১৫শ','২০০ হিজরী পরবর্তী ইমাম শাফেঈ (রহ.) কর্তৃক সালাফদের উসূলে হাদীসের বিপরীত অবস্থান','https://www.youtube.com/live/0GZOjzgnWHg?si=srQsoNdRcI14fUlf','','https://t.me/rahbar_to_truth/608','https://drive.google.com/file/d/1PfNDTWZawo-A4apn3TMRZ8BFgHi8-deT/view?usp=sharing'],
+['১৬শ','হানাফীদের আমলে মুতাওয়ারাসের পরিচয়','https://www.youtube.com/live/lgVj5ZNwuww?si=L1OHj7q75ElgsnKV','','https://t.me/rahbar_to_truth/609','https://drive.google.com/file/d/1gvQ0qLpOs8AKcyjeOvj4RmJ3dzmg4S_X/view?usp=sharing'],
+['১৭শ','العمل المتوارث ও এতে মালেকিয়া ও হানাফিয়াদের মধ্যকার বৈচিত্র্য','https://www.youtube.com/live/oxxC_zD3QRU?si=OJmoNQndX0UigDtH','','https://t.me/rahbar_to_truth/610','https://drive.google.com/file/d/1c_b_v0qYgr4t5d031L1F855nt_dAJWMw/view?usp=sharing']
 ];
 const key='rahbar-dars-done-v1';let done=JSON.parse(localStorage.getItem(key)||'[]');
 const $=s=>document.querySelector(s), lessonsEl=$('#lessons');
-function render(){const q=$('#search').value.trim().toLowerCase();lessonsEl.innerHTML='';let shown=0;lessons.forEach((x,i)=>{if(q&&!(`${x[0]} ${x[1]}`.toLowerCase().includes(q)))return;shown++;const is=done.includes(i);const c=document.createElement('article');c.className='card'+(is?' done':'');c.innerHTML=`<div class="card-head"><span class="number">${x[0]} দরস</span><button class="check" title="সম্পন্ন হিসেবে চিহ্নিত করুন" aria-label="সম্পন্ন">${is?'✓':'○'}</button></div><div class="topic">${x[1]}</div><div class="actions"><a class="btn yt" href="${x[2]}" target="_blank" rel="noopener">▶ YouTube</a><span class="btn download disabled">⇩ Archive</span><span class="btn download disabled">⇩ Telegram</span><span class="btn download disabled">⇩ Drive</span></div><div class="hint">ডাউনলোড লিংক যুক্ত হলে এই বাটনগুলো সক্রিয় হবে</div>`;c.querySelector('.check').onclick=()=>{done=done.includes(i)?done.filter(n=>n!==i):[...done,i];localStorage.setItem(key,JSON.stringify(done));render();};lessonsEl.appendChild(c);});$('#empty').style.display=shown?'none':'block';$('#count').textContent=`১৭টির মধ্যে ${done.length}টি সম্পন্ন` ;$('#progress').style.width=(done.length/17*100)+'%';}
+function render(){const q=$('#search').value.trim().toLowerCase();lessonsEl.innerHTML='';let shown=0;lessons.forEach((x,i)=>{if(q&&!(`${x[0]} ${x[1]}`.toLowerCase().includes(q)))return;shown++;const is=done.includes(i);const c=document.createElement('article');c.className='card'+(is?' done':'');
+const archiveUrl=x[3];
+const telegramUrl=x[4];
+const driveUrl=x[5];
+
+const archiveBtn=archiveUrl?`<a class="btn download" href="${archiveUrl}" target="_blank" rel="noopener">⇩ Archive</a>`:`<span class="btn download disabled">⇩ Archive</span>`;
+const telegramBtn=telegramUrl?`<a class="btn download" href="${telegramUrl}" target="_blank" rel="noopener">⇩ Telegram</a>`:`<span class="btn download disabled">⇩ Telegram</span>`;
+const driveBtn=driveUrl?`<a class="btn download" href="${driveUrl}" target="_blank" rel="noopener">⇩ Drive</a>`:`<span class="btn download disabled">⇩ Drive</span>`;
+
+const hasDownload=archiveUrl||telegramUrl||driveUrl;
+const hintText=hasDownload?'সংযুক্ত লিংক থেকে দরস ডাউনলোড করুন':'ডাউনলোড লিংক যুক্ত হলে এই বাটনগুলো সক্রিয় হবে';
+
+c.innerHTML=`<div class="card-head"><span class="number">${x[0]} দরস</span><button class="check" title="সম্পন্ন হিসেবে চিহ্নিত করুন" aria-label="সম্পন্ন">${is?'✓':'○'}</button></div><div class="topic">${x[1]}</div><div class="actions"><a class="btn yt" href="${x[2]}" target="_blank" rel="noopener">▶ YouTube</a>${archiveBtn}${telegramBtn}${driveBtn}</div><div class="hint">${hintText}</div>`;c.querySelector('.check').onclick=()=>{done=done.includes(i)?done.filter(n=>n!==i):[...done,i];localStorage.setItem(key,JSON.stringify(done));render();};lessonsEl.appendChild(c);});$('#empty').style.display=shown?'none':'block';$('#count').textContent=`১৭টির মধ্যে ${done.length}টি সম্পন্ন`;$('#progress').style.width=(done.length/17*100)+'%';}
 $('#search').addEventListener('input',render);$('#theme').onclick=()=>{const dark=document.body.dataset.theme==='dark';document.body.dataset.theme=dark?'':'dark';$('#theme').textContent=dark?'☾ ডার্ক মোড':'☀ লাইট মোড';localStorage.setItem('rahbar-theme',dark?'light':'dark')};
 if(localStorage.getItem('rahbar-theme')==='dark'){$('#theme').click()}
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');setTimeout(()=>$('#toast').classList.remove('show'),2200)}
